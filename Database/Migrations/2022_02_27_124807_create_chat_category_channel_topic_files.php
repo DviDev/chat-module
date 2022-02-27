@@ -16,7 +16,8 @@ class CreateChatCategoryChannelTopicFiles extends Migration
         Schema::create('chat_category_channel_topic_files', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamps();
+            $table->bigInteger('topic_id');
+            $table->string('path');
         });
     }
 

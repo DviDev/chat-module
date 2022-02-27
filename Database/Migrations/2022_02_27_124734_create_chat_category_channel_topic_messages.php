@@ -16,7 +16,11 @@ class CreateChatCategoryChannelTopicMessages extends Migration
         Schema::create('chat_category_channel_topic_messages', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamps();
+            $table->bigInteger('topic_id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('parent_id');
+            $table->text('message');
+            $table->timestamp('created_at');
         });
     }
 

@@ -16,7 +16,8 @@ class CreateChatPermissionGroupUsers extends Migration
         Schema::create('chat_permission_group_users', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamps();
+            $table->bigInteger('group_id');
+            $table->bigInteger('user_id');
         });
     }
 

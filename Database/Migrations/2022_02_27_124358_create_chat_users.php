@@ -16,7 +16,9 @@ class CreateChatUsers extends Migration
         Schema::create('chat_users', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamps();
+            $table->bigInteger('chat_id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('invite_id');
         });
     }
 

@@ -16,7 +16,8 @@ class CreateChatCategoryChannels extends Migration
         Schema::create('chat_category_channels', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamps();
+            $table->bigInteger('category_id');
+            $table->string('name');
         });
     }
 

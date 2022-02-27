@@ -16,7 +16,10 @@ class CreateChatCategories extends Migration
         Schema::create('chat_categories', function (Blueprint $table) {
             $table->id();
 
-            $table->timestamps();
+            $table->bigInteger('chat_id');
+            $table->string('name', 50);
+            $table->timestamp('created_at');
+            $table->bigInteger('created_by_user_id');
         });
     }
 
