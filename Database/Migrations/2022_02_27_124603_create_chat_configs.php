@@ -16,8 +16,8 @@ class CreateChatConfigs extends Migration
         Schema::create('chat_configs', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('chat_id');
-            $table->tinyInteger('time_between_messages');
+            $table->bigInteger('chat_id')->unsigned();
+            $table->tinyInteger('time_between_messages')->unsigned();
         });
     }
 

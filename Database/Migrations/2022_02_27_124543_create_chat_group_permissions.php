@@ -16,8 +16,8 @@ class CreateChatGroupPermissions extends Migration
         Schema::create('chat_group_permissions', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('group_id');
-            $table->smallInteger('permission_id');
+            $table->bigInteger('group_id')->unsigned();
+            $table->smallInteger('permission_id')->unsigned();
         });
     }
 

@@ -16,8 +16,8 @@ class CreateChatCategoryChannelUsers extends Migration
         Schema::create('chat_category_channel_users', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('channel_id');
-            $table->bigInteger('user_id');
+            $table->bigInteger('channel_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamp('created_at')->useCurrent();
         });
     }
