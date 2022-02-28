@@ -18,7 +18,7 @@ class CreateChatCategoryChannelTopics extends Migration
 
             $table->string('name');
             $table->bigInteger('user_id');
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

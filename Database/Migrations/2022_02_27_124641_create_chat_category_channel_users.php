@@ -18,7 +18,7 @@ class CreateChatCategoryChannelUsers extends Migration
 
             $table->bigInteger('channel_id');
             $table->bigInteger('user_id');
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

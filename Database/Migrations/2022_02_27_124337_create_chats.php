@@ -17,7 +17,7 @@ class CreateChats extends Migration
             $table->id();
 
             $table->bigInteger('user_id');
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

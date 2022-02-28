@@ -18,7 +18,7 @@ class CreateChatCategories extends Migration
 
             $table->bigInteger('chat_id');
             $table->string('name', 50);
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
             $table->bigInteger('created_by_user_id');
         });
     }

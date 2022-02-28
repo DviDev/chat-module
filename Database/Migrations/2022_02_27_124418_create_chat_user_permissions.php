@@ -18,7 +18,7 @@ class CreateChatUserPermissions extends Migration
 
             $table->bigInteger('user_id');
             $table->bigInteger('permission_id');
-            $table->timestamp('created_at');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
