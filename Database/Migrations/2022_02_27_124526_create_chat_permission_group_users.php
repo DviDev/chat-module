@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Modules\Chat\Entities\ChatPermissionGroupUserEntityModel;
 
 class CreateChatPermissionGroupUsers extends Migration
 {
@@ -16,8 +17,9 @@ class CreateChatPermissionGroupUsers extends Migration
         Schema::create('chat_permission_group_users', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('group_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
+            $prop = ChatPermissionGroupUserEntityModel::props(null, true);
+            $table->bigInteger($prop->group_id)->unsigned();
+            $table->bigInteger($prop->user_id)->unsigned();
         });
     }
 

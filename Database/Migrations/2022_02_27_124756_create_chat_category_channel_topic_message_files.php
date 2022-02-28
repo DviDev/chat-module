@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Modules\Chat\Entities\ChatCategoryChannelTopicMessageFileEntityModel;
 
 class CreateChatCategoryChannelTopicMessageFiles extends Migration
 {
@@ -16,8 +17,9 @@ class CreateChatCategoryChannelTopicMessageFiles extends Migration
         Schema::create('chat_category_channel_topic_message_files', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('message_id')->unsigned();
-            $table->string('path');
+            $prop = ChatCategoryChannelTopicMessageFileEntityModel::props(null, true);
+            $table->bigInteger($prop->message_id)->unsigned();
+            $table->string($prop->path);
         });
     }
 
