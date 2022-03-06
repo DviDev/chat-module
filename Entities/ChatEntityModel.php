@@ -10,6 +10,8 @@ use Modules\Chat\Repositories\ChatRepository;
  * @link https://github.com/DaviMenezes
  * @property $id
  * @property $user_id
+ * @property $name
+ * @property $description
  * @property $created_at
  * @method static self props($alias = null, $force = null)
  * @method ChatRepository repository()

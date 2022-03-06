@@ -18,7 +18,9 @@ class CreateChatCategoryChannelTopics extends Migration
             $table->id();
 
             $prop = ChatCategoryChannelTopicEntityModel::props(null, true);
-            $table->string($prop->name);
+            $table->string($prop->channel_id);
+            $table->string($prop->title, 150);
+            $table->string($prop->message);
             $table->bigInteger($prop->user_id)->unsigned();
             $table->timestamp($prop->created_at)->useCurrent();
         });

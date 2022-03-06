@@ -9,7 +9,9 @@
   * @author Davi Menezes (davimenezes.dev@gmail.com)
   * @link https://github.com/DaviMenezes
   * @property $id
-  * @property $name
+  * @property $channel_id
+  * @property $title
+  * @property $message
   * @property $created_at
   * @property $user_id
   * @method static self props($alias = null, $force = null)

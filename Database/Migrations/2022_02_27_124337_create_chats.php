@@ -18,6 +18,8 @@ class CreateChats extends Migration
             $table->id();
             $prop = ChatEntityModel::props(null, true);
             $table->bigInteger($prop->user_id)->unsigned();
+            $table->string($prop->name, 100);
+            $table->string($prop->description)->nullable();
             $table->timestamp($prop->created_at)->useCurrent();
         });
     }
