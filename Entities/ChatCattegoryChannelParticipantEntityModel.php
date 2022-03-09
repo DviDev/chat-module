@@ -3,7 +3,7 @@
 namespace Modules\Chat\Entities;
 
 use Modules\Base\Entities\BaseEntityModel;
-use Modules\Chat\Repositories\ChatCattegoryChannelParticipantRepository;
+use Modules\Chat\Repositories\ChatCategoryChannelParticipantRepository;
 use Modules\Chat\Models\ChatCattegoryChannelParticipantModel;
 
 /**
@@ -17,13 +17,13 @@ use Modules\Chat\Models\ChatCattegoryChannelParticipantModel;
  * @property $updated_at
  * @property-read ChatCattegoryChannelParticipantModel $model
  * @method static self props($alias = null, $force = null)
- * @method ChatCattegoryChannelParticipantRepository repository()
+ * @method ChatCategoryChannelParticipantRepository repository()
  */
 class ChatCattegoryChannelParticipantEntityModel extends BaseEntityModel
 {
     protected function repositoryClass(): string
     {
-        return ChatCattegoryChannelParticipantRepository::class;
+        return ChatCategoryChannelParticipantRepository::class;
     }
 
     /**

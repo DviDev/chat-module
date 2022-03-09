@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\chat\Repositories;
+namespace Modules\Chat\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
 use Modules\chat\Entities\ChatCattegoryChannelParticipantEntityModel;
@@ -17,7 +17,7 @@ use Modules\chat\Models\ChatCattegoryChannelParticipantModel;
  * @method ChatCattegoryChannelParticipantModel firstOrNew($query)
  * @method ChatCattegoryChannelParticipantEntityModel findOrFail($id)
  */
-class ChatCattegoryChannelParticipantRepository extends BaseRepository
+class ChatCategoryChannelParticipantRepository extends BaseRepository
 {
     /**
      * @inheritDoc
