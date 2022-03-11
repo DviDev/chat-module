@@ -3,19 +3,19 @@
 namespace Modules\Chat\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
-use Modules\chat\Entities\ChatCattegoryChannelParticipantEntityModel;
-use Modules\chat\Models\ChatCattegoryChannelParticipantModel;
+use Modules\chat\Entities\ChatCategoryChannelParticipantEntityModel;
+use Modules\chat\Models\ChatCategoryChannelParticipantModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method self obj()
- * @method ChatCattegoryChannelParticipantModel model()
- * @method ChatCattegoryChannelParticipantEntityModel find($id)
- * @method ChatCattegoryChannelParticipantModel first()
- * @method ChatCattegoryChannelParticipantModel findOrNew($id)
- * @method ChatCattegoryChannelParticipantModel firstOrNew($query)
- * @method ChatCattegoryChannelParticipantEntityModel findOrFail($id)
+ * @method ChatCategoryChannelParticipantModel model()
+ * @method ChatCategoryChannelParticipantEntityModel find($id)
+ * @method ChatCategoryChannelParticipantModel first()
+ * @method ChatCategoryChannelParticipantModel findOrNew($id)
+ * @method ChatCategoryChannelParticipantModel firstOrNew($query)
+ * @method ChatCategoryChannelParticipantEntityModel findOrFail($id)
  */
 class ChatCategoryChannelParticipantRepository extends BaseRepository
 {
@@ -24,6 +24,6 @@ class ChatCategoryChannelParticipantRepository extends BaseRepository
      */
     public function modelClass(): string
     {
-        return ChatCattegoryChannelParticipantModel::class;
+        return ChatCategoryChannelParticipantModel::class;
     }
 }
