@@ -16,4 +16,9 @@ class ChatConfigModel extends BaseModel
     {
         return ChatConfigEntityModel::class;
     }
+
+    public static function table($alias = null): string
+    {
+        return parent::dbTable('chat_configs', $alias);
+    }
 }

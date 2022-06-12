@@ -16,4 +16,9 @@ class ChatCategoryChannelUserModel extends BaseModel
     {
         return ChatCategoryChannelUserEntityModel::class;
     }
+
+    public static function table($alias = null): string
+    {
+        return parent::dbTable('chat_category_channel_users', $alias);
+    }
 }

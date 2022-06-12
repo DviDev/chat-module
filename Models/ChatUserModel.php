@@ -16,4 +16,9 @@ class ChatUserModel extends BaseModel
     {
         return ChatUserEntityModel::class;
     }
+
+    public static function table($alias = null): string
+    {
+        return parent::dbTable('chat_users', $alias);
+    }
 }

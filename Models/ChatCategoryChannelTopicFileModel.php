@@ -16,4 +16,9 @@ class ChatCategoryChannelTopicFileModel extends BaseModel
     {
         return ChatCategoryChannelTopicFileEntityModel::class;
     }
+
+    public static function table($alias = null): string
+    {
+        return parent::dbTable('chat_category_channel_topic_files', $alias);
+    }
 }

@@ -16,4 +16,9 @@ class ChatPermissionGroupModel extends BaseModel
     {
         return ChatPermissionGroupEntityModel::class;
     }
+
+    public static function table($alias = null): string
+    {
+        return parent::dbTable('chat_permission_groups', $alias);
+    }
 }

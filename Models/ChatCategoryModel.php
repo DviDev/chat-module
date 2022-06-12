@@ -16,4 +16,9 @@ class ChatCategoryModel extends BaseModel
     {
         return ChatCategoryEntityModel::class;
     }
+
+    public static function table($alias = null): string
+    {
+        return parent::dbTable('chat_categories', $alias);
+    }
 }
