@@ -22,7 +22,7 @@ class CreateChatCategoryChannelTopics extends Migration
             $table->string($prop->title, 150);
             $table->string($prop->message);
             $table->bigInteger($prop->user_id)->unsigned();
-            $table->timestamp($prop->created_at)->useCurrent();
+            $table->timestamp($prop->created_at);
         });
     }
 

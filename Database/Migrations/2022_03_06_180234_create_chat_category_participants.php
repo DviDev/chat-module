@@ -21,8 +21,8 @@ return new class extends Migration
             $table->bigInteger($prop->category_id);
             $table->bigInteger($prop->user_id);
             $table->enum($prop->type, ['owner', 'admin', 'default']);
-            $table->timestamp($prop->created_at)->useCurrent();
-            $table->timestamp($prop->updated_at)->useCurrent();
+            $table->timestamp($prop->created_at);
+            $table->timestamp($prop->updated_at)->nullable();
         });
     }
 
