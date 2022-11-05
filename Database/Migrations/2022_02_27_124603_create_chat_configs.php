@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Modules\Chat\Entities\ChatConfigEntityModel;
 
 class CreateChatConfigs extends Migration
 {
@@ -16,8 +17,9 @@ class CreateChatConfigs extends Migration
         Schema::create('chat_configs', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('chat_id');
-            $table->tinyInteger('time_between_messages');
+            $prop = ChatConfigEntityModel::props(null, true);
+            $table->bigInteger($prop->chat_id)->unsigned();
+            $table->tinyInteger($prop->time_between_messages)->unsigned();
         });
     }
 

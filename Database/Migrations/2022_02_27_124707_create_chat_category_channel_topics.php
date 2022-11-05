@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Modules\Chat\Entities\ChatCategoryChannelTopicEntityModel;
 
 class CreateChatCategoryChannelTopics extends Migration
 {
@@ -16,9 +17,12 @@ class CreateChatCategoryChannelTopics extends Migration
         Schema::create('chat_category_channel_topics', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->bigInteger('user_id');
-            $table->timestamp('created_at');
+            $prop = ChatCategoryChannelTopicEntityModel::props(null, true);
+            $table->string($prop->channel_id);
+            $table->string($prop->title, 150);
+            $table->string($prop->message);
+            $table->bigInteger($prop->user_id)->unsigned();
+            $table->timestamp($prop->created_at)->useCurrent();
         });
     }
 

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Modules\Chat\Entities\ChatUserEntityModel;
 
 class CreateChatUsers extends Migration
 {
@@ -16,9 +17,10 @@ class CreateChatUsers extends Migration
         Schema::create('chat_users', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('chat_id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('invite_id');
+            $prop = ChatUserEntityModel::props(null, true);
+            $table->bigInteger($prop->chat_id)->unsigned();
+            $table->bigInteger($prop->user_id)->unsigned();
+            $table->bigInteger($prop->invite_id)->unsigned();
         });
     }
 

@@ -16,6 +16,7 @@ class ChatDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+         $this->call(PermissionsTableSeeder::class);
         // $this->call("OthersTableSeeder");
     }
 }
