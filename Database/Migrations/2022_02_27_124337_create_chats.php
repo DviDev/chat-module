@@ -20,7 +20,7 @@ class CreateChats extends Migration
             $table->bigInteger($prop->user_id)->unsigned();
             $table->string($prop->name, 100);
             $table->string($prop->description)->nullable();
-            $table->timestamp($prop->created_at)->useCurrent();
+            $table->timestamp($prop->created_at);
         });
     }
 

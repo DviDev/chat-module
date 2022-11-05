@@ -20,7 +20,7 @@ class CreateChatCategories extends Migration
             $prop = ChatCategoryEntityModel::props(null, true);
             $table->bigInteger($prop->chat_id)->unsigned();
             $table->string($prop->name, 50);
-            $table->timestamp($prop->created_at)->useCurrent();
+            $table->timestamp($prop->created_at);
             $table->bigInteger($prop->created_by_user_id)->unsigned();
         });
     }

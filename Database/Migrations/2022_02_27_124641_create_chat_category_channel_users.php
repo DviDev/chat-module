@@ -20,7 +20,7 @@ class CreateChatCategoryChannelUsers extends Migration
             $prop = ChatCategoryChannelUserEntityModel::props(null, true);
             $table->bigInteger($prop->channel_id)->unsigned();
             $table->bigInteger($prop->user_id)->unsigned();
-            $table->timestamp($prop->created_at)->useCurrent();
+            $table->timestamp($prop->created_at);
         });
     }
 
