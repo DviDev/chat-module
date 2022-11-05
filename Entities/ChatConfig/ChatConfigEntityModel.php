@@ -1,31 +1,26 @@
 <?php
 
-namespace Modules\Chat\Entities;
+namespace Modules\Chat\Entities\ChatConfig;
 
 use Modules\Base\Entities\BaseEntityModel;
 use Modules\Chat\Repositories\ChatConfigRepository;
+use Modules\Chat\Models\ChatConfigModel;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
- * @property $id
- * @property $chat_id
- * @property $time_between_messages
+ * @property-read ChatConfigModel $model
+ * @method self save()
+ * @method static self new()
  * @method static self props($alias = null, $force = null)
  * @method ChatConfigRepository repository()
  */
 class ChatConfigEntityModel extends BaseEntityModel
 {
+    use ChatConfigProps;
+
     protected function repositoryClass(): string
     {
         return ChatConfigRepository::class;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function dbTable($alias = null)
-    {
-        return self::setTable('chat_configs', $alias);
     }
 }

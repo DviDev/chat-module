@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatPermissionGroupEntityModel;
+use Modules\Chat\Entities\ChatPermissionGroup\ChatPermissionGroupEntityModel;
 
 class CreateChatPermissionGroups extends Migration
 {

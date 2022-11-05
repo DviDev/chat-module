@@ -1,31 +1,26 @@
 <?php
 
-namespace Modules\Chat\Entities;
+namespace Modules\Chat\Entities\ChatPermissionGroupUser;
 
 use Modules\Base\Entities\BaseEntityModel;
 use Modules\Chat\Repositories\ChatPermissionGroupUserRepository;
+use Modules\Chat\Models\ChatPermissionGroupUserModel;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
- * @property $id
- * @property $group_id
- * @property $user_id
+ * @property-read ChatPermissionGroupUserModel $model
+ * @method self save()
+ * @method static self new()
  * @method static self props($alias = null, $force = null)
  * @method ChatPermissionGroupUserRepository repository()
  */
 class ChatPermissionGroupUserEntityModel extends BaseEntityModel
 {
+    use ChatPermissionGroupUserProps;
+
     protected function repositoryClass(): string
     {
         return ChatPermissionGroupUserRepository::class;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function dbTable($alias = null)
-    {
-        return self::setTable('chat_permission_group_users', $alias);
     }
 }

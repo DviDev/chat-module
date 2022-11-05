@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatCategoryParticipantEntityModel;
+use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEntityModel;
 
 return new class extends Migration
 {

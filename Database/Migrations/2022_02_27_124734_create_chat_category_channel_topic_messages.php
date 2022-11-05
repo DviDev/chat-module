@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatCategoryChannelTopicMessageEntityModel;
+use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTopicMessageEntityModel;
 
 class CreateChatCategoryChannelTopicMessages extends Migration
 {

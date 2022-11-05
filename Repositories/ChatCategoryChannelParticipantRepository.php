@@ -3,8 +3,8 @@
 namespace Modules\Chat\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
-use Modules\chat\Entities\ChatCategoryChannelParticipantEntityModel;
-use Modules\chat\Models\ChatCategoryChannelParticipantModel;
+use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEntityModel;
+use Modules\Chat\Models\ChatCategoryChannelParticipantModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)

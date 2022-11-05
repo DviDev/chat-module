@@ -1,11 +1,12 @@
 <?php
+
 namespace Modules\Chat\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
-use Modules\Chat\Entities\ChatCategoryChannelTopicMessageEntityModel;
+use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTopicMessageEntityModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicMessageModel;
 
- /**
+/**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method self obj()
@@ -18,7 +19,6 @@ use Modules\Chat\Models\ChatCategoryChannelTopicMessageModel;
  */
 class ChatCategoryChannelTopicMessageRepository extends BaseRepository
 {
-
     /**
      * @inheritDoc
      */

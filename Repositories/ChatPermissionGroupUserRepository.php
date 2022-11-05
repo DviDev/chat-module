@@ -2,7 +2,7 @@
 namespace Modules\Chat\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
-use Modules\Chat\Entities\ChatPermissionGroupUserEntityModel;
+use Modules\Chat\Entities\ChatPermissionGroupUser\ChatPermissionGroupUserEntityModel;
 use Modules\Chat\Models\ChatPermissionGroupUserModel;
 
 /**

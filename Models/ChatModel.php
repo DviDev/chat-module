@@ -2,23 +2,35 @@
 
 namespace Modules\Chat\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Entities\ChatEntityModel;
+use Modules\Chat\Database\Factories\ChatFactory;
+use Modules\Chat\Entities\Chat\ChatEntityModel;
+use Modules\Chat\Entities\Chat\ChatProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatEntityModel toEntity()
+ * @method ChatFactory factory()
  */
 class ChatModel extends BaseModel
 {
-    function modelEntity()
+    use HasFactory;
+    use ChatProps;
+
+    public function modelEntity(): string
     {
         return ChatEntityModel::class;
     }
 
+    protected static function newFactory(): ChatFactory
+    {
+        return new ChatFactory();
+    }
+
     public static function table($alias = null): string
     {
-        return parent::dbTable('chats', $alias);
+        return self::dbTable('chats', $alias);
     }
 }
