@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatUser\ChatUserEntityModel;
 
-class CreateChatUsers extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -33,4 +33,4 @@ class CreateChatUsers extends Migration
     {
         Schema::dropIfExists('chat_users');
     }
-}
+};

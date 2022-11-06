@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatConfig\ChatConfigEntityModel;
 
-class CreateChatConfigs extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -32,4 +32,4 @@ class CreateChatConfigs extends Migration
     {
         Schema::dropIfExists('chat_configs');
     }
-}
+};

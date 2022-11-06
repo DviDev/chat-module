@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatCategoryChannelTopicMessageFile\ChatCategoryChannelTopicMessageFileEntityModel;
 
-class CreateChatCategoryChannelTopicMessageFiles extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -32,4 +32,4 @@ class CreateChatCategoryChannelTopicMessageFiles extends Migration
     {
         Schema::dropIfExists('chat_category_channel_topic_message_files');
     }
-}
+};

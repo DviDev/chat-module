@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTopicMessageEntityModel;
 
-class CreateChatCategoryChannelTopicMessages extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -35,4 +35,4 @@ class CreateChatCategoryChannelTopicMessages extends Migration
     {
         Schema::dropIfExists('chat_category_channel_topic_messages');
     }
-}
+};

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatPermissionGroupUser\ChatPermissionGroupUserEntityModel;
 
-class CreateChatPermissionGroupUsers extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -32,4 +32,4 @@ class CreateChatPermissionGroupUsers extends Migration
     {
         Schema::dropIfExists('chat_permission_group_users');
     }
-}
+};

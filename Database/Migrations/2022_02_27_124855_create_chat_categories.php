@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatCategory\ChatCategoryEntityModel;
 
-class CreateChatCategories extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -34,4 +34,4 @@ class CreateChatCategories extends Migration
     {
         Schema::dropIfExists('chat_categories');
     }
-}
+};
