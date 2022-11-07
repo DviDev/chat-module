@@ -20,7 +20,7 @@ return new class extends Migration
             $prop = ChatUserEntityModel::props(null, true);
             $table->bigInteger($prop->chat_id)->unsigned();
             $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->invite_id)->unsigned();
+            $table->bigInteger($prop->invite_id)->unsigned()->nullable();
         });
     }
 

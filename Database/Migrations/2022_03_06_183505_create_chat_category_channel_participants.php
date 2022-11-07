@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEntityModel;
+use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEnum;
 
 return new class extends Migration
 {
@@ -20,7 +21,7 @@ return new class extends Migration
             $prop = ChatCategoryChannelParticipantEntityModel::props(null, true);
             $table->bigInteger($prop->channel_id);
             $table->bigInteger($prop->user_id);
-            $table->enum($prop->type, ['owner', 'admin', 'default']);
+            $table->enum($prop->type, ChatCategoryChannelParticipantEnum::toArray());
             $table->timestamp($prop->created_at);
             $table->timestamp($prop->updated_at)->nullable();
         });

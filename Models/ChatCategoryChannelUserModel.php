@@ -12,7 +12,7 @@ use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatCategoryChannelUserEntityModel toEntity()
- * @method ChatCategoryChannelUserFactory factory()
+ * @method static ChatCategoryChannelUserFactory factory()
  */
 class ChatCategoryChannelUserModel extends BaseModel
 {

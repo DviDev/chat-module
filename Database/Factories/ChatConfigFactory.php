@@ -27,7 +27,8 @@ class ChatConfigFactory extends Factory
     {
         $p = ChatConfigEntityModel::props(null, true);
         return [
-
+            $p->chat_id => null,
+            $p->time_between_messages => 3,
         ];
     }
 }

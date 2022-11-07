@@ -12,7 +12,7 @@ use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatGroupPermissionEntityModel toEntity()
- * @method ChatGroupPermissionFactory factory()
+ * @method static ChatGroupPermissionFactory factory()
  */
 class ChatGroupPermissionModel extends BaseModel
 {

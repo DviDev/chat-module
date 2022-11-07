@@ -12,7 +12,7 @@ use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelPart
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatCategoryChannelParticipantEntityModel toEntity()
- * @method ChatCategoryChannelParticipantFactory factory()
+ * @method static ChatCategoryChannelParticipantFactory factory()
  */
 class ChatCategoryChannelParticipantModel extends BaseModel
 {

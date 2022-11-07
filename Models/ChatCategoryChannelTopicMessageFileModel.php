@@ -12,7 +12,7 @@ use Modules\Chat\Entities\ChatCategoryChannelTopicMessageFile\ChatCategoryChanne
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatCategoryChannelTopicMessageFileEntityModel toEntity()
- * @method ChatCategoryChannelTopicMessageFileFactory factory()
+ * @method static ChatCategoryChannelTopicMessageFileFactory factory()
  */
 class ChatCategoryChannelTopicMessageFileModel extends BaseModel
 {

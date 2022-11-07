@@ -7,8 +7,8 @@ namespace Modules\Chat\Entities\ChatCategoryChannelTopic;
  * @property $channel_id
  * @property $title
  * @property $message
- * @property $created_at
  * @property $user_id
+ * @property $created_at
  */
 trait ChatCategoryChannelTopicProps
 {

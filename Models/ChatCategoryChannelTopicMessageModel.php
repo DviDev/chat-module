@@ -12,7 +12,7 @@ use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTop
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatCategoryChannelTopicMessageEntityModel toEntity()
- * @method ChatCategoryChannelTopicMessageFactory factory()
+ * @method static ChatCategoryChannelTopicMessageFactory factory()
  */
 class ChatCategoryChannelTopicMessageModel extends BaseModel
 {

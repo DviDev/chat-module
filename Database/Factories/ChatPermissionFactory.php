@@ -27,7 +27,8 @@ class ChatPermissionFactory extends Factory
     {
         $p = ChatPermissionEntityModel::props(null, true);
         return [
-
+            $p->name => $this->faker->words(3, true),
+            $p->description => $this->faker->sentence(),
         ];
     }
 }

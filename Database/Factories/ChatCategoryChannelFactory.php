@@ -27,7 +27,8 @@ class ChatCategoryChannelFactory extends Factory
     {
         $p = ChatCategoryChannelEntityModel::props(null, true);
         return [
-
+            $p->category_id => null,
+            $p->name => $this->faker->word(),
         ];
     }
 }

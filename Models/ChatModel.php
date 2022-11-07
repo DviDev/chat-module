@@ -12,7 +12,7 @@ use Modules\Chat\Entities\Chat\ChatProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatEntityModel toEntity()
- * @method ChatFactory factory()
+ * @method static ChatFactory factory()
  */
 class ChatModel extends BaseModel
 {

@@ -27,7 +27,9 @@ class ChatFactory extends Factory
     {
         $p = ChatEntityModel::props(null, true);
         return [
-
+            $p->user_id => null,
+            $p->name => $this->faker->words(3, true),
+            $p->description => $this->faker->sentence(),
         ];
     }
 }

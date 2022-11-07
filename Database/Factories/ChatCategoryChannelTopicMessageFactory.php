@@ -27,7 +27,10 @@ class ChatCategoryChannelTopicMessageFactory extends Factory
     {
         $p = ChatCategoryChannelTopicMessageEntityModel::props(null, true);
         return [
-
+            $p->topic_id => null,
+            $p->parent_id => null,
+            $p->user_id => null,
+            $p->message => $this->faker->sentence(),
         ];
     }
 }

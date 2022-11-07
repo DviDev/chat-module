@@ -12,7 +12,7 @@ use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatUserPermissionEntityModel toEntity()
- * @method ChatUserPermissionFactory factory()
+ * @method static ChatUserPermissionFactory factory()
  */
 class ChatUserPermissionModel extends BaseModel
 {
