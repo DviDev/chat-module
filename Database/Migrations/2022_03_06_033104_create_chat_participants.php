@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Modules\Chat\Entities\ChatParticipant\ChatParticipantEntityModel;
+use Modules\Chat\Entities\ChatParticipant\ChatParticipantEnum;
 
 return new class extends Migration
 {
@@ -19,7 +20,7 @@ return new class extends Migration
             $prop = ChatParticipantEntityModel::props(null, true);
             $table->bigInteger($prop->chat_id);
             $table->bigInteger($prop->user_id);
-            $table->enum($prop->type, ['owner', 'admin', 'default']);
+            $table->enum($prop->type, ChatParticipantEnum::toArray());
             $table->timestamp($prop->created_at);
             $table->timestamp($prop->updated_at)->nullable();
         });
