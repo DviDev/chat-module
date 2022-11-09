@@ -46,7 +46,7 @@ class ChatDatabaseSeeder extends Seeder
         Model::unguard();
 
         $chat = ChatEntityModel::props();
-        ChatModel::factory()->count(3)->create([
+        ChatModel::factory()->count(2)->create([
             $chat->user_id => User::query()->first()->id
         ])->each(function (ChatModel $chat) {
             $category = ChatCategoryEntityModel::props();
@@ -64,7 +64,7 @@ class ChatDatabaseSeeder extends Seeder
                         $participant->user_id => $channel->category->created_by_user_id
                     ]);
                     $topic = ChatCategoryChannelTopicEntityModel::props();
-                    ChatCategoryChannelTopicModel::factory()->count(3)->create([
+                    ChatCategoryChannelTopicModel::factory()->count(11)->create([
                         $topic->channel_id => $channel->id,
                         $topic->user_id => $chat->user_id
                     ])->each(function(ChatCategoryChannelTopicModel $topic) use ($channel) {
@@ -90,7 +90,7 @@ class ChatDatabaseSeeder extends Seeder
             ChatConfigModel::factory()->create([
                 $config->chat_id => $chat->id
             ]);
-            ChatPermissionModel::factory()->count(3)->create()
+            ChatPermissionModel::factory()->count(11)->create()
                 ->each(function(ChatPermissionModel $permission) {
                     $group = ChatPermissionGroupModel::factory()->create();
                     $p = ChatGroupPermissionEntityModel::props();
