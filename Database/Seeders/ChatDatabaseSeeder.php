@@ -46,16 +46,16 @@ class ChatDatabaseSeeder extends Seeder
         Model::unguard();
 
         $chat = ChatEntityModel::props();
-        ChatModel::factory()->count(2)->create([
+        ChatModel::factory()->count(config('app.MODULE_SEED_CATEGORY_COUNT'))->create([
             $chat->user_id => User::query()->first()->id
         ])->each(function (ChatModel $chat) {
             $category = ChatCategoryEntityModel::props();
-            ChatCategoryModel::factory()->count(3)->create([
+            ChatCategoryModel::factory()->count(config('app.MODULE_SEED_CATEGORY_COUNT'))->create([
                 $category->chat_id => $chat->id,
                 $category->created_by_user_id => $chat->user_id,
             ])->each(function(ChatCategoryModel $category) use ($chat) {
                 $channel = ChatCategoryChannelEntityModel::props();
-                ChatCategoryChannelModel::factory()->count(3)->create([
+                ChatCategoryChannelModel::factory()->count(config('app.MODULE_SEED_CATEGORY_COUNT'))->create([
                     $channel->category_id => $category->id
                 ])->each(function (ChatCategoryChannelModel $channel) use ($chat) {
                     $participant = ChatCategoryChannelParticipantEntityModel::props();
@@ -64,7 +64,7 @@ class ChatDatabaseSeeder extends Seeder
                         $participant->user_id => $channel->category->created_by_user_id
                     ]);
                     $topic = ChatCategoryChannelTopicEntityModel::props();
-                    ChatCategoryChannelTopicModel::factory()->count(11)->create([
+                    ChatCategoryChannelTopicModel::factory()->count(config('app.MODULE_SEED_COUNT'))->create([
                         $topic->channel_id => $channel->id,
                         $topic->user_id => $chat->user_id
                     ])->each(function(ChatCategoryChannelTopicModel $topic) use ($channel) {
@@ -90,7 +90,7 @@ class ChatDatabaseSeeder extends Seeder
             ChatConfigModel::factory()->create([
                 $config->chat_id => $chat->id
             ]);
-            ChatPermissionModel::factory()->count(11)->create()
+            ChatPermissionModel::factory()->count(config('app.MODULE_SEED_COUNT'))->create()
                 ->each(function(ChatPermissionModel $permission) {
                     $group = ChatPermissionGroupModel::factory()->create();
                     $p = ChatGroupPermissionEntityModel::props();
