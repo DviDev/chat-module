@@ -2,9 +2,8 @@
 namespace Modules\Chat\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Modules\Chat\Entities\ChatParticipant\ChatParticipantEnum;
-use Modules\Chat\Models\ChatParticipantModel;
 use Modules\Chat\Entities\ChatParticipant\ChatParticipantEntityModel;
+use Modules\Chat\Models\ChatParticipantModel;
 
 /**
  * @method ChatParticipantModel create(array $attributes = [])
@@ -30,7 +29,7 @@ class ChatParticipantFactory extends Factory
         return [
             $p->chat_id => null,
             $p->user_id => null,
-            $p->type => collect(ChatParticipantEnum::toArray())->random(),
+            $p->type => null,
         ];
     }
 }

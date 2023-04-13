@@ -1,15 +1,14 @@
 <?php
 namespace Modules\Chat\Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Chat\Models\ChatModel;
-use Modules\Chat\Entities\Chat\ChatEntityModel;
 
 /**
  * @method ChatModel create(array $attributes = [])
  * @method ChatModel make(array $attributes = [])
  */
-class ChatFactory extends Factory
+class ChatFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
@@ -25,11 +24,6 @@ class ChatFactory extends Factory
      */
     public function definition(): array
     {
-        $p = ChatEntityModel::props(null, true);
-        return [
-            $p->user_id => null,
-            $p->name => $this->faker->words(3, true),
-            $p->description => $this->faker->sentence(),
-        ];
+        return $this->getValues();
     }
 }

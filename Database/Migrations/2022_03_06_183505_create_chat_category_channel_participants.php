@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEnum;
 
@@ -19,11 +19,15 @@ return new class extends Migration
             $table->id();
 
             $prop = ChatCategoryChannelParticipantEntityModel::props(null, true);
-            $table->bigInteger($prop->channel_id);
-            $table->bigInteger($prop->user_id);
+            $table->foreignId($prop->channel_id)->references('id')->on('chat_category_channels')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->user_id)->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->enum($prop->type, ChatCategoryChannelParticipantEnum::toArray());
             $table->timestamp($prop->created_at);
             $table->timestamp($prop->updated_at)->nullable();
+
+            $table->unique([$prop->channel_id, $prop->user_id]);
         });
     }
 

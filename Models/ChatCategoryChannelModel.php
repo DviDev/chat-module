@@ -2,8 +2,10 @@
 
 namespace Modules\Chat\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Database\Factories\ChatCategoryChannelFactory;
 use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
@@ -13,6 +15,8 @@ use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @property-read ChatCategoryModel $category
+ * @property-read ChatCategoryChannelParticipantModel[] $participants
+ * @property-read ChatCategoryChannelTopicModel[] $topics
  * @method ChatCategoryChannelEntityModel toEntity()
  * @method static ChatCategoryChannelFactory factory()
  */
@@ -39,5 +43,15 @@ class ChatCategoryChannelModel extends BaseModel
     public function category(): BelongsTo
     {
         return $this->belongsTo(ChatCategoryModel::class, 'category_id');
+    }
+
+    public function participants()
+    {
+        return $this->belongsToMany(User::class, ChatCategoryChannelParticipantModel::class, 'channel_id');
+    }
+
+    public function topics(): HasMany
+    {
+        return $this->hasMany(ChatCategoryChannelTopicModel::class, 'channel_id');
     }
 }

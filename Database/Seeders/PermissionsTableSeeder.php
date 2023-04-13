@@ -2,8 +2,8 @@
 
 namespace Modules\Chat\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 use Modules\Chat\Entities\ChatPermission\ChatPermissionEntityModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Services\Enums\PermissionEnum;
@@ -27,13 +27,12 @@ class PermissionsTableSeeder extends Seeder
         ];
         $permissions = collect($items);
 
-        $permissions->each(function ($permission) {
+        $permissions->each(function (PermissionEnum $permission) {
             $entity = ChatPermissionEntityModel::props();
-            if (ChatPermissionModel::query()->where($entity->name, $permission)->exists()) {
-                return;
-            }
-            $entity->name = $permission;
-            $entity->save();
+            ChatPermissionModel::query()->updateOrCreate([
+                $entity->name => $permission->name,
+                $entity->description => "bla bla bla"
+            ]);
         });
 
     }
