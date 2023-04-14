@@ -48,7 +48,7 @@ class ChatDatabaseSeeder extends Seeder
 
         $me = User::query()->where('id', 1)->first();
         $firsWorkspace = $me->workspaces()->first();
-        $seed_total = config('app.MODULE_SEED_CATEGORY_COUNT');
+        $seed_total = config('app.SEED_MODULE_CATEGORY_COUNT');
         $seeded = 0;
         ChatModel::factory()
             ->for($me, 'user')
@@ -112,7 +112,7 @@ class ChatDatabaseSeeder extends Seeder
 
     function createChatCategories(ChatModel $chat): void
     {
-        $seed_total = config('app.CHAT_CATEGORY_SEED_COUNT');
+        $seed_total = config('app.SEED_CHAT_CATEGORY_COUNT');
         $seeded = 0;
         ChatCategoryModel::factory()
             ->for($chat, 'chat')
@@ -130,7 +130,7 @@ class ChatDatabaseSeeder extends Seeder
     function createChatCategoryChannels(ChatCategoryModel $category, ChatModel $chat): void
     {
         $channel = ChatCategoryChannelEntityModel::props();
-        ChatCategoryChannelModel::factory()->count(config('app.MODULE_SEED_CATEGORY_COUNT'))->create([
+        ChatCategoryChannelModel::factory()->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create([
             $channel->category_id => $category->id
         ]);
         $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
@@ -189,7 +189,7 @@ class ChatDatabaseSeeder extends Seeder
     function createChannelTopics(ChatCategoryChannelModel $channel, ChatModel $chat): void
     {
         $topic = ChatCategoryChannelTopicEntityModel::props();
-        $seed_total = config('app.MODULE_SEED_COUNT');
+        $seed_total = config('app.SEED_MODULE_COUNT');
         $seeded = 0;
         ChatCategoryChannelTopicModel::factory()->count($seed_total)->create([
             $topic->channel_id => $channel->id,
