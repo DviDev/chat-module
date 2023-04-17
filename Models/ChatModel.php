@@ -63,4 +63,14 @@ class ChatModel extends BaseModel
     {
         return $this->hasMany(ChatCategoryModel::class, 'chat_id');
     }
+
+    public function configs(): HasMany
+    {
+        return $this->hasMany(ChatConfigModel::class, 'chat_id');
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, ChatUserModel::class, 'user_id', 'chat_id');
+    }
 }

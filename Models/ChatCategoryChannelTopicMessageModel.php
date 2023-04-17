@@ -5,6 +5,7 @@ namespace Modules\Chat\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Database\Factories\ChatCategoryChannelTopicMessageFactory;
 use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTopicMessageEntityModel;
@@ -46,5 +47,10 @@ class ChatCategoryChannelTopicMessageModel extends BaseModel
     public function topic(): BelongsTo
     {
         return $this->belongsTo(ChatCategoryChannelTopicModel::class, 'topic_id');
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(ChatCategoryChannelTopicMessageFileModel::class, 'message_id');
     }
 }

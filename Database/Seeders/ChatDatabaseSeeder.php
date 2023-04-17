@@ -58,6 +58,7 @@ class ChatDatabaseSeeder extends Seeder
         $me->chats()->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
             $seeded++;
             ds("chat $seeded / $seed_total");
+
             WorkspaceChatModel::factory()
                 ->for($firsWorkspace, 'workspace')
                 ->for($chat, 'chat')
@@ -94,8 +95,10 @@ class ChatDatabaseSeeder extends Seeder
 
         /**@var WorkspaceModel $workspace */
         $workspace = $chat->workspaces()->first();
-        $participants = $workspace->participants()->whereNot('user_id', 1)->get();
-        $seed_total = $participants->count();
+        $builder = $workspace->participants()->whereNot('user_id', 1);
+        $builder = $builder->limit($builder->count() -2);
+        $participants = $builder->get();
+        $seed_total = $participants->count() -2;
         $seeded = 0;
         $participants->each(function (User $user) use ($chat, $seed_total, &$seeded) {
             $p = ChatParticipantEntityModel::props();
