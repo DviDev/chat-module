@@ -18,8 +18,12 @@ return new class extends Migration
             $table->id();
 
             $prop = ChatGroupPermissionEntityModel::props(null, true);
-            $table->bigInteger($prop->group_id)->unsigned();
-            $table->smallInteger($prop->permission_id)->unsigned();
+            $table->foreignId($prop->group_id)
+                ->references('id')->on('chat_permission_groups')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->permission_id)
+                ->references('id')->on('chat_permissions')
+                ->cascadeOnUpdate()->restrictOnDelete();
         });
     }
 

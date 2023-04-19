@@ -18,7 +18,9 @@ return new class extends Migration
             $table->id();
 
             $prop = ChatCategoryChannelTopicMessageFileEntityModel::props(null, true);
-            $table->bigInteger($prop->message_id)->unsigned();
+            $table->foreignId($prop->message_id)
+                ->references('id')->on('chat_category_channel_topic_messages')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->path);
         });
     }

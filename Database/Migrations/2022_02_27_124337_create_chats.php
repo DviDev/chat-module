@@ -17,7 +17,9 @@ return new class extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $prop = ChatEntityModel::props(null, true);
-            $table->bigInteger($prop->user_id)->unsigned();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->name, 100);
             $table->string($prop->description)->nullable();
             $table->timestamp($prop->created_at);

@@ -18,7 +18,9 @@ return new class extends Migration
             $table->id();
 
             $prop = ChatConfigEntityModel::props(null, true);
-            $table->bigInteger($prop->chat_id)->unsigned();
+            $table->foreignId($prop->chat_id)
+                ->references('id')->on('chats')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->tinyInteger($prop->time_between_messages)->unsigned();
         });
     }

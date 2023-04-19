@@ -18,8 +18,12 @@ return new class extends Migration
         Schema::create('chat_participants', function (Blueprint $table) {
             $table->id();
             $prop = ChatParticipantEntityModel::props(null, true);
-            $table->bigInteger($prop->chat_id);
-            $table->bigInteger($prop->user_id);
+            $table->foreignId($prop->chat_id)
+                ->references('id')->on('chats')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->enum($prop->type, ChatParticipantEnum::toArray());
             $table->timestamp($prop->created_at);
             $table->timestamp($prop->updated_at)->nullable();

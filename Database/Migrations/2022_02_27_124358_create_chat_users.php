@@ -18,8 +18,12 @@ return new class extends Migration
             $table->id();
 
             $prop = ChatUserEntityModel::props(null, true);
-            $table->bigInteger($prop->chat_id)->unsigned();
-            $table->bigInteger($prop->user_id)->unsigned();
+            $table->foreignId($prop->chat_id)
+                ->references('id')->on('chats')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->bigInteger($prop->invite_id)->unsigned()->nullable();
         });
     }

@@ -18,9 +18,17 @@ return new class extends Migration
             $table->id();
 
             $prop = ChatCategoryChannelTopicMessageEntityModel::props(null, true);
-            $table->bigInteger($prop->topic_id)->unsigned();
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->parent_id)->unsigned()->nullable();
+            $table->foreignId($prop->topic_id)
+                ->references('id')->on('chat_category_channel_topics')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->parent_id)
+                ->nullable()
+                ->references('id')->on('chat_category_channel_topic_messages')
+                ->cascadeOnUpdate()->restrictOnDelete()
+            ;
             $table->text($prop->message);
             $table->timestamp($prop->created_at);
         });

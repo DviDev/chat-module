@@ -18,8 +18,12 @@ return new class extends Migration
             $table->id();
 
             $p = ChatCategoryChannelUserEntityModel::props(null, true);
-            $table->bigInteger($p->channel_id)->unsigned();
-            $table->bigInteger($p->user_id)->unsigned();
+            $table->foreignId($p->channel_id)
+                ->references('id')->on('chat_category_channels')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($p->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamp($p->created_at);
 
             $table->unique([$p->channel_id, $p->user_id]);

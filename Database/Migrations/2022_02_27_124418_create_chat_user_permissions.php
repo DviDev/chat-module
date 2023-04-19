@@ -17,8 +17,12 @@ return new class extends Migration
         Schema::create('chat_user_permissions', function (Blueprint $table) {
             $table->id();
             $prop = ChatUserPermissionEntityModel::props(null, true);
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->permission_id)->unsigned();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->permission_id)
+                ->references('id')->on('chat_permissions')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamp($prop->created_at);
         });
     }

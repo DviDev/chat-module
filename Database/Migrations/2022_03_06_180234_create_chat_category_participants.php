@@ -19,8 +19,12 @@ return new class extends Migration
             $table->id();
 
             $prop = ChatCategoryParticipantEntityModel::props(null, true);
-            $table->bigInteger($prop->category_id);
-            $table->bigInteger($prop->user_id);
+            $table->foreignId($prop->category_id)
+                ->references('id')->on('chat_categories')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($prop->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->enum($prop->type, ChatCategoryParticipantEnum::toArray());
             $table->timestamp($prop->created_at);
             $table->timestamp($prop->updated_at)->nullable();
