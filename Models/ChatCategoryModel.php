@@ -57,6 +57,6 @@ class ChatCategoryModel extends BaseModel
 
     public function participants(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, ChatCategoryParticipantModel::class, 'category_id');
+        return $this->belongsToMany(User::class, ChatCategoryParticipantModel::class, 'category_id', 'participant_id');
     }
 }

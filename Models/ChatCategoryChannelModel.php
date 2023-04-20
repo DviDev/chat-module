@@ -48,7 +48,7 @@ class ChatCategoryChannelModel extends BaseModel
 
     public function participants(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, ChatCategoryChannelParticipantModel::class, 'channel_id');
+        return $this->belongsToMany(User::class, ChatCategoryChannelParticipantModel::class, 'channel_id', 'user_id');
     }
 
     public function topics(): HasMany
@@ -58,7 +58,7 @@ class ChatCategoryChannelModel extends BaseModel
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, ChatCategoryChannelUserModel::class, 'user_id', 'channel_id');
+        return $this->belongsToMany(User::class, ChatCategoryChannelUserModel::class, 'channel_id', 'user_id');
     }
 
 }

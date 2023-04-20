@@ -51,7 +51,7 @@ class ChatModel extends BaseModel
 
     public function participants(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, ChatParticipantModel::class, 'chat_id');
+        return $this->belongsToMany(User::class, ChatParticipantModel::class, 'chat_id', 'user_id');
     }
 
     public function workspaces(): BelongsToMany
@@ -71,6 +71,6 @@ class ChatModel extends BaseModel
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, ChatUserModel::class, 'user_id', 'chat_id');
+        return $this->belongsToMany(User::class, ChatUserModel::class, 'chat_id', 'user_id');
     }
 }

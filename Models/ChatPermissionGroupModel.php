@@ -38,11 +38,11 @@ class ChatPermissionGroupModel extends BaseModel
 
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(ChatPermissionModel::class, ChatGroupPermissionModel::class, 'permission_id', 'group_id');
+        return $this->belongsToMany(ChatPermissionModel::class, ChatGroupPermissionModel::class, 'group_id', 'permission_id');
     }
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, ChatPermissionGroupUserModel::class, 'user_id', 'group_id');
+        return $this->belongsToMany(User::class, ChatPermissionGroupUserModel::class, 'group_id', 'user_id');
     }
 }
