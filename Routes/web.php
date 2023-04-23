@@ -12,6 +12,7 @@
 */
 
 use App\Models\User;
+use Illuminate\Support\Facades\Route;
 use Modules\Chat\Models\ChatCategoryChannelModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicMessageModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicModel;
@@ -23,7 +24,7 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
 Route::prefix('chat')->group(function () {
     Route::view('/list', 'chat::components.page.chat_list_page')->name('admin.chats');
     Route::get('/{chat}/categories', fn(ChatModel $chat) =>
-        view('chat::components.page.chat_categories_page', compact($chat)))->name('admin.chat.categories');
+        view('chat::components.page.chat_categories_page', compact('chat')))->name('admin.chat.categories');
     Route::get('/category/{category}/channels', fn(ChatCategoryModel $category) =>
         view('chat::components.page.chat_category_channel_page', compact('category')))->name('admin.chat.category.channels');
     Route::get('/category/channel/{channel}/participants', fn(ChatCategoryChannelModel $channel) =>
