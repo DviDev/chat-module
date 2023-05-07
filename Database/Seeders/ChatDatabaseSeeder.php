@@ -210,7 +210,6 @@ class ChatDatabaseSeeder extends Seeder
     function createTopicMessages(ChatCategoryChannelTopicModel $topic): void
     {
         $participants = $topic->channel->participants();
-//        dd("topic $topic->id channel $topic->channel_id participants {$participants->count()}");
         $seed_total = $participants->count();
         $seeded = 0;
         $participants->each(function (User $participant) use ($topic, $seed_total, &$seeded) {
