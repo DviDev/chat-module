@@ -9,6 +9,8 @@ namespace Modules\Chat\Entities\ChatCategoryChannelTopicMessage;
  * @property $user_id
  * @property $message
  * @property $created_at
+ * @property $updated_at
+ * @property $deleted_at
  */
 trait ChatCategoryChannelTopicMessageProps
 {

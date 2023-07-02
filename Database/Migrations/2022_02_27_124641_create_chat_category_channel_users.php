@@ -24,7 +24,9 @@ return new class extends Migration
             $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->timestamp($p->created_at);
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
 
             $table->unique([$p->channel_id, $p->user_id]);
         });

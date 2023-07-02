@@ -18,16 +18,18 @@ return new class extends Migration
         Schema::create('chat_category_channel_participants', function (Blueprint $table) {
             $table->id();
 
-            $prop = ChatCategoryChannelParticipantEntityModel::props(null, true);
-            $table->foreignId($prop->channel_id)->references('id')->on('chat_category_channels')
+            $p = ChatCategoryChannelParticipantEntityModel::props(null, true);
+            $table->foreignId($p->channel_id)->references('id')->on('chat_category_channels')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId($prop->user_id)->references('id')->on('users')
+            $table->foreignId($p->user_id)->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->enum($prop->type, ChatCategoryChannelParticipantEnum::toArray());
-            $table->timestamp($prop->created_at);
-            $table->timestamp($prop->updated_at)->nullable();
+            $table->enum($p->type, ChatCategoryChannelParticipantEnum::toArray());
 
-            $table->unique([$prop->channel_id, $prop->user_id]);
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
+            $table->unique([$p->channel_id, $p->user_id]);
         });
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Modules\Chat\Entities\ChatUser\ChatUserEntityModel;
 
 return new class extends Migration
@@ -17,14 +17,18 @@ return new class extends Migration
         Schema::create('chat_users', function (Blueprint $table) {
             $table->id();
 
-            $prop = ChatUserEntityModel::props(null, true);
-            $table->foreignId($prop->chat_id)
+            $p = ChatUserEntityModel::props(null, true);
+            $table->foreignId($p->chat_id)
                 ->references('id')->on('chats')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId($prop->user_id)
+            $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->bigInteger($prop->invite_id)->unsigned()->nullable();
+            $table->bigInteger($p->invite_id)->unsigned()->nullable();
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
         });
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Modules\Chat\Entities\ChatParticipant\ChatParticipantEntityModel;
 use Modules\Chat\Entities\ChatParticipant\ChatParticipantEnum;
 
@@ -17,16 +17,17 @@ return new class extends Migration
     {
         Schema::create('chat_participants', function (Blueprint $table) {
             $table->id();
-            $prop = ChatParticipantEntityModel::props(null, true);
-            $table->foreignId($prop->chat_id)
+            $p = ChatParticipantEntityModel::props(null, true);
+            $table->foreignId($p->chat_id)
                 ->references('id')->on('chats')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId($prop->user_id)
+            $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->enum($prop->type, ChatParticipantEnum::toArray());
-            $table->timestamp($prop->created_at);
-            $table->timestamp($prop->updated_at)->nullable();
+            $table->enum($p->type, ChatParticipantEnum::toArray());
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
         });
     }
 

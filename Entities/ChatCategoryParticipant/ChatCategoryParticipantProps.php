@@ -9,6 +9,7 @@ namespace Modules\Chat\Entities\ChatCategoryParticipant;
  * @property $type
  * @property $created_at
  * @property $updated_at
+ * @property $deleted_at
  */
 trait ChatCategoryParticipantProps
 {

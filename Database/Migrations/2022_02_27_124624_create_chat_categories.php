@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Modules\Chat\Entities\ChatCategory\ChatCategoryEntityModel;
 
 return new class extends Migration
@@ -22,7 +22,7 @@ return new class extends Migration
                 ->references('id')->on('chat_categories')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->name, 50);
-            $table->timestamp($prop->created_at);
+            $table->timestamp($prop->created_at)->useCurrent();
             $table->foreignId($prop->created_by_user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
