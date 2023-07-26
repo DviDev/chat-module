@@ -30,6 +30,13 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Models\ChatUserModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
+use Modules\Permission\Database\Seeders\PermissionDatabaseSeeder;
+use Modules\Project\Database\Seeders\ProjectTableSeeder;
+use Modules\Project\Models\ProjectModuleEntityActionModel;
+use Modules\Project\Models\ProjectModuleEntityDBModel;
+use Modules\Project\Models\ProjectModuleEntityListenerModel;
+use Modules\Project\Models\ProjectModuleEntityObserverModel;
+use Modules\Project\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
 
@@ -44,10 +51,11 @@ class ChatDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(PermissionsTableSeeder::class);
+        $this->call(ChatPermissionTableSeeder::class);
+        $this->call(ChatProjectModuleTableSeeder::class);
 
         $me = User::query()->where('id', 1)->first();
-        $firsWorkspace = $me->workspaces()->first();
+        $firsWorkspace = $me->workspaces()->firstOrCreate(WorkspaceModel::factory()->make()->toArray());
         $seed_total = config('app.SEED_MODULE_CATEGORY_COUNT');
         $seeded = 0;
         ChatModel::factory()
@@ -225,9 +233,8 @@ class ChatDatabaseSeeder extends Seeder
     function createChatGroupPermissions(ChatModel $chat): void
     {
         $config = ChatConfigEntityModel::props();
-        ChatConfigModel::factory()->create([
-            $config->chat_id => $chat->id
-        ]);
+        ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
+
         ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
             ds("chat permission $permission->id $permission->name");
 

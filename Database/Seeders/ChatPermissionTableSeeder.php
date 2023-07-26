@@ -8,7 +8,7 @@ use Modules\Chat\Entities\ChatPermission\ChatPermissionEntityModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Services\Enums\PermissionEnum;
 
-class PermissionsTableSeeder extends Seeder
+class ChatPermissionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
