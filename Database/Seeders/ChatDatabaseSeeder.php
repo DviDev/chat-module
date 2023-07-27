@@ -30,6 +30,7 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Models\ChatUserModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
+use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Permission\Database\Seeders\PermissionDatabaseSeeder;
 use Modules\Project\Database\Seeders\ProjectTableSeeder;
 use Modules\Project\Models\ProjectModuleEntityActionModel;
@@ -51,6 +52,8 @@ class ChatDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        (new ScanTableDomain())->scan('chat');
+
         $this->call(ChatPermissionTableSeeder::class);
         $this->call(ChatProjectModuleTableSeeder::class);
 
@@ -58,9 +61,8 @@ class ChatDatabaseSeeder extends Seeder
         $firsWorkspace = $me->workspaces()->firstOrCreate(WorkspaceModel::factory()->make()->toArray());
         $seed_total = config('app.SEED_MODULE_CATEGORY_COUNT');
         $seeded = 0;
-        ChatModel::factory()
+        ChatModel::factory($seed_total)
             ->for($me, 'user')
-            ->count($seed_total)
             ->create();
 
         $me->chats()->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
