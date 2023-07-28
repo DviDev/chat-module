@@ -2,6 +2,7 @@
 namespace Modules\Chat\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Chat\Models\ChatCategoryChannelModel;
 use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
 
@@ -9,7 +10,7 @@ use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
  * @method ChatCategoryChannelModel create(array $attributes = [])
  * @method ChatCategoryChannelModel make(array $attributes = [])
  */
-class ChatCategoryChannelFactory extends Factory
+class ChatCategoryChannelFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.

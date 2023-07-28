@@ -2,6 +2,7 @@
 namespace Modules\Chat\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEnum;
 use Modules\Chat\Models\ChatCategoryParticipantModel;
 use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEntityModel;
@@ -10,7 +11,7 @@ use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEntityM
  * @method ChatCategoryParticipantModel create(array $attributes = [])
  * @method ChatCategoryParticipantModel make(array $attributes = [])
  */
-class ChatCategoryParticipantFactory extends Factory
+class ChatCategoryParticipantFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.

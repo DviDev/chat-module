@@ -2,6 +2,7 @@
 namespace Modules\Chat\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Chat\Models\ChatGroupPermissionModel;
 use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionEntityModel;
 
@@ -9,7 +10,7 @@ use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionEntityModel;
  * @method ChatGroupPermissionModel create(array $attributes = [])
  * @method ChatGroupPermissionModel make(array $attributes = [])
  */
-class ChatGroupPermissionFactory extends Factory
+class ChatGroupPermissionFactory extends BaseFactory
 {
     /**
      * The name of the factory's corresponding model.
