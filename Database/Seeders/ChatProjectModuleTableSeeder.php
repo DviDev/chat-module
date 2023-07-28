@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
 use Modules\Project\Database\Seeders\ProjectTableSeeder;
-use Modules\Project\Models\ProjectEntityAttributeModel;
-use Modules\Project\Models\ProjectModuleEntityActionModel;
-use Modules\Project\Models\ProjectModuleEntityDBModel;
 use Modules\Project\Models\ProjectModuleModel;
 
 class ChatProjectModuleTableSeeder extends Seeder
@@ -31,15 +28,5 @@ class ChatProjectModuleTableSeeder extends Seeder
         );
 
         $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
-
-
-
-
-
-
-
-
-
-
     }
 }
