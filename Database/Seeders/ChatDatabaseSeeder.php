@@ -58,7 +58,7 @@ class ChatDatabaseSeeder extends Seeder
         $this->call(ChatProjectModuleTableSeeder::class);
 
         $me = User::query()->where('id', 1)->first();
-        $firsWorkspace = $me->workspaces()->firstOrCreate(WorkspaceModel::factory()->make()->toArray());
+        $firsWorkspace = $me->workspaces()->first() ?: WorkspaceModel::factory()->create();
         $seed_total = config('app.SEED_MODULE_CATEGORY_COUNT');
         $seeded = 0;
         ChatModel::factory($seed_total)
