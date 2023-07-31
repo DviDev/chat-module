@@ -31,13 +31,6 @@ use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Models\ChatUserModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
 use Modules\DBMap\Domains\ScanTableDomain;
-use Modules\Permission\Database\Seeders\PermissionDatabaseSeeder;
-use Modules\Project\Database\Seeders\ProjectTableSeeder;
-use Modules\Project\Models\ProjectModuleEntityActionModel;
-use Modules\Project\Models\ProjectModuleEntityDBModel;
-use Modules\Project\Models\ProjectModuleEntityListenerModel;
-use Modules\Project\Models\ProjectModuleEntityObserverModel;
-use Modules\Project\Models\ProjectModuleModel;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
 
@@ -82,8 +75,6 @@ class ChatDatabaseSeeder extends Seeder
 
             $this->createChatUsers($chat);
         });
-
-        // $this->call("OthersTableSeeder");
     }
 
     function createParticipants(ChatModel $chat): void
