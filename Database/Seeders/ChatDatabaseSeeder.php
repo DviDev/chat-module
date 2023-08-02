@@ -92,7 +92,6 @@ class ChatDatabaseSeeder extends Seeder
             $p->user_id => User::factory()->create()->id,
             $p->type => ChatParticipantEnum::admin->name,
         ]);
-        ds("chat $participant->chat_id as admin participant $participant->id");
 
         /**@var WorkspaceModel $workspace */
         $workspace = $chat->workspaces()->first();
@@ -103,14 +102,11 @@ class ChatDatabaseSeeder extends Seeder
         $seeded = 0;
         $participants->each(function (User $user) use ($chat, $seed_total, &$seeded) {
             $p = ChatParticipantEntityModel::props();
-            $participant = ChatParticipantModel::factory()->create([
+            ChatParticipantModel::factory()->create([
                 $p->chat_id => $chat->id,
                 $p->user_id => $user->id,
                 $p->type => ChatParticipantEnum::default->name,
             ]);
-
-            $seeded++;
-            ds("chat $participant->chat_id default participant user $user->id $seeded / $seed_total");
         });
     }
 
