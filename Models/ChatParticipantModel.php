@@ -5,7 +5,6 @@ namespace Modules\Chat\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatParticipantFactory;
 use Modules\Chat\Entities\ChatParticipant\ChatParticipantEntityModel;
 use Modules\Chat\Entities\ChatParticipant\ChatParticipantProps;
 
@@ -13,7 +12,6 @@ use Modules\Chat\Entities\ChatParticipant\ChatParticipantProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatParticipantEntityModel toEntity()
- * @method static ChatParticipantFactory factory()
  */
 class ChatParticipantModel extends BaseModel
 {

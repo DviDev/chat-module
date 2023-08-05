@@ -5,7 +5,6 @@ namespace Modules\Chat\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatCategoryChannelUserFactory;
 use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserProps;
 
@@ -13,7 +12,6 @@ use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatCategoryChannelUserEntityModel toEntity()
- * @method static ChatCategoryChannelUserFactory factory()
  */
 class ChatCategoryChannelUserModel extends BaseModel
 {

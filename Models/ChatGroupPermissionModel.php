@@ -5,7 +5,6 @@ namespace Modules\Chat\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatGroupPermissionFactory;
 use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionEntityModel;
 use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionProps;
 
@@ -13,7 +12,6 @@ use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatGroupPermissionEntityModel toEntity()
- * @method static ChatGroupPermissionFactory factory()
  */
 class ChatGroupPermissionModel extends BaseModel
 {

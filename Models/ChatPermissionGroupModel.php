@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatPermissionGroupFactory;
 use Modules\Chat\Entities\ChatPermissionGroup\ChatPermissionGroupEntityModel;
 use Modules\Chat\Entities\ChatPermissionGroup\ChatPermissionGroupProps;
 
@@ -15,7 +14,6 @@ use Modules\Chat\Entities\ChatPermissionGroup\ChatPermissionGroupProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatPermissionGroupEntityModel toEntity()
- * @method static ChatPermissionGroupFactory factory()
  */
 class ChatPermissionGroupModel extends BaseModel
 {

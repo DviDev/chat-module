@@ -5,7 +5,6 @@ namespace Modules\Chat\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatCategoryChannelParticipantFactory;
 use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantProps;
 
@@ -13,7 +12,6 @@ use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelPart
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatCategoryChannelParticipantEntityModel toEntity()
- * @method static ChatCategoryChannelParticipantFactory factory()
  */
 class ChatCategoryChannelParticipantModel extends BaseModel
 {

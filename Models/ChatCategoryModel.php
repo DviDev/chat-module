@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatCategoryFactory;
 use Modules\Chat\Entities\ChatCategory\ChatCategoryEntityModel;
 use Modules\Chat\Entities\ChatCategory\ChatCategoryProps;
 
@@ -19,7 +18,6 @@ use Modules\Chat\Entities\ChatCategory\ChatCategoryProps;
  * @property-read  ChatModel $chat
  * @property-read  ChatCategoryChannelModel[] $channels
  * @method ChatCategoryEntityModel toEntity()
- * @method static ChatCategoryFactory factory()
  */
 class ChatCategoryModel extends BaseModel
 {

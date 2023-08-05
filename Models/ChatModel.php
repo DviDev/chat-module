@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatFactory;
 use Modules\Chat\Entities\Chat\ChatEntityModel;
 use Modules\Chat\Entities\Chat\ChatProps;
 use Modules\Workspace\Models\WorkspaceChatModel;
@@ -22,7 +21,6 @@ use Modules\Workspace\Models\WorkspaceModel;
  * @property-read  User[] $participants
  * @property-read  WorkspaceModel[] $workspaces
  * @method ChatEntityModel toEntity()
- * @method static ChatFactory factory()
  * @property-read  ChatCategoryModel[] $categories
  */
 class ChatModel extends BaseModel

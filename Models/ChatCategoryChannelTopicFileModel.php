@@ -5,7 +5,6 @@ namespace Modules\Chat\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatCategoryChannelTopicFileFactory;
 use Modules\Chat\Entities\ChatCategoryChannelTopicFile\ChatCategoryChannelTopicFileEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelTopicFile\ChatCategoryChannelTopicFileProps;
 
@@ -13,7 +12,6 @@ use Modules\Chat\Entities\ChatCategoryChannelTopicFile\ChatCategoryChannelTopicF
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @method ChatCategoryChannelTopicFileEntityModel toEntity()
- * @method static ChatCategoryChannelTopicFileFactory factory()
  */
 class ChatCategoryChannelTopicFileModel extends BaseModel
 {

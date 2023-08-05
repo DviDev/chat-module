@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Database\Factories\ChatCategoryChannelTopicMessageFactory;
 use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTopicMessageEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTopicMessageProps;
 
@@ -18,7 +17,6 @@ use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTop
  * @property-read  User $user
  * @property-read  ChatCategoryChannelTopicModel $topic
  * @method ChatCategoryChannelTopicMessageEntityModel toEntity()
- * @method static ChatCategoryChannelTopicMessageFactory factory()
  */
 class ChatCategoryChannelTopicMessageModel extends BaseModel
 {
