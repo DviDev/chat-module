@@ -5,6 +5,7 @@ namespace Modules\Chat\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Database\Factories\ChatCategoryChannelTopicFactory;
 use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicEntityModel;
@@ -27,9 +28,11 @@ class ChatCategoryChannelTopicModel extends BaseModel
         return self::dbTable('chat_category_channel_topics', $alias);
     }
 
-    protected static function newFactory(): ChatCategoryChannelTopicFactory
+    protected static function newFactory(): BaseFactory
     {
-        return new ChatCategoryChannelTopicFactory();
+        return new class extends BaseFactory {
+            protected $model = ChatCategoryChannelTopicModel::class;
+        };
     }
 
     public function modelEntity(): string

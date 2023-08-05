@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Database\Factories\ChatCategoryChannelFactory;
 use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
@@ -31,9 +32,11 @@ class ChatCategoryChannelModel extends BaseModel
         return ChatCategoryChannelEntityModel::class;
     }
 
-    protected static function newFactory(): ChatCategoryChannelFactory
+    protected static function newFactory(): BaseFactory
     {
-        return new ChatCategoryChannelFactory();
+        return new class extends BaseFactory {
+            protected $model = ChatCategoryChannelModel::class;
+        };
     }
 
     public static function table($alias = null): string

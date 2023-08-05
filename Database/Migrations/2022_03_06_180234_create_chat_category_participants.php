@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEntityModel;
-use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEnum;
 
 return new class extends Migration
 {
@@ -25,7 +24,7 @@ return new class extends Migration
             $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->enum($p->type, ChatCategoryParticipantEnum::toArray());
+            $table->char($p->type); // ChatCategoryParticipantEnum::toArray()
             $table->timestamp($p->created_at)->useCurrent();
             $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
             $table->timestamp($p->deleted_at)->nullable();

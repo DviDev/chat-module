@@ -3,6 +3,7 @@
 namespace Modules\Chat\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Database\Factories\ChatCategoryChannelParticipantFactory;
 use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEntityModel;
@@ -24,9 +25,11 @@ class ChatCategoryChannelParticipantModel extends BaseModel
         return ChatCategoryChannelParticipantEntityModel::class;
     }
 
-    protected static function newFactory(): ChatCategoryChannelParticipantFactory
+    protected static function newFactory(): BaseFactory
     {
-        return new ChatCategoryChannelParticipantFactory();
+        return new class extends BaseFactory {
+            protected $model = ChatCategoryChannelParticipantModel::class;
+        };
     }
 
     public static function table($alias = null): string

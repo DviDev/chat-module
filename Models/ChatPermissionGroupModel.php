@@ -5,6 +5,7 @@ namespace Modules\Chat\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Database\Factories\ChatPermissionGroupFactory;
 use Modules\Chat\Entities\ChatPermissionGroup\ChatPermissionGroupEntityModel;
@@ -26,9 +27,11 @@ class ChatPermissionGroupModel extends BaseModel
         return ChatPermissionGroupEntityModel::class;
     }
 
-    protected static function newFactory(): ChatPermissionGroupFactory
+    protected static function newFactory(): BaseFactory
     {
-        return new ChatPermissionGroupFactory();
+        return new class extends BaseFactory {
+            protected $model = ChatPermissionGroupModel::class;
+        };
     }
 
     public static function table($alias = null): string

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Database\Factories\ChatFactory;
 use Modules\Chat\Entities\Chat\ChatEntityModel;
@@ -34,9 +35,11 @@ class ChatModel extends BaseModel
         return ChatEntityModel::class;
     }
 
-    protected static function newFactory(): ChatFactory
+    protected static function newFactory(): BaseFactory
     {
-        return new ChatFactory();
+        return new class extends BaseFactory {
+            protected $model = ChatModel::class;
+        };
     }
 
     public static function table($alias = null): string
