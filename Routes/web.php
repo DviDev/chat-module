@@ -21,7 +21,7 @@ use Modules\Chat\Models\ChatGroupPermissionModel;
 use Modules\Chat\Models\ChatModel;
 use Modules\Chat\Models\ChatPermissionGroupModel;
 
-Route::prefix('chat')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('chat')->group(function () {
     Route::view('/list', 'chat::components.page.chat_list_page')->name('admin.chats');
     Route::get('/{chat}/categories', fn(ChatModel $chat) =>
         view('chat::components.page.chat_categories_page', compact('chat')))->name('admin.chat.categories');

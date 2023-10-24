@@ -1,3 +1,3 @@
-<x-app-layout>
-    <livewire:chat.chat-category-channel-topic-message-table :topic="$topic"/>
-</x-app-layout>
+<x-lte::layout.v1.page>
+    <livewire:chat::channel.topic.messages-chat-page :topic="$topic"/>
+</x-lte::layout.v1.page>

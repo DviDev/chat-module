@@ -22,13 +22,15 @@ return new class extends Migration
                 ->references('id')->on('chat_category_channels')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($p->title, 150);
-            $table->string($p->message);
+            $table->string($p->message)->nullable();
             $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamp($p->created_at)->useCurrent();
             $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
             $table->timestamp($p->deleted_at)->nullable();
+
+            $table->unique([$p->channel_id, $p->title]);
 
         });
     }

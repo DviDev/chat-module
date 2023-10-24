@@ -17,15 +17,14 @@ return new class extends Migration
         Schema::create('chat_categories', function (Blueprint $table) {
             $table->id();
 
-            $prop = ChatCategoryEntityModel::props(null, true);
-            $table->foreignId($prop->chat_id)
-                ->references('id')->on('chat_categories')
+            $p = ChatCategoryEntityModel::props(null, true);
+            $table->foreignId($p->chat_id)->references('id')->on('chats')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->string($prop->name, 50);
-            $table->timestamp($prop->created_at)->useCurrent();
-            $table->foreignId($prop->created_by_user_id)
-                ->references('id')->on('users')
+            $table->foreignId($p->created_by_user_id)->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
+            $table->string($p->name, 50);
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent();
         });
     }
 

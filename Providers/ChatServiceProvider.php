@@ -22,6 +22,8 @@ use Modules\Chat\Http\Livewire\ChatPermissionTable;
 use Modules\Chat\Http\Livewire\ChatTable;
 use Modules\Chat\Http\Livewire\ChatUserPermissionTable;
 use Modules\Chat\Http\Livewire\ChatUserTable;
+use Modules\Chat\Livewire\Channel\Topic\MessagesChatPage;
+use Modules\Chat\Livewire\Chat\TopicItem;
 
 class ChatServiceProvider extends ServiceProvider
 {
@@ -73,6 +75,9 @@ class ChatServiceProvider extends ServiceProvider
         \Livewire::component('chat::table', ChatTable::class);
         \Livewire::component('chat::user-permission-table', ChatUserPermissionTable::class);
         \Livewire::component('chat::user-table', ChatUserTable::class);
+
+        \Livewire::component('chat::category.channel.topic-item', TopicItem::class);
+        \Livewire::component('chat::channel.topic.messages-chat-page', MessagesChatPage::class);
 
         $this->app->register(RouteServiceProvider::class);
     }

@@ -23,6 +23,10 @@ class ChatCategoryChannelTopicMessageModel extends BaseModel
     use HasFactory;
     use ChatCategoryChannelTopicMessageProps;
 
+    protected $with = ['user'];
+
+    protected $casts = ['created_at' => 'datetime'];
+
     public function modelEntity(): string
     {
         return ChatCategoryChannelTopicMessageEntityModel::class;

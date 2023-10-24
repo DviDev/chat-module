@@ -29,7 +29,7 @@ final class ChatCategoryChannelParticipantTable extends PowerGridComponent
     */
     public function datasource(): ?Collection
     {
-        return collect($this->channel->participants);
+        return collect($this->channel->participantUsers);
     }
 
     /*

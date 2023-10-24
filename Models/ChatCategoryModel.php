@@ -56,6 +56,11 @@ class ChatCategoryModel extends BaseModel
         return $this->hasMany(ChatCategoryChannelModel::class, 'category_id');
     }
 
+    public function firstChannel(): ChatCategoryChannelModel|HasMany|null
+    {
+        return $this->channels()->first();
+    }
+
     public function participants(): BelongsToMany
     {
         return $this->belongsToMany(User::class, ChatCategoryParticipantModel::class, 'category_id', 'participant_id');

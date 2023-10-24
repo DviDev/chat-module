@@ -16,7 +16,8 @@ use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelProps;
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @property-read ChatCategoryModel $category
- * @property-read ChatCategoryChannelParticipantModel[] $participants
+ * @property-read User[] $participantUsers
+ * @property-read ChannelParticipantModel[] $participants
  * @property-read ChatCategoryChannelTopicModel[] $topics
  * @method ChatCategoryChannelEntityModel toEntity()
  */
@@ -47,9 +48,14 @@ class ChatCategoryChannelModel extends BaseModel
         return $this->belongsTo(ChatCategoryModel::class, 'category_id');
     }
 
-    public function participants(): BelongsToMany
+    public function participantUsers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, ChatCategoryChannelParticipantModel::class, 'channel_id', 'user_id');
+        return $this->belongsToMany(User::class, ChannelParticipantModel::class, 'channel_id', 'user_id');
+    }
+
+    public function participants(): HasMany
+    {
+        return $this->hasMany(ChannelParticipantModel::class, 'channel_id');
     }
 
     public function topics(): HasMany

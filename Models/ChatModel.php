@@ -4,9 +4,11 @@ namespace Modules\Chat\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Entities\Chat\ChatEntityModel;
@@ -63,6 +65,11 @@ class ChatModel extends BaseModel
     public function categories(): HasMany
     {
         return $this->hasMany(ChatCategoryModel::class, 'chat_id');
+    }
+
+    public function firstCategory(): ChatCategoryModel|HasMany|null
+    {
+        return $this->categories()->first();
     }
 
     public function configs(): HasMany

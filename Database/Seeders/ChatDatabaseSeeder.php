@@ -5,9 +5,10 @@ namespace Modules\Chat\Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
+use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
-use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEntityModel;
-use Modules\Chat\Entities\ChatCategoryChannelParticipant\ChatCategoryChannelParticipantEnum;
+use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantEntityModel;
+use Modules\Chat\Entities\ChannelParticipant\ChatCategoryChannelParticipantEnum;
 use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserEntityModel;
 use Modules\Chat\Entities\ChatConfig\ChatConfigEntityModel;
@@ -17,7 +18,7 @@ use Modules\Chat\Entities\ChatParticipant\ChatParticipantEnum;
 use Modules\Chat\Entities\ChatUser\ChatUserEntityModel;
 use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionEntityModel;
 use Modules\Chat\Models\ChatCategoryChannelModel;
-use Modules\Chat\Models\ChatCategoryChannelParticipantModel;
+use Modules\Chat\Models\ChannelParticipantModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicMessageModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicModel;
 use Modules\Chat\Models\ChatCategoryChannelUserModel;
@@ -34,7 +35,7 @@ use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
 
-class ChatDatabaseSeeder extends Seeder
+class ChatDatabaseSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
@@ -48,11 +49,11 @@ class ChatDatabaseSeeder extends Seeder
         (new ScanTableDomain())->scan('chat');
 
         $this->call(ChatPermissionTableSeeder::class);
-        $this->call(ChatProjectModuleTableSeeder::class);
+//        $this->call(ChatProjectModuleTableSeeder::class);
 
         $me = User::query()->where('id', 1)->first();
         $firsWorkspace = $me->workspaces()->first() ?: WorkspaceModel::factory()->create();
-        $seed_total = config('app.SEED_MODULE_CATEGORY_COUNT');
+        $seed_total = config('chat.SEED_CHAT_CATEGORIES_COUNT');
         $seeded = 0;
         ChatModel::factory($seed_total)
             ->for($me, 'user')
@@ -60,12 +61,18 @@ class ChatDatabaseSeeder extends Seeder
 
         $me->chats()->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
             $seeded++;
-            ds("chat $seeded / $seed_total");
+
+            $this->command->warn(PHP_EOL . 'Criando workspace/chat ...');
+            /*$this->withProgressBar(1, fn() => WorkspaceChatModel::factory()
+                ->for($firsWorkspace, 'workspace')
+                ->for($chat, 'chat')
+                ->create());*/
 
             WorkspaceChatModel::factory()
                 ->for($firsWorkspace, 'workspace')
                 ->for($chat, 'chat')
                 ->create();
+
 
             $this->createParticipants($chat);
 
@@ -79,13 +86,14 @@ class ChatDatabaseSeeder extends Seeder
 
     function createParticipants(ChatModel $chat): void
     {
+        $this->command->warn(PHP_EOL . 'Creating chat participants ...');
         $p = ChatParticipantEntityModel::props();
         $participant = ChatParticipantModel::factory()->create([
             $p->chat_id => $chat->id,
             $p->user_id => $chat->user_id,
             $p->type => ChatParticipantEnum::owner->name,
         ]);
-        ds("set owner chat $participant->chat_id as owner participant $participant->id");
+//        ds("set owner chat $participant->chat_id as owner participant $participant->id");
 
         $participant = ChatParticipantModel::factory()->create([
             $p->chat_id => $chat->id,
@@ -112,6 +120,7 @@ class ChatDatabaseSeeder extends Seeder
 
     function createChatCategories(ChatModel $chat): void
     {
+        $this->command->warn(PHP_EOL . 'Creating chat categories ...');
         $seed_total = config('app.SEED_CHAT_CATEGORY_COUNT');
         $seeded = 0;
         ChatCategoryModel::factory()
@@ -121,7 +130,7 @@ class ChatDatabaseSeeder extends Seeder
 
         $chat->categories()->each(function (ChatCategoryModel $category) use ($chat, $seed_total, &$seeded) {
             $seeded++;
-            ds("chat $chat->id category $seeded / $seed_total");
+//            ds("chat $chat->id category $seeded / $seed_total");
 
             $this->createChatCategoryChannels($category, $chat);
         });
@@ -134,7 +143,7 @@ class ChatDatabaseSeeder extends Seeder
             $channel->category_id => $category->id
         ]);
         $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
-            ds("create chat $chat->id category $channel->category_id channel $channel->id");
+//            ds("create chat $chat->id category $channel->category_id channel $channel->id");
 
             $this->createCategoryChannelParticipants($channel, $chat);
 
@@ -145,44 +154,44 @@ class ChatDatabaseSeeder extends Seeder
                 $user->user_id => $chat->id,
                 $user->channel_id => $channel->id,
             ]);
-            ds("chat category channel $model->channel_id user $model->user_id");
+//            ds("chat category channel $model->channel_id user $model->user_id");
         });
     }
 
     function createCategoryChannelParticipants(ChatCategoryChannelModel $channel, ChatModel $chat): void
     {
-        $p = ChatCategoryChannelParticipantEntityModel::props();
+        $p = ChannelParticipantEntityModel::props();
 
-        if (!ChatCategoryChannelParticipantModel::query()
+        if (!ChannelParticipantModel::query()
             ->where($p->channel_id, $channel->id)
             ->where($p->user_id, $channel->category->created_by_user_id)->exists()) {
-            $participant = ChatCategoryChannelParticipantModel::factory()->create([
+            $participant = ChannelParticipantModel::factory()->create([
                 $p->channel_id => $channel->id,
                 $p->user_id => $channel->category->created_by_user_id,
                 $p->type => ChatCategoryChannelParticipantEnum::owner->name
             ]);
-            ds("chat $chat->id categoryChannel $participant->channel_id participant owner $participant->id");
+//            ds("chat $chat->id categoryChannel $participant->channel_id participant owner $participant->id");
         }
 
-        $participant = ChatCategoryChannelParticipantModel::factory()->create([
+        $participant = ChannelParticipantModel::factory()->create([
             $p->channel_id => $channel->id,
             $p->user_id => User::factory()->create()->id,
             $p->type => ChatCategoryChannelParticipantEnum::admin->name
         ]);
-        ds("chat $chat->id categoryChannel $participant->channel_id participant admin $participant->id");
+//        ds("chat $chat->id categoryChannel $participant->channel_id participant admin $participant->id");
 
         $participants = $chat->participants()->whereNot('user_id', $channel->category->created_by_user_id);
         $seed_total = $participants->count();
         $seeded = 0;
         $participants->each(function (User $user) use ($channel, $chat, $seed_total, &$seeded) {
-            $p = ChatCategoryChannelParticipantEntityModel::props();
-            $participant = ChatCategoryChannelParticipantModel::factory()->create([
+            $p = ChannelParticipantEntityModel::props();
+            $participant = ChannelParticipantModel::factory()->create([
                 $p->channel_id => $channel->id,
                 $p->user_id => $user->id,
                 $p->type => ChatCategoryChannelParticipantEnum::default->name
             ]);
             $seeded++;
-            ds("chat $chat->id categoryChannel $participant->channel_id participant default $seeded / $seed_total");
+//            ds("chat $chat->id categoryChannel $participant->channel_id participant default $seeded / $seed_total");
         });
     }
 
@@ -198,7 +207,7 @@ class ChatDatabaseSeeder extends Seeder
         $channel->topics()
             ->each(function (ChatCategoryChannelTopicModel $topic) use ($channel, $chat, $seed_total, &$seeded) {
                 $seeded++;
-                ds("chat $chat->id category $channel->category_id channel $topic->channel_id topic $seeded / $seed_total");
+//                ds("chat $chat->id category $channel->category_id channel $topic->channel_id topic $seeded / $seed_total");
 
                 $this->createTopicMessages($topic);
             });
@@ -206,7 +215,7 @@ class ChatDatabaseSeeder extends Seeder
 
     function createTopicMessages(ChatCategoryChannelTopicModel $topic): void
     {
-        $participants = $topic->channel->participants();
+        $participants = $topic->channel->participantUsers();
         $seed_total = $participants->count();
         $seeded = 0;
         $participants->each(function (User $participant) use ($topic, $seed_total, &$seeded) {
@@ -215,17 +224,18 @@ class ChatDatabaseSeeder extends Seeder
                 ->for($topic, 'topic')
                 ->create();
             $seeded++;
-            ds("chat {$topic->channel->category->chat_id} category {$topic->channel->category_id} channel $topic->channel_id topic $topic->id user $msg->user_id message $seeded / $seed_total");
+//            ds("chat {$topic->channel->category->chat_id} category {$topic->channel->category_id} channel $topic->channel_id topic $topic->id user $msg->user_id message $seeded / $seed_total");
         });
     }
 
     function createChatGroupPermissions(ChatModel $chat): void
     {
+        $this->command->warn(PHP_EOL . 'Creating chat group permissions ...');
         $config = ChatConfigEntityModel::props();
         ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
 
         ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
-            ds("chat permission $permission->id $permission->name");
+//            ds("chat permission $permission->id $permission->name");
 
             $p = ChatGroupPermissionEntityModel::props();
             ChatGroupPermissionModel::factory()->create([
@@ -237,6 +247,7 @@ class ChatDatabaseSeeder extends Seeder
 
     protected function createChatUsers(ChatModel $chat): void
     {
+        $this->command->warn(PHP_EOL . 'Creating chat users ...');
         $participants = $chat->participants();
         $seed_total = $participants->count();
         $seeded = 0;
@@ -252,7 +263,7 @@ class ChatDatabaseSeeder extends Seeder
                 $permission->permission_id => ChatPermissionModel::query()->inRandomOrder()->first()->id
             ]);
             $seeded++;
-            ds("creating chat $chat->id user and permission $seeded / $seed_total");
+//            ds("creating chat $chat->id user and permission $seeded / $seed_total");
         });
     }
 }
