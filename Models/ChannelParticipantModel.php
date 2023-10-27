@@ -22,6 +22,8 @@ class ChannelParticipantModel extends BaseModel
     use HasFactory;
     use ChannelParticipantProps;
 
+    protected $with = ['user'];
+
     public function modelEntity(): string
     {
         return ChannelParticipantEntityModel::class;
