@@ -5,7 +5,8 @@
                 <i class="fas fa-edit text-blue-600 cursor-pointer my-auto mr-2" @click="editing = !editing"
                    title="Editar título"></i>
             @endif
-            {{$topic->title}}</div>
+            {{$topic->title}}
+        </div>
         <div x-show="editing">
             <x-lte::form.input placeholder="titulo" wire:model="title" wire:keydown.prevent.enter="save"
                                @keydown.enter="editing = false"/>
@@ -18,6 +19,7 @@
     <div class="w-3/12 flex space-x-1 my-auto">
         <div class="relative my-auto">
             <x-dvui::notification text="{{$topic->messages()->count()}}" top left
+                                  title="total de mensagens"
                                   class="bg-blue-600 border-r border-b border-r-white text-white p-1"/>
             <a href="{{route('admin.chat.category.channel.topic.messages', $topic->id)}}"
                class="bg-blue-600 rounded py-1.5 px-2.5 my-auto">
