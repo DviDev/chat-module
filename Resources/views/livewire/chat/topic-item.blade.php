@@ -16,7 +16,7 @@
         {{$topic->created_at->longRelativeDiffForHumans()}}
     </div>
     <div class="w-3/12 flex space-x-1 my-auto">
-        <div class="relative">
+        <div class="relative my-auto">
             <x-dvui::notification text="{{$topic->messages()->count()}}" top left
                                   class="bg-blue-600 border-r border-b border-r-white text-white p-1"/>
             <a href="{{route('admin.chat.category.channel.topic.messages', $topic->id)}}"
@@ -24,7 +24,7 @@
                 <i class="fas fa-comments text-white cursor-pointer" title="acompanhar conversa"></i>
             </a>
         </div>
-        <x-dvui::button action="disable" confirm danger rounded sm>
+        <x-dvui::button action="disable" confirm danger rounded sm class="my-auto">
             <i class="fas fa-trash cursor-pointer my-auto" title="remover"></i>
         </x-dvui::button>
     </div>

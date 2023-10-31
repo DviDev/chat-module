@@ -31,7 +31,7 @@
             <div class="p-2 border-bottom bg-gray-200 rounded-b-lg mb-1 text-gray-700"
                  x-data="{editing: false}">
                 <div class="flex space-x-2 justify-center" x-show="!editing">
-                    <div class="my-auto">{{$topic->message}}</div>
+                    <div class="my-auto">{!! $topic->message !!}</div>
                     <i class="fas fa-edit text-blue-600 my-auto cursor-pointer" @click="editing=true"></i>
                 </div>
                 <x-dvui::form.input wire:model="topic_message" x-show="editing" style="display:none"
