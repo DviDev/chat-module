@@ -24,11 +24,26 @@ class TopicItem extends Component
         return view('chat::livewire.chat.topic-item');
     }
 
-    public function save()
+    public function save(): void
     {
         $this->topic->title = $this->title;
         $this->topic->save();
 
         Toastr::instance($this)->success('Item salvo');
+    }
+
+    public function disable(): void
+    {
+        $this->topic->delete();
+        Toastr::instance($this)->success('Item removido');
+    }
+
+    public function forceDelete()
+    {
+        $this->topic->messages()->delete();
+        $this->topic->forceDelete();
+        Toastr::instance($this)->success('Item removido');
+
+
     }
 }

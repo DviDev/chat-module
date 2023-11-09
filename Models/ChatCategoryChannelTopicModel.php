@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
@@ -24,6 +25,7 @@ class ChatCategoryChannelTopicModel extends BaseModel
 {
     use HasFactory;
     use ChatCategoryChannelTopicProps;
+    use SoftDeletes;
 
     protected $casts = ['created_at' => 'datetime'];
 

@@ -7,10 +7,9 @@
                 <x-dvui::icon.arrow.left class="my-auto"/>
             </a>--}}
 
-            <span class="card-title grow flex justify-content-center">
+            <div class="card-title grow">
                 <div>{{$topic->title}}</div>
-
-            </span>
+            </div>
             <div class="card-tools">
                 <span title="3 New Messages" class="badge bg-success">{{$topic->messages()->count()}}</span>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -30,25 +29,28 @@
         <x-lte::card.body class="p-0">
             <div class="p-2 border-bottom bg-gray-200 rounded-b-lg mb-1 text-gray-700"
                  x-data="{editing: false}">
-                <div class="flex space-x-2 justify-center" x-show="!editing">
-                    <div class="my-auto">{!! $topic->message !!}</div>
-                    <i class="fas fa-edit text-blue-600 my-auto cursor-pointer" @click="editing=true"></i>
-                </div>
                 <x-dvui::form.input wire:model="topic_message" x-show="editing" style="display:none"
                     x-on:keydown.esc="editing=false" x-on:keydown.enter="editing=false" wire:keydown.prevent.enter="saveTopicMessage"/>
+                <div class="flex space-x-2 " x-show="!editing">
+                    <i class="fas fa-edit text-blue-600 ml-2 my-auto cursor-pointer" @click="editing=true"></i>
+                    <div class="my-auto ml-1">{!! $topic->message !!}</div>
+                </div>
             </div>
             <div class="p-2 flex flex-col grow space-y-2">
                 <!-- Conversations are loaded here -->
-                <form action="#" method="post">
-                    <div class="input-group focus:outline-none focus:border-gray-300">
-                        <input type="text" name="message" placeholder="digite a mensagem ..."
-                               class="form-control border-gray-300 rounded-l focus:outline-none focus:border-gray-300" wire:model="message">
-                        <span class="input-group-append">
-                      <button type="submit" class="btn btn-success">Enviar</button>
-                    </span>
-                    </div>
-                    <x-dvui::error field="message"/>
-                </form>
+                @if(!$topic->trashed())
+                    <form action="#" method="post">
+                        <div class="input-group focus:outline-none focus:border-gray-300">
+                            <input type="text" name="message" placeholder="digite a mensagem ..."
+                                   class="form-control border-gray-300 rounded-l focus:outline-none focus:border-gray-300" wire:model="message">
+                            <span class="input-group-append">
+                                <button type="submit" class="btn btn-success">Enviar</button>
+                            </span>
+                        </div>
+                        <x-dvui::error field="message"/>
+                    </form>
+                @endif
+
                 {{--MESSAGES--}}
                 <div class="direct-chat-messages grow bg-gray-50 rounded">
                     @foreach($topic->messages()->orderByDesc('id')->get()->all() as $message)
@@ -71,7 +73,7 @@
                 <!--/.direct-chat-messages-->
 
                 <!-- PARTICIPANTS -->
-                <div class="direct-chat-contacts">
+                {{--<div class="direct-chat-contacts">
                     <ul class="contacts-list">
                         @foreach($topic->channel->participants as $participant)
                             <li>
@@ -90,9 +92,7 @@
                         </li>
                         @endforeach
                     </ul>
-                    <!-- /.contatcts-list -->
-                </div>
-                <!-- /.direct-chat-pane -->
+                </div>--}}
             </div>
         </x-lte::card.body>
         <x-lte::card.footer>
