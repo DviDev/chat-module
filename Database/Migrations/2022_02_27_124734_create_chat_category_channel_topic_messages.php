@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatCategoryChannelTopicMessageEntityModel;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTopicMessageEntityModel;
 
-class CreateChatCategoryChannelTopicMessages extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,12 +17,21 @@ class CreateChatCategoryChannelTopicMessages extends Migration
         Schema::create('chat_category_channel_topic_messages', function (Blueprint $table) {
             $table->id();
 
-            $prop = ChatCategoryChannelTopicMessageEntityModel::props(null, true);
-            $table->bigInteger($prop->topic_id)->unsigned();
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->parent_id)->unsigned();
-            $table->text($prop->message);
-            $table->timestamp($prop->created_at);
+            $p = ChatCategoryChannelTopicMessageEntityModel::props(null, true);
+            $table->foreignId($p->topic_id)
+                ->references('id')->on('chat_category_channel_topics')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($p->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($p->parent_id)
+                ->nullable()
+                ->references('id')->on('chat_category_channel_topic_messages')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->text($p->message);
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
         });
     }
 
@@ -35,4 +44,4 @@ class CreateChatCategoryChannelTopicMessages extends Migration
     {
         Schema::dropIfExists('chat_category_channel_topic_messages');
     }
-}
+};

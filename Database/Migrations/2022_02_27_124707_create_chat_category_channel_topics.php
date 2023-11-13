@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatCategoryChannelTopicEntityModel;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicEntityModel;
 
-class CreateChatCategoryChannelTopics extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,12 +17,21 @@ class CreateChatCategoryChannelTopics extends Migration
         Schema::create('chat_category_channel_topics', function (Blueprint $table) {
             $table->id();
 
-            $prop = ChatCategoryChannelTopicEntityModel::props(null, true);
-            $table->string($prop->channel_id);
-            $table->string($prop->title, 150);
-            $table->string($prop->message);
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->timestamp($prop->created_at);
+            $p = ChatCategoryChannelTopicEntityModel::props(null, true);
+            $table->foreignId($p->channel_id)
+                ->references('id')->on('chat_category_channels')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->string($p->title, 150);
+            $table->string($p->message)->nullable();
+            $table->foreignId($p->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
+            $table->unique([$p->channel_id, $p->title]);
+
         });
     }
 
@@ -35,4 +44,4 @@ class CreateChatCategoryChannelTopics extends Migration
     {
         Schema::dropIfExists('chat_category_channel_topics');
     }
-}
+};

@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatUserEntityModel;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Modules\Chat\Entities\ChatUser\ChatUserEntityModel;
 
-class CreateChatUsers extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -17,10 +17,18 @@ class CreateChatUsers extends Migration
         Schema::create('chat_users', function (Blueprint $table) {
             $table->id();
 
-            $prop = ChatUserEntityModel::props(null, true);
-            $table->bigInteger($prop->chat_id)->unsigned();
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->invite_id)->unsigned();
+            $p = ChatUserEntityModel::props(null, true);
+            $table->foreignId($p->chat_id)
+                ->references('id')->on('chats')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($p->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->bigInteger($p->invite_id)->unsigned()->nullable();
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
         });
     }
 
@@ -33,4 +41,4 @@ class CreateChatUsers extends Migration
     {
         Schema::dropIfExists('chat_users');
     }
-}
+};

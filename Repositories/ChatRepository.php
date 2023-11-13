@@ -1,8 +1,9 @@
 <?php
+
 namespace Modules\Chat\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
-use Modules\Chat\Entities\ChatEntityModel;
+use Modules\Chat\Entities\Chat\ChatEntityModel;
 use Modules\Chat\Models\ChatModel;
 
 /**
@@ -18,7 +19,6 @@ use Modules\Chat\Models\ChatModel;
  */
 class ChatRepository extends BaseRepository
 {
-
     /**
      * @inheritDoc
      */

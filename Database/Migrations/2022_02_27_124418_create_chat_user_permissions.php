@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatUserPermissionEntityModel;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionEntityModel;
 
-class CreateChatUserPermissions extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -16,10 +16,17 @@ class CreateChatUserPermissions extends Migration
     {
         Schema::create('chat_user_permissions', function (Blueprint $table) {
             $table->id();
-            $prop = ChatUserPermissionEntityModel::props(null, true);
-            $table->bigInteger($prop->user_id)->unsigned();
-            $table->bigInteger($prop->permission_id)->unsigned();
-            $table->timestamp($prop->created_at);
+            $p = ChatUserPermissionEntityModel::props(null, true);
+            $table->foreignId($p->user_id)
+                ->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($p->permission_id)
+                ->references('id')->on('chat_permissions')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
         });
     }
 
@@ -32,4 +39,4 @@ class CreateChatUserPermissions extends Migration
     {
         Schema::dropIfExists('chat_user_permissions');
     }
-}
+};

@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatConfigEntityModel;
+use Modules\Chat\Entities\ChatConfig\ChatConfigEntityModel;
 
-class CreateChatConfigs extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,9 @@ class CreateChatConfigs extends Migration
             $table->id();
 
             $prop = ChatConfigEntityModel::props(null, true);
-            $table->bigInteger($prop->chat_id)->unsigned();
+            $table->foreignId($prop->chat_id)
+                ->references('id')->on('chats')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->tinyInteger($prop->time_between_messages)->unsigned();
         });
     }
@@ -32,4 +34,4 @@ class CreateChatConfigs extends Migration
     {
         Schema::dropIfExists('chat_configs');
     }
-}
+};

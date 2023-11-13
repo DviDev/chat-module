@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatCategoryChannelTopicMessageFileEntityModel;
+use Modules\Chat\Entities\ChatCategoryChannelTopicMessageFile\ChatCategoryChannelTopicMessageFileEntityModel;
 
-class CreateChatCategoryChannelTopicMessageFiles extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,9 @@ class CreateChatCategoryChannelTopicMessageFiles extends Migration
             $table->id();
 
             $prop = ChatCategoryChannelTopicMessageFileEntityModel::props(null, true);
-            $table->bigInteger($prop->message_id)->unsigned();
+            $table->foreignId($prop->message_id)
+                ->references('id')->on('chat_category_channel_topic_messages')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->path);
         });
     }
@@ -32,4 +34,4 @@ class CreateChatCategoryChannelTopicMessageFiles extends Migration
     {
         Schema::dropIfExists('chat_category_channel_topic_message_files');
     }
-}
+};

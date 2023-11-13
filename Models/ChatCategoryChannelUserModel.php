@@ -2,8 +2,11 @@
 
 namespace Modules\Chat\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Entities\ChatCategoryChannelUserEntityModel;
+use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserEntityModel;
+use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
@@ -12,13 +15,23 @@ use Modules\Chat\Entities\ChatCategoryChannelUserEntityModel;
  */
 class ChatCategoryChannelUserModel extends BaseModel
 {
-    function modelEntity()
+    use HasFactory;
+    use ChatCategoryChannelUserProps;
+
+    public function modelEntity(): string
     {
         return ChatCategoryChannelUserEntityModel::class;
     }
 
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory {
+            protected $model = ChatCategoryChannelUserModel::class;
+        };
+    }
+
     public static function table($alias = null): string
     {
-        return parent::dbTable('chat_category_channel_users', $alias);
+        return self::dbTable('chat_category_channel_users', $alias);
     }
 }

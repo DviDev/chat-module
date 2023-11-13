@@ -2,8 +2,11 @@
 
 namespace Modules\Chat\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
-use Modules\Chat\Entities\ChatUserPermissionEntityModel;
+use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionEntityModel;
+use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
@@ -12,13 +15,23 @@ use Modules\Chat\Entities\ChatUserPermissionEntityModel;
  */
 class ChatUserPermissionModel extends BaseModel
 {
-    function modelEntity()
+    use HasFactory;
+    use ChatUserPermissionProps;
+
+    public function modelEntity(): string
     {
         return ChatUserPermissionEntityModel::class;
     }
 
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory {
+            protected $model = ChatUserPermissionModel::class;
+        };
+    }
+
     public static function table($alias = null): string
     {
-        return parent::dbTable('chat_user_permissions', $alias);
+        return self::dbTable('chat_user_permissions', $alias);
     }
 }

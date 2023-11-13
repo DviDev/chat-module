@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatCategoryChannelEntityModel;
+use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
 
-class CreateChatCategoryChannels extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -18,7 +18,9 @@ class CreateChatCategoryChannels extends Migration
             $table->id();
 
             $prop = ChatCategoryChannelEntityModel::props(null, true);
-            $table->bigInteger($prop->category_id)->unsigned();
+            $table->foreignId($prop->category_id)
+                ->references('id')->on('chat_categories')
+                ->cascadeOnUpdate()->restrictOnDelete();
             $table->string($prop->name);
         });
     }
@@ -32,4 +34,4 @@ class CreateChatCategoryChannels extends Migration
     {
         Schema::dropIfExists('chat_category_channels');
     }
-}
+};

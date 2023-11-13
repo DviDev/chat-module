@@ -3,7 +3,7 @@
 namespace Modules\Chat\Repositories;
 
 use Modules\Base\Repository\BaseRepository;
-use Modules\Chat\Entities\ChatCategoryParticipantEntityModel;
+use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEntityModel;
 use Modules\Chat\Models\ChatCategoryParticipantModel;
 
 /**

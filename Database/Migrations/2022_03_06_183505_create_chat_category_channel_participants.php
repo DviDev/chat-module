@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Modules\Chat\Entities\ChatCategoryChannelParticipantEntityModel;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantEntityModel;
+use Modules\Chat\Entities\ChannelParticipant\ChatCategoryChannelParticipantEnum;
 
 return new class extends Migration
 {
@@ -17,12 +18,18 @@ return new class extends Migration
         Schema::create('chat_category_channel_participants', function (Blueprint $table) {
             $table->id();
 
-            $prop = ChatCategoryChannelParticipantEntityModel::props(null, true);
-            $table->bigInteger($prop->channel_id);
-            $table->bigInteger($prop->user_id);
-            $table->enum($prop->type, ['owner', 'admin', 'default']);
-            $table->timestamp($prop->created_at);
-            $table->timestamp($prop->updated_at)->nullable();
+            $p = ChannelParticipantEntityModel::props(null, true);
+            $table->foreignId($p->channel_id)->references('id')->on('chat_category_channels')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId($p->user_id)->references('id')->on('users')
+                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->char($p->type)->default(ChatCategoryChannelParticipantEnum::default->name);
+
+            $table->timestamp($p->created_at)->useCurrent();
+            $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
+            $table->timestamp($p->deleted_at)->nullable();
+
+            $table->unique([$p->channel_id, $p->user_id]);
         });
     }
 
