@@ -63,7 +63,7 @@
                                     {{$message->created_at->format('d m H:i')}}
                                 </span>
                             </div>
-                            <img class="direct-chat-img" src="{{asset('dist/img/user1-128x128.jpg')}}"
+                            <img class="direct-chat-img" src="{{asset($message->user->image_path)}}"
                                  alt="{{$message->user->name}}">
                             <div class="direct-chat-text">{{$message->message}}</div>
                         </div>
