@@ -1,3 +1,4 @@
+<!-- topic item -->
 <div @class(["flex space-x-2 hover:bg-gray-100 py-1 px-2", 'bg-red-100' => $topic->wasRecentlyCreated]) x-data="{editing: false}">
     <div class="w-6/12 my-auto">
         <div x-show="!editing">
@@ -13,8 +14,10 @@
         </div>
     </div>
     <div class="w-3/12 my-auto">
-        {{$topic->created_at}}
-        {{$topic->created_at->longRelativeDiffForHumans()}}
+
+        <span title="{{$topic->created_at->format(config('base.date_format'). ' '.config('base.time_format'))}}" data-te-toggle="tooltip">
+            {{$topic->created_at->longRelativeDiffForHumans()}}
+        </span>
     </div>
     <div class="w-3/12 flex space-x-1 my-auto">
         <div class="relative my-auto">
