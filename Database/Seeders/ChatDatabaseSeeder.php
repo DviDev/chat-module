@@ -59,7 +59,7 @@ class ChatDatabaseSeeder extends BaseSeeder
             ->for($me, 'user')
             ->create();
 
-        $me->chats()->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
+        $me->chats()->with('user')->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
             $seeded++;
 
             $this->command->warn(PHP_EOL . 'Criando workspace/chat ...');
