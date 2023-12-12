@@ -45,42 +45,55 @@ class ChatDatabaseSeeder extends BaseSeeder
     {
         Model::unguard();
 
-        (new ScanTableDomain())->scan('chat');
+        try {
+            \DB::beginTransaction();
 
-        $this->call(ChatPermissionTableSeeder::class);
+            $this->command->warn(PHP_EOL . '🤖 scanning chat module');
+
+            (new ScanTableDomain())->scan('chat');
+
+            $this->command->warn(PHP_EOL . '🤖🪴seeding chat permissions ...');
+            $this->call(ChatPermissionTableSeeder::class);
 //        $this->call(ChatProjectModuleTableSeeder::class);
 
-        $me = User::query()->where('id', 1)->first();
-        $firsWorkspace = $me->workspaces()->first() ?: WorkspaceModel::factory()->create();
-        $seed_total = config('chat.SEED_CHAT_CATEGORIES_COUNT');
-        $seeded = 0;
-        ChatModel::factory($seed_total)
-            ->for($me, 'user')
-            ->create();
-
-        $me->chats()->with('user')->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
-            $seeded++;
-
-            $this->command->warn(PHP_EOL . 'Criando workspace/chat ...');
-            /*$this->withProgressBar(1, fn() => WorkspaceChatModel::factory()
-                ->for($firsWorkspace, 'workspace')
-                ->for($chat, 'chat')
-                ->create());*/
-
-            WorkspaceChatModel::factory()
-                ->for($firsWorkspace, 'workspace')
-                ->for($chat, 'chat')
+            $this->command->warn(PHP_EOL . '🤖 🪴seeding chat categories...');
+            $me = User::query()->where('id', 1)->first();
+            $firsWorkspace = $me->workspaces()->first() ?: WorkspaceModel::factory()->create();
+            $seed_total = config('chat.SEED_CHAT_CATEGORIES_COUNT');
+            $seeded = 0;
+            ChatModel::factory($seed_total)
+                ->for($me, 'user')
                 ->create();
 
+            $me->chats()->with('user')->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
+                $seeded++;
 
-            $this->createParticipants($chat);
+                $this->command->warn(PHP_EOL . 'Criando workspace/chat ...');
+                /*$this->withProgressBar(1, fn() => WorkspaceChatModel::factory()
+                    ->for($firsWorkspace, 'workspace')
+                    ->for($chat, 'chat')
+                    ->create());*/
 
-            $this->createChatCategories($chat);
+                WorkspaceChatModel::factory()
+                    ->for($firsWorkspace, 'workspace')
+                    ->for($chat, 'chat')
+                    ->create();
 
-            $this->createChatGroupPermissions($chat);
 
-            $this->createChatUsers($chat);
-        });
+                $this->createParticipants($chat);
+
+                $this->createChatCategories($chat);
+
+                $this->createChatGroupPermissions($chat);
+
+                $this->createChatUsers($chat);
+            });
+
+            \DB::commit();
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            $this->command->error("🔥🚒👨‍🚒".$exception->getMessage());
+        }
     }
 
     function createParticipants(ChatModel $chat): void
