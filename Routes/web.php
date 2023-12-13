@@ -22,9 +22,9 @@ use Modules\Chat\Models\ChatModel;
 use Modules\Chat\Models\ChatPermissionGroupModel;
 
 Route::middleware(['auth', 'verified'])->prefix('chat')->group(function () {
-    Route::view('/list', 'chat::components.page.chat_list_page')->name('admin.chats');
+    Route::view('/list', 'chat::components.page.chat_list_page')->name('chat.list');
     Route::get('/{chat}/categories', fn(ChatModel $chat) =>
-        view('chat::components.page.chat_categories_page', compact('chat')))->name('admin.chat.categories');
+        view('chat::components.page.chat_categories_page', compact('chat')))->name('chat.categories');
     Route::get('/category/{category}/channels', fn(ChatCategoryModel $category) =>
         view('chat::components.page.chat_category_channel_page', compact('category')))->name('admin.chat.category.channels');
     Route::get('/category/channel/{channel}/participants', fn(ChatCategoryChannelModel $channel) =>
