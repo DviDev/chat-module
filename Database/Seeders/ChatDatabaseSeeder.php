@@ -100,14 +100,13 @@ class ChatDatabaseSeeder extends BaseSeeder
     {
         $this->command->warn(PHP_EOL . 'Creating chat participants ...');
         $p = ChatParticipantEntityModel::props();
-        $participant = ChatParticipantModel::factory()->create([
+        ChatParticipantModel::factory()->create([
             $p->chat_id => $chat->id,
             $p->user_id => $chat->user_id,
             $p->type => ChatParticipantEnum::owner->name,
         ]);
-//        ds("set owner chat $participant->chat_id as owner participant $participant->id");
 
-        $participant = ChatParticipantModel::factory()->create([
+        ChatParticipantModel::factory()->create([
             $p->chat_id => $chat->id,
             $p->user_id => User::factory()->create()->id,
             $p->type => ChatParticipantEnum::admin->name,
@@ -142,8 +141,6 @@ class ChatDatabaseSeeder extends BaseSeeder
 
         $chat->categories()->each(function (ChatCategoryModel $category) use ($chat, $seed_total, &$seeded) {
             $seeded++;
-//            ds("chat $chat->id category $seeded / $seed_total");
-
             $this->createChatCategoryChannels($category, $chat);
         });
     }
@@ -155,18 +152,15 @@ class ChatDatabaseSeeder extends BaseSeeder
             $channel->category_id => $category->id
         ]);
         $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
-//            ds("create chat $chat->id category $channel->category_id channel $channel->id");
-
             $this->createCategoryChannelParticipants($channel, $chat);
 
             $this->createChannelTopics($channel, $chat);
 
             $user = ChatCategoryChannelUserEntityModel::props();
-            $model = ChatCategoryChannelUserModel::factory()->create([
+            ChatCategoryChannelUserModel::factory()->create([
                 $user->user_id => $chat->id,
                 $user->channel_id => $channel->id,
             ]);
-//            ds("chat category channel $model->channel_id user $model->user_id");
         });
     }
 
@@ -182,7 +176,6 @@ class ChatDatabaseSeeder extends BaseSeeder
                 $p->user_id => $channel->category->created_by_user_id,
                 $p->type => ChatCategoryChannelParticipantEnum::owner->name
             ]);
-//            ds("chat $chat->id categoryChannel $participant->channel_id participant owner $participant->id");
         }
 
         $participant = ChannelParticipantModel::factory()->create([
@@ -190,20 +183,17 @@ class ChatDatabaseSeeder extends BaseSeeder
             $p->user_id => User::factory()->create()->id,
             $p->type => ChatCategoryChannelParticipantEnum::admin->name
         ]);
-//        ds("chat $chat->id categoryChannel $participant->channel_id participant admin $participant->id");
 
         $participants = $chat->participants()->whereNot('user_id', $channel->category->created_by_user_id);
-        $seed_total = $participants->count();
         $seeded = 0;
-        $participants->each(function (User $user) use ($channel, $chat, $seed_total, &$seeded) {
+        $participants->each(function (User $user) use ($channel, $chat, &$seeded) {
             $p = ChannelParticipantEntityModel::props();
-            $participant = ChannelParticipantModel::factory()->create([
+            ChannelParticipantModel::factory()->create([
                 $p->channel_id => $channel->id,
                 $p->user_id => $user->id,
                 $p->type => ChatCategoryChannelParticipantEnum::default->name
             ]);
             $seeded++;
-//            ds("chat $chat->id categoryChannel $participant->channel_id participant default $seeded / $seed_total");
         });
     }
 
@@ -211,16 +201,12 @@ class ChatDatabaseSeeder extends BaseSeeder
     {
         $topic = ChatCategoryChannelTopicEntityModel::props();
         $seed_total = config('app.SEED_MODULE_COUNT');
-        $seeded = 0;
         ChatCategoryChannelTopicModel::factory()->count($seed_total)->create([
             $topic->channel_id => $channel->id,
             $topic->user_id => $chat->user_id
         ]);
         $channel->topics()
-            ->each(function (ChatCategoryChannelTopicModel $topic) use ($channel, $chat, $seed_total, &$seeded) {
-                $seeded++;
-//                ds("chat $chat->id category $channel->category_id channel $topic->channel_id topic $seeded / $seed_total");
-
+            ->each(function (ChatCategoryChannelTopicModel $topic) use ($channel, $chat, $seed_total) {
                 $this->createTopicMessages($topic);
             });
     }
@@ -231,12 +217,11 @@ class ChatDatabaseSeeder extends BaseSeeder
         $seed_total = $participants->count();
         $seeded = 0;
         $participants->each(function (User $participant) use ($topic, $seed_total, &$seeded) {
-            $msg = ChatCategoryChannelTopicMessageModel::factory()
+            ChatCategoryChannelTopicMessageModel::factory()
                 ->for($participant, 'user')
                 ->for($topic, 'topic')
                 ->create();
             $seeded++;
-//            ds("chat {$topic->channel->category->chat_id} category {$topic->channel->category_id} channel $topic->channel_id topic $topic->id user $msg->user_id message $seeded / $seed_total");
         });
     }
 
@@ -247,8 +232,6 @@ class ChatDatabaseSeeder extends BaseSeeder
         ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
 
         ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
-//            ds("chat permission $permission->id $permission->name");
-
             $p = ChatGroupPermissionEntityModel::props();
             ChatGroupPermissionModel::factory()->create([
                 $p->group_id => ChatPermissionGroupModel::factory()->create()->id,
@@ -275,7 +258,6 @@ class ChatDatabaseSeeder extends BaseSeeder
                 $permission->permission_id => ChatPermissionModel::query()->inRandomOrder()->first()->id
             ]);
             $seeded++;
-//            ds("creating chat $chat->id user and permission $seeded / $seed_total");
         });
     }
 }
