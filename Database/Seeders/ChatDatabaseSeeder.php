@@ -33,6 +33,7 @@ use Modules\Chat\Models\ChatUserPermissionModel;
 use Modules\DBMap\Domains\ScanTableDomain;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
+use Nwidart\Modules\Facades\Module;
 
 class ChatDatabaseSeeder extends BaseSeeder
 {
@@ -44,55 +45,42 @@ class ChatDatabaseSeeder extends BaseSeeder
     public function run()
     {
         Model::unguard();
-
         try {
             \DB::beginTransaction();
-
             $this->command->warn(PHP_EOL . '🤖 scanning chat module');
-
             (new ScanTableDomain())->scan('chat');
-
             $this->command->warn(PHP_EOL . '🤖🪴seeding chat permissions ...');
             $this->call(ChatPermissionTableSeeder::class);
 //        $this->call(ChatProjectModuleTableSeeder::class);
-
             $this->command->warn(PHP_EOL . '🤖 🪴seeding chat categories...');
             $me = User::query()->where('id', 1)->first();
-            $firsWorkspace = $me->workspaces()->first() ?: WorkspaceModel::factory()->create();
+            $firsWorkspace = collect(Module::allEnabled())->contains('Workspace')
+                ? ($me->workspaces()->first() ?: WorkspaceModel::factory()->create())
+                : null;
             $seed_total = config('chat.SEED_CHAT_CATEGORIES_COUNT');
             $seeded = 0;
             ChatModel::factory($seed_total)
                 ->for($me, 'user')
                 ->create();
-
             $me->chats()->with('user')->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total, &$seeded) {
                 $seeded++;
-
                 $this->command->warn(PHP_EOL . 'Criando workspace/chat ...');
-                /*$this->withProgressBar(1, fn() => WorkspaceChatModel::factory()
-                    ->for($firsWorkspace, 'workspace')
-                    ->for($chat, 'chat')
-                    ->create());*/
 
-                WorkspaceChatModel::factory()
-                    ->for($firsWorkspace, 'workspace')
-                    ->for($chat, 'chat')
-                    ->create();
-
-
+                if (collect(Module::allEnabled())->contains('Workspace')) {
+                    $this->withProgressBar(1, fn() => WorkspaceChatModel::factory()
+                        ->for($firsWorkspace, 'workspace')
+                        ->for($chat, 'chat')
+                        ->create());
+                }
                 $this->createParticipants($chat);
-
                 $this->createChatCategories($chat);
-
                 $this->createChatGroupPermissions($chat);
-
                 $this->createChatUsers($chat);
             });
-
             \DB::commit();
         } catch (\Exception $exception) {
             \DB::rollBack();
-            $this->command->error("🔥🚒👨‍🚒".$exception->getMessage());
+            $this->command->error("🔥🚒👨‍🚒" . $exception->getMessage());
         }
     }
 
@@ -105,21 +93,23 @@ class ChatDatabaseSeeder extends BaseSeeder
             $p->user_id => $chat->user_id,
             $p->type => ChatParticipantEnum::owner->name,
         ]);
-
         ChatParticipantModel::factory()->create([
             $p->chat_id => $chat->id,
             $p->user_id => User::factory()->create()->id,
             $p->type => ChatParticipantEnum::admin->name,
         ]);
 
-        /**@var WorkspaceModel $workspace */
-        $workspace = $chat->workspaces()->first();
-        $builder = $workspace->participants()->whereNot('user_id', 1);
-        $builder = $builder->limit($builder->count() -2);
-        $participants = $builder->get();
-        $seed_total = $participants->count() -2;
-        $seeded = 0;
-        $participants->each(function (User $user) use ($chat, $seed_total, &$seeded) {
+        if (collect(Module::allEnabled())->contains('Workspace')) {
+            /**@var WorkspaceModel $workspace */
+            $workspace = $chat->workspaces()->first();
+            $builder = $workspace->participants()->whereNot('user_id', 1);
+            $builder = $builder->limit($builder->count() - 2);
+            $participants = $builder->get();
+        } else {
+            $participants = collect();
+        }
+
+        $participants->each(function (User $user) use ($chat, &$seeded) {
             $p = ChatParticipantEntityModel::props();
             ChatParticipantModel::factory()->create([
                 $p->chat_id => $chat->id,
@@ -138,7 +128,6 @@ class ChatDatabaseSeeder extends BaseSeeder
             ->for($chat, 'chat')
             ->for($chat->user, 'user')
             ->count($seed_total)->create();
-
         $chat->categories()->each(function (ChatCategoryModel $category) use ($chat, $seed_total, &$seeded) {
             $seeded++;
             $this->createChatCategoryChannels($category, $chat);
@@ -153,9 +142,7 @@ class ChatDatabaseSeeder extends BaseSeeder
         ]);
         $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
             $this->createCategoryChannelParticipants($channel, $chat);
-
             $this->createChannelTopics($channel, $chat);
-
             $user = ChatCategoryChannelUserEntityModel::props();
             ChatCategoryChannelUserModel::factory()->create([
                 $user->user_id => $chat->id,
@@ -167,7 +154,6 @@ class ChatDatabaseSeeder extends BaseSeeder
     function createCategoryChannelParticipants(ChatCategoryChannelModel $channel, ChatModel $chat): void
     {
         $p = ChannelParticipantEntityModel::props();
-
         if (!ChannelParticipantModel::query()
             ->where($p->channel_id, $channel->id)
             ->where($p->user_id, $channel->category->created_by_user_id)->exists()) {
@@ -177,13 +163,11 @@ class ChatDatabaseSeeder extends BaseSeeder
                 $p->type => ChatCategoryChannelParticipantEnum::owner->name
             ]);
         }
-
         $participant = ChannelParticipantModel::factory()->create([
             $p->channel_id => $channel->id,
             $p->user_id => User::factory()->create()->id,
             $p->type => ChatCategoryChannelParticipantEnum::admin->name
         ]);
-
         $participants = $chat->participants()->whereNot('user_id', $channel->category->created_by_user_id);
         $seeded = 0;
         $participants->each(function (User $user) use ($channel, $chat, &$seeded) {
@@ -230,7 +214,6 @@ class ChatDatabaseSeeder extends BaseSeeder
         $this->command->warn(PHP_EOL . 'Creating chat group permissions ...');
         $config = ChatConfigEntityModel::props();
         ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
-
         ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
             $p = ChatGroupPermissionEntityModel::props();
             ChatGroupPermissionModel::factory()->create([
