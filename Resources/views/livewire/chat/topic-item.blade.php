@@ -1,23 +1,31 @@
 <!-- topic item -->
-<div @class(["flex space-x-2 hover:bg-gray-100 py-1 px-2", 'bg-red-100' => $topic->wasRecentlyCreated]) x-data="{editing: false}">
-    <div class="w-6/12 my-auto">
+<div
+    @class(["flex space-x-2 hover:bg-gray-100 py-1 px-2", 'bg-red-100' => $topic->wasRecentlyCreated]) x-data="{editing: false}">
+    <div class="w-9/12 my-auto">
         <div x-show="!editing">
             @if($topic->created_at->diff(now())->i < 1)
                 <i class="fas fa-edit text-blue-600 cursor-pointer my-auto mr-2" @click="editing = !editing"
                    title="Editar título"></i>
             @endif
-            {{$topic->title}}
+            <div class="flex space-x-1">
+                <img src="{{$topic->user->image_path}}" width="40px" height="40px" class="border rounded my-auto">
+                <div class="">
+                    <div class="text-[10px] leading-none font-bold text-gray-500">{{str($topic->user->name)->upper()}}</div>
+                    <div
+                        title="{{$topic->created_at->format(config('base.date_format'). ' '.config('base.time_format'))}}"
+                        data-te-toggle="tooltip"
+                        class="text-[10px] text-gray-500 leading-none">
+                        {{$topic->created_at->longRelativeDiffForHumans()}}
+                    </div>
+                    <div class="font-bold text-gray-700">{{$topic->title}}</div>
+                </div>
+
+            </div>
         </div>
         <div x-show="editing">
             <x-lte::form.input placeholder="titulo" wire:model="title" wire:keydown.prevent.enter="save"
                                @keydown.enter="editing = false"/>
         </div>
-    </div>
-    <div class="w-3/12 my-auto">
-
-        <span title="{{$topic->created_at->format(config('base.date_format'). ' '.config('base.time_format'))}}" data-te-toggle="tooltip">
-            {{$topic->created_at->longRelativeDiffForHumans()}}
-        </span>
     </div>
     <div class="w-3/12 flex space-x-1 my-auto">
         <div class="relative my-auto">
@@ -34,7 +42,8 @@
                     <i class="fas fa-trash cursor-pointer my-auto"></i>
                 </x-dvui::button>
             @else
-                <i class="fas fa-trash-alt fa-2x text-gray-400 ml-2 cursor-pointer my-auto" title="tópico arquivado"></i>
+                <i class="fas fa-trash-alt fa-2x text-gray-400 ml-2 cursor-pointer my-auto"
+                   title="tópico arquivado"></i>
             @endif
         @else
             <x-dvui::button action="disable" confirm warning rounded sm class="my-auto" title="Desabilitar">
