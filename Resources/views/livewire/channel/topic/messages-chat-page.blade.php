@@ -30,7 +30,8 @@
             <div class="p-2 border-bottom bg-gray-200 rounded-b-lg mb-1 text-gray-700"
                  x-data="{editing: false}">
                 <x-dvui::form.input wire:model="topic_message" x-show="editing" style="display:none"
-                    x-on:keydown.esc="editing=false" x-on:keydown.enter="editing=false" wire:keydown.prevent.enter="saveTopicMessage"/>
+                                    x-on:keydown.esc="editing=false" x-on:keydown.enter="editing=false"
+                                    wire:keydown.prevent.enter="saveTopicMessage"/>
                 <div class="flex space-x-2 " x-show="!editing">
                     <i class="fas fa-edit text-blue-600 ml-2 my-auto cursor-pointer" @click="editing=true"></i>
                     <div class="my-auto ml-1">{!! $topic->message !!}</div>
@@ -42,7 +43,8 @@
                     <form action="#" method="post">
                         <div class="input-group focus:outline-none focus:border-gray-300">
                             <input type="text" name="message" placeholder="digite a mensagem ..."
-                                   class="form-control border-gray-300 rounded-l focus:outline-none focus:border-gray-300" wire:model="message">
+                                   class="form-control border-gray-300 rounded-l focus:outline-none focus:border-gray-300"
+                                   wire:model="message">
                             <span class="input-group-append">
                                 <button type="submit" class="btn btn-success">Enviar</button>
                             </span>
@@ -57,7 +59,7 @@
                         <div @class(["direct-chat-msg", "right" => $message->user_id !== $topic->user->id])>
                             <div class="direct-chat-infos clearfix">
                                 <span class="direct-chat-name float-left">
-                                    {{$message->user->name .' ('.trans($message->user->type).')'}}
+                                    {{$message->user->name .' ('.trans($message->user->type_id).')'}}
                                 </span>
                                 <span class="direct-chat-timestamp float-right">
                                     {{$message->created_at->format('d m H:i')}}
