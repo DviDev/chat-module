@@ -3,7 +3,7 @@
 namespace Modules\Chat\Entities\ChatMessageUserRead;
 
 use Modules\Base\Entities\BaseEntityModel;
-use Modules\Seguros\Models\ChatMessageUserReadModel;
+use Modules\Seguro\Models\ChatMessageUserReadModel;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
