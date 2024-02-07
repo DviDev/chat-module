@@ -19,6 +19,8 @@ class ChatPermissionTableSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->command->warn(PHP_EOL . '🤖🪴seeding chat permissions ...');
+
         $items = [
             PermissionEnum::READ,
             PermissionEnum::WRITE,
