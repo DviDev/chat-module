@@ -16,7 +16,7 @@ class ChatDatabaseSeeder extends BaseSeeder
     public function run()
     {
         Model::unguard();
-        $this->command->warn(PHP_EOL . '🤖 scanning chat module');
+        $this->command->warn(PHP_EOL . '🤖 🕵️ scanning chat module ...');
         (new ScanTableDomain())->scan('chat');
 
         $this->call(ChatSeeder::class);

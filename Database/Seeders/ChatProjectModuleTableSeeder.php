@@ -19,7 +19,7 @@ class ChatProjectModuleTableSeeder extends Seeder
     {
         Model::unguard();
 
-        $module = ProjectModuleModel::query()->where('name', 'Chat')->first();
+        $module = ProjectModuleModel::byName('Chat');
         $project = $module->project;
 
         $this->call(

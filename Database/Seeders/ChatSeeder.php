@@ -5,6 +5,7 @@ namespace Modules\Chat\Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Event;
+use Modules\Base\Database\Seeders\SeederEventDTO;
 use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantEntityModel;
 use Modules\Chat\Entities\ChannelParticipant\ChatCategoryChannelParticipantEnum;
 use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
@@ -36,20 +37,15 @@ use Nwidart\Modules\Facades\Module;
 
 class ChatSeeder extends Seeder
 {
-    /**
-     * @var mixed|null
-     */
-    protected mixed $event;
+    protected ?SeederEventDTO $event = null;
 
     /**
      * Run the database seeds.
      */
-    public function run($event = null, $payload = []): void
+    public function run($event = null): void
     {
         try {
             $this->event = $event;
-
-//            DB::beginTransaction();
 
             $this->call(ChatPermissionTableSeeder::class);
             $this->command->warn(PHP_EOL . '🤖 🪴 seeding chat categories...');
@@ -65,7 +61,7 @@ class ChatSeeder extends Seeder
 
             $chats->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total) {
                 if ($this->event) {
-                    Event::dispatch($this->event['class'], array_merge($this->event['payload'], ['chat' => $chat]));
+                    Event::dispatch($this->event->class(), $this->event->param('chat', $chat)->payload());
                 }
 
                 $this->createWorkspaceChat($chat, $firsWorkspace);
