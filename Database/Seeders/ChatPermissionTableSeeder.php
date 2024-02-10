@@ -3,12 +3,12 @@
 namespace Modules\Chat\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Seeder;
+use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\Chat\Entities\ChatPermission\ChatPermissionEntityModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Services\Enums\PermissionEnum;
 
-class ChatPermissionTableSeeder extends Seeder
+class ChatPermissionTableSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class ChatPermissionTableSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->command->warn(PHP_EOL . '🤖🪴seeding chat permissions ...');
+        $this->command->warn(PHP_EOL . '🤖 🌱 seeding CHAT PERMISSIONS ...');
 
         $items = [
             PermissionEnum::READ,
@@ -37,5 +37,6 @@ class ChatPermissionTableSeeder extends Seeder
             ]);
         });
 
+        $this->command->warn(PHP_EOL . '🤖 ✔ ️ CHAT PERMISSIONS done');
     }
 }

@@ -3,8 +3,8 @@
 namespace Modules\Chat\Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Event;
+use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\Base\Database\Seeders\SeederEventDTO;
 use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantEntityModel;
 use Modules\Chat\Entities\ChannelParticipant\ChatCategoryChannelParticipantEnum;
@@ -35,7 +35,7 @@ use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Nwidart\Modules\Facades\Module;
 
-class ChatSeeder extends Seeder
+class ChatSeeder extends BaseSeeder
 {
     protected ?SeederEventDTO $event = null;
 
@@ -44,52 +44,50 @@ class ChatSeeder extends Seeder
      */
     public function run($event = null): void
     {
-        try {
-            $this->event = $event;
+        $this->command->warn(PHP_EOL . '🤖 ✔ ' . str(__CLASS__)->explode('\\')->last() . ' ...');
 
-            $this->call(ChatPermissionTableSeeder::class);
-            $this->command->warn(PHP_EOL . '🤖 🪴 seeding chat categories...');
+        $this->event = $event;
 
-            $me = User::find(1);
-            $firsWorkspace = collect(Module::allEnabled())->contains('Workspace')
-                ? (WorkspaceModel::byUserId($me->id)->first() ?: WorkspaceModel::factory()->create())
-                : null;
+        $this->call(ChatPermissionTableSeeder::class);
 
-            $seed_total = config('chat.SEED_CHATS_COUNT');
+        $me = User::find(1);
+        $firsWorkspace = collect(Module::allEnabled())->contains('Workspace')
+            ? (WorkspaceModel::byUserId($me->id)->first() ?: WorkspaceModel::factory()->create())
+            : null;
 
-            $chats = ChatModel::factory($seed_total)->for($me, 'user')->create();
+        $seed_total = config('chat.SEED_CHATS_COUNT');
 
-            $chats->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total) {
-                if ($this->event) {
-                    Event::dispatch($this->event->class(), $this->event->param('chat', $chat)->payload());
-                }
+        $chats = ChatModel::factory($seed_total)->for($me, 'user')->create();
 
-                $this->createWorkspaceChat($chat, $firsWorkspace);
-                $this->createParticipants($chat);
-                $this->createChatCategories($chat);
-                $this->createChatGroupPermissions($chat);
-                $this->createChatUsers($chat);
-            });
-//            DB::commit();
-        } catch (\Exception $exception) {
-//            DB::rollBack();
-            $this->command->error(PHP_EOL . "🔥🚒👨‍🚒" . __CLASS__);
-            throw $exception;
-        }
+        $chats->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total) {
+            if ($this->event) {
+                Event::dispatch($this->event->class(), $this->event->param('chat', $chat)->payload());
+            }
+
+            $this->createWorkspaceChat($chat, $firsWorkspace);
+            $this->createParticipants($chat);
+            $this->createChatCategories($chat);
+            $this->createChatGroupPermissions($chat);
+            $this->createChatUsers($chat);
+        });
+
+        $this->command->warn(PHP_EOL . '🤖 ✔ ' . str(__CLASS__)->explode('\\')->last() . ' done');
     }
 
     protected function createWorkspaceChat(ChatModel $chat, WorkspaceModel $firsWorkspace): void
     {
-        $this->command->warn(PHP_EOL . 'Criando workspace/chat ...');
+        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
 
         if (collect(Module::allEnabled())->contains('Workspace')) {
             WorkspaceChatModel::factory()->for($firsWorkspace, 'workspace')->for($chat, 'chat')->create();
         }
+        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
     }
 
     function createParticipants(ChatModel $chat): void
     {
-        $this->command->warn(PHP_EOL . 'Creating chat participants ...');
+        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
+
         $p = ChatParticipantEntityModel::props();
         ChatParticipantModel::factory()->create([
             $p->chat_id => $chat->id,
@@ -120,11 +118,14 @@ class ChatSeeder extends Seeder
                 $p->type => ChatParticipantEnum::default->name,
             ]);
         });
+
+        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
     }
 
     function createChatCategories(ChatModel $chat): void
     {
-        $this->command->warn(PHP_EOL . 'Creating chat categories ...');
+        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
+
         $seed_total = config('app.SEED_CHAT_CATEGORY_COUNT');
 
         ChatCategoryModel::factory()
@@ -134,39 +135,8 @@ class ChatSeeder extends Seeder
         $chat->categories()->each(function (ChatCategoryModel $category) use ($chat, $seed_total) {
             $this->createChatCategoryChannels($category, $chat);
         });
-    }
 
-    function createChatGroupPermissions(ChatModel $chat): void
-    {
-        $this->command->warn(PHP_EOL . 'Creating chat group permissions ...');
-        $config = ChatConfigEntityModel::props();
-        ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
-        ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
-            $p = ChatGroupPermissionEntityModel::props();
-            ChatGroupPermissionModel::factory()->create([
-                $p->group_id => ChatPermissionGroupModel::factory()->create()->id,
-                $p->permission_id => $permission->id
-            ]);
-        });
-    }
-
-    protected function createChatUsers(ChatModel $chat): void
-    {
-        $this->command->warn(PHP_EOL . 'Creating chat users ...');
-        $participants = $chat->participants();
-
-        $participants->each(function (User $user) use ($chat) {
-            $chatUser = ChatUserEntityModel::props();
-            ChatUserModel::factory()->create([
-                $chatUser->user_id => $user->id,
-                $chatUser->chat_id => $chat->id,
-            ]);
-            $permission = ChatUserPermissionEntityModel::props();
-            ChatUserPermissionModel::factory()->create([
-                $permission->user_id => $user->id,
-                $permission->permission_id => ChatPermissionModel::query()->inRandomOrder()->first()->id
-            ]);
-        });
+        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
     }
 
     function createChatCategoryChannels(ChatCategoryModel $category, ChatModel $chat): void
@@ -239,5 +209,41 @@ class ChatSeeder extends Seeder
                 ->for($topic, 'topic')
                 ->create();
         });
+    }
+
+    function createChatGroupPermissions(ChatModel $chat): void
+    {
+        $this->command->warn(PHP_EOL . 'Creating chat group permissions ...');
+        $config = ChatConfigEntityModel::props();
+        ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
+        ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
+            $p = ChatGroupPermissionEntityModel::props();
+            ChatGroupPermissionModel::factory()->create([
+                $p->group_id => ChatPermissionGroupModel::factory()->create()->id,
+                $p->permission_id => $permission->id
+            ]);
+        });
+    }
+
+    protected function createChatUsers(ChatModel $chat): void
+    {
+        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
+
+        $participants = $chat->participants();
+
+        $participants->each(function (User $user) use ($chat) {
+            $chatUser = ChatUserEntityModel::props();
+            ChatUserModel::factory()->create([
+                $chatUser->user_id => $user->id,
+                $chatUser->chat_id => $chat->id,
+            ]);
+            $permission = ChatUserPermissionEntityModel::props();
+            ChatUserPermissionModel::factory()->create([
+                $permission->user_id => $user->id,
+                $permission->permission_id => ChatPermissionModel::query()->inRandomOrder()->first()->id
+            ]);
+        });
+
+        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
     }
 }
