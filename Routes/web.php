@@ -20,6 +20,9 @@ use Modules\Chat\Models\ChatCategoryModel;
 use Modules\Chat\Models\ChatGroupPermissionModel;
 use Modules\Chat\Models\ChatModel;
 use Modules\Chat\Models\ChatPermissionGroupModel;
+use Modules\Project\Services\DynamicRoutes;
+
+DynamicRoutes::all('Chat');
 
 Route::middleware(['auth', 'verified'])->prefix('chat')->group(function () {
     Route::view('/list', 'chat::components.page.chat_list_page')->name('chat.list');
