@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\App\Models\Relations\BelongsToUser;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Entities\Chat\ChatEntityModel;
@@ -27,7 +28,7 @@ class ChatModel extends BaseModel
 {
     use HasFactory;
     use ChatProps;
-    use Modules\App\Models\Relations\BelongsToUser;
+    use BelongsToUser;
 
     public function modelEntity(): string
     {
