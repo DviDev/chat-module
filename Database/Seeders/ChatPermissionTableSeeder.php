@@ -31,10 +31,10 @@ class ChatPermissionTableSeeder extends BaseSeeder
 
         $permissions->each(function (PermissionEnum $permission) {
             $entity = ChatPermissionEntityModel::props();
-            ChatPermissionModel::query()->updateOrCreate([
-                $entity->name => $permission->name,
-                $entity->description => "bla bla bla"
-            ]);
+            ChatPermissionModel::query()->updateOrCreate(
+                [$entity->name => $permission->name],
+                [$entity->description => "bla bla bla"]
+            );
         });
 
         $this->command->warn(PHP_EOL . '🤖 ✔ ️ CHAT PERMISSIONS done');

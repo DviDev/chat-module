@@ -5,6 +5,7 @@ namespace Modules\Chat\Database\Seeders;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\DBMap\Domains\ScanTableDomain;
+use Nwidart\Modules\Facades\Module;
 
 class ChatDatabaseSeeder extends BaseSeeder
 {
@@ -16,8 +17,11 @@ class ChatDatabaseSeeder extends BaseSeeder
     public function run()
     {
         Model::unguard();
-        $this->command->warn(PHP_EOL . '🤖 🚀 scanning chat module ...');
-        (new ScanTableDomain())->scan('chat');
+
+        if (in_array(Module::allEnabled(), ['Project', 'DBMap'])) {
+            $this->command->warn(PHP_EOL . '🤖 🚀 scanning chat module ...');
+            (new ScanTableDomain())->scan('chat');
+        }
 
         $this->call(ChatSeeder::class);
 
