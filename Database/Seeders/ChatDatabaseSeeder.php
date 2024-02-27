@@ -18,7 +18,8 @@ class ChatDatabaseSeeder extends BaseSeeder
     {
         Model::unguard();
 
-        if (in_array(Module::allEnabled(), ['Project', 'DBMap'])) {
+        $modules = collect(Module::allEnabled());
+        if ($modules->contains('DBMap')) {
             $this->command->warn(PHP_EOL . '🤖 🚀 scanning chat module ...');
             (new ScanTableDomain())->scan('chat');
         }
