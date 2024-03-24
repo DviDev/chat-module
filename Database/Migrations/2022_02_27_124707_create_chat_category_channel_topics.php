@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId($p->channel_id)
                 ->references('id')->on('chat_category_channels')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->string($p->title, 150);
+            $table->string($p->title);
             $table->string($p->message)->nullable();
             $table->foreignId($p->user_id)
                 ->references('id')->on('users')

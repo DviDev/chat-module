@@ -1,5 +1,16 @@
 # Chat Module
 ### Simple chat management
+
+#### Module Dependencies
+
+1. [**App**](https://github.com/DviDev/app-module)
+2. [**Base**](https://github.com/DviDev/app-module)
+
+#### Module Optional Relations
+
+1. [**DBMap**](https://github.com/DviDev/dbmap-module)
+1. [**Project**](https://github.com/DviDev/project-module)
+
 ```mermaid
 graph TD;
     Chat-->Groups;

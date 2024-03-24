@@ -2,7 +2,7 @@
 
 <x-lte::card :title="$topic->title" card_id="chat_topic_messages">
     <x-lte::card.header :navs="false">
-        <div class="flex">
+        <div class="flex p-2 w-full">
             {{--<a href="{{url()->previous()}}" class="border rounded border-gray-200 px-2 py-1">
                 <x-dvui::icon.arrow.left class="my-auto"/>
             </a>--}}
@@ -11,17 +11,18 @@
                 <div>{{$topic->title}}</div>
             </div>
             <div class="card-tools">
-                <span title="3 New Messages" class="badge bg-success">{{$topic->messages()->count()}}</span>
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <span title="{{$topic->messages()->count() .' '. __('New Messages')}} "
+                      class="badge bg-success">{{$topic->messages()->count()}}</span>
+                {{--<button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" title="Contacts"
+                </button>--}}
+                {{--<button type="button" class="btn btn-tool" title="Contacts"
                         data-widget="chat-pane-toggle">
                     <i class="fas fa-comments"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                </button>--}}
+                {{--<button type="button" class="btn btn-tool" data-card-widget="remove">
                     <i class="fas fa-times"></i>
-                </button>
+                </button>--}}
             </div>
         </div>
     </x-lte::card.header>
@@ -29,7 +30,7 @@
         <x-lte::card.body class="p-0">
             <div class="p-2 border-bottom bg-gray-200 rounded-b-lg mb-1 text-gray-700"
                  x-data="{editing: false}">
-                <x-dvui::form.input wire:model="topic_message" x-show="editing" style="display:none"
+                <x-lte::form.input wire:model="topic_message" x-show="editing" style="display:none"
                                     x-on:keydown.esc="editing=false" x-on:keydown.enter="editing=false"
                                     wire:keydown.prevent.enter="saveTopicMessage"/>
                 <div class="flex space-x-2 " x-show="!editing">

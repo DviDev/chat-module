@@ -64,8 +64,11 @@ class ChatSeeder extends BaseSeeder
                 Event::dispatch($this->event->class(), $this->event->param('chat', $chat)->payload());
             }
 
-            $this->createWorkspaceChat($chat, $firsWorkspace);
-            $this->createParticipants($chat);
+            if (collect(Module::allEnabled())->contains('Workspace')) {
+                $this->createWorkspaceChat($chat, $firsWorkspace);
+                $this->createParticipants($chat);
+            }
+
             $this->createChatCategories($chat);
             $this->createChatGroupPermissions($chat);
             $this->createChatUsers($chat);
