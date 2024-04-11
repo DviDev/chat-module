@@ -47,7 +47,8 @@
                                    class="form-control border-gray-300 rounded-l focus:outline-none focus:border-gray-300"
                                    wire:model="message">
                             <span class="input-group-append">
-                                <button type="submit" class="btn btn-success">Enviar</button>
+                                <button type="submit"
+                                        class="bg-green-600 rounded-r text-white px-3 py-2">Enviar</button>
                             </span>
                         </div>
                         <x-dvui::error field="message"/>
