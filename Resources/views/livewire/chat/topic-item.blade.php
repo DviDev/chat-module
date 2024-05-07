@@ -8,9 +8,9 @@
                    title="Editar título"></i>
             @endif
             <div class="flex space-x-1">
-                @if($topic->user->image_path)
-                    @if(File::exists(public_path($topic->user->image_path)))
-                        <img src="{{$topic->user->image_path}}" width="40px" height="40px"
+                @if($img = $topic->user->image_path)
+                    @if(File::exists(public_path($img)))
+                        <img src="{{$img}}" width="40px" height="40px"
                              class="border rounded my-auto">
                     @endif
                 @else
