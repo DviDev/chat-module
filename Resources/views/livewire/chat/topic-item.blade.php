@@ -1,6 +1,6 @@
-<!-- topic item -->
 <div
-    @class(["flex space-x-2 hover:bg-gray-100 py-1 px-2", 'bg-red-100' => $topic->wasRecentlyCreated]) x-data="{editing: false}">
+    @class(["flex space-x-2 hover:bg-gray-100 py-1 px-2", 'bg-red-100' => $topic->wasRecentlyCreated])
+    x-data="{editing: false}">
     <div class="w-9/12 my-auto">
         <div x-show="!editing">
             @if($topic->created_at->diff(now())->i < 1)
@@ -8,9 +8,17 @@
                    title="Editar título"></i>
             @endif
             <div class="flex space-x-1">
-                <img src="{{$topic->user->image_path}}" width="40px" height="40px" class="border rounded my-auto">
+                @if($topic->user->image_path)
+                    @if(File::exists(public_path($topic->user->image_path)))
+                        <img src="{{$topic->user->image_path}}" width="40px" height="40px"
+                             class="border rounded my-auto">
+                    @endif
+                @else
+                    <x-dvui::icon.user/>
+                @endif
                 <div class="">
-                    <div class="text-[10px] leading-none font-bold text-gray-500">{{str($topic->user->name)->upper()}}</div>
+                    <div
+                        class="text-[10px] leading-none font-bold text-gray-500">{{str($topic->user->name)->upper()}}</div>
                     <div
                         title="{{$topic->created_at->format(config('base.date_format'). ' '.config('base.time_format'))}}"
                         data-te-toggle="tooltip"

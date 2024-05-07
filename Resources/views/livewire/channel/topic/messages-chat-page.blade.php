@@ -31,8 +31,8 @@
             <div class="p-2 border-bottom bg-gray-200 rounded-b-lg mb-1 text-gray-700"
                  x-data="{editing: false}">
                 <x-lte::form.input wire:model="topic_message" x-show="editing" style="display:none"
-                                    x-on:keydown.esc="editing=false" x-on:keydown.enter="editing=false"
-                                    wire:keydown.prevent.enter="saveTopicMessage"/>
+                                   x-on:keydown.esc="editing=false" x-on:keydown.enter="editing=false"
+                                   wire:keydown.prevent.enter="saveTopicMessage"/>
                 <div class="flex space-x-2 " x-show="!editing">
                     <i class="fas fa-edit text-blue-600 ml-2 my-auto cursor-pointer" @click="editing=true"></i>
                     <div class="my-auto ml-1">{!! $topic->message !!}</div>
@@ -58,18 +58,25 @@
                 {{--MESSAGES--}}
                 <div class="direct-chat-messages grow bg-gray-50 rounded">
                     @foreach($topic->messages()->orderByDesc('id')->get()->all() as $message)
-                        <div @class(["direct-chat-msg", "right" => $message->user_id !== $topic->user->id])>
+                        <div @class(["mb-1", "text-right" => $message->user_id !== $topic->user->id])>
                             <div class="direct-chat-infos clearfix">
                                 <span class="direct-chat-name float-left">
-                                    {{$message->user->name .' ('.trans($message->user->type_id).')'}}
+                                    {{$message->user->name .' ('.trans($message->user->type->name).')'}}
                                 </span>
                                 <span class="direct-chat-timestamp float-right">
                                     {{$message->created_at->format('d m H:i')}}
                                 </span>
                             </div>
-                            <img class="direct-chat-img" src="{{asset($message->user->image_path)}}"
-                                 alt="{{$message->user->name}}">
-                            <div class="direct-chat-text">{{$message->message}}</div>
+                            <div @class(["flex" => true])>
+                                @if($message->user->image_path)
+                                    <img class="direct-chat-img" src="{{asset($message->user->image_path)}}"
+                                         alt="{{$message->user->name}}">
+                                @else
+                                    <x-dvui::icon.user class="w-[40px] rounded"/>
+                                @endif
+
+                                <div class="direct-chat-text">{{$message->message}}</div>
+                            </div>
                         </div>
                     @endforeach
 
