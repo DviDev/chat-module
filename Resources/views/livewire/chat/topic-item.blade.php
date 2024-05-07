@@ -9,8 +9,8 @@
             @endif
             <div class="flex space-x-1">
                 @if($img = $topic->user->image_path)
-                    @if(File::exists(public_path($img)))
-                        <img src="{{$img}}" width="40px" height="40px"
+                    @if(str($img)->contains('http') || File::exists(public_path($img)))
+                        <img src="{{$img}}" width="50px" height="50px"
                              class="border rounded my-auto">
                     @endif
                 @else
