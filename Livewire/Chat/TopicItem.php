@@ -38,12 +38,10 @@ class TopicItem extends Component
         Toastr::instance($this)->success('Item removido');
     }
 
-    public function forceDelete()
+    public function forceDelete(): void
     {
         $this->topic->messages()->delete();
         $this->topic->forceDelete();
         Toastr::instance($this)->success('Item removido');
-
-
     }
 }
