@@ -7,13 +7,15 @@
                 <i class="fas fa-edit text-blue-600 cursor-pointer my-auto mr-2" @click="editing = !editing"
                    title="Editar título"></i>
             @endif
-            <div class="flex space-x-1">
+                <div class="flex items-center space-x-1">
                 @if($img = $topic->user->image_path)
                     @if(str($img)->contains('http') || File::exists(public_path($img)))
                         <img src="{{$img}}" width="50px" height="50px" class="border rounded my-auto">
                     @endif
                 @else
-                    <x-dvui::icon.user/>
+                        <div class="border border-gray-600 rounded-full shadow-lg bg-gray-200 p-1">
+                            <x-dvui::icon.user/>
+                        </div>
                 @endif
                 <div class="">
                     <div
