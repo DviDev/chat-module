@@ -2,8 +2,8 @@
 
 namespace Modules\Chat\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelParticipantTable;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelTable;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelTopicFileTable;
@@ -80,6 +80,7 @@ class ChatServiceProvider extends ServiceProvider
         \Livewire::component('chat::channel.topic.messages-chat-page', MessagesChatPage::class);
 
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(ChatEventServiceProvider::class);
     }
 
     /**
