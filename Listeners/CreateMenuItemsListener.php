@@ -21,9 +21,9 @@ class CreateMenuItemsListener extends CreateMenuItemsListenerContract
         return config('chat.name');
     }
 
-    protected function createMenuItem($module, MenuModel $menuModel, ModuleTableModel $table, $key = null): void
+    protected function createMenuItem(MenuModel $menuModel, ModuleTableModel $table, $key = null): void
     {
-        parent::createMenuItem($module, $menuModel, $table, $key);
+        parent::createMenuItem($menuModel, $table, $key);
 
         $menuModel->active = null;
         $menuModel->save();
