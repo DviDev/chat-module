@@ -46,6 +46,10 @@ class ChatSeeder extends BaseSeeder
     {
         $this->command->warn(PHP_EOL . '🤖 ✔ ' . str(__CLASS__)->explode('\\')->last() . ' ...');
 
+        if (!config('chat.SEED_CHATS_IN_PRODUCTION')) {
+            $this->command->warn(PHP_EOL . '🤖 ✔ No Seed in production');
+            return;
+        }
         $this->event = $event;
 
         $this->call(ChatPermissionTableSeeder::class);
