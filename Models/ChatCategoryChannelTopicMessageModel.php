@@ -16,6 +16,7 @@ use Modules\Chat\Entities\ChatCategoryChannelTopicMessage\ChatCategoryChannelTop
  * @link https://github.com/DaviMenezes
  * @property-read  User $user
  * @property-read  ChatCategoryChannelTopicModel $topic
+ * @property-read  ChatCategoryChannelTopicMessageModel $parent
  * @method ChatCategoryChannelTopicMessageEntityModel toEntity()
  */
 class ChatCategoryChannelTopicMessageModel extends BaseModel
@@ -57,5 +58,10 @@ class ChatCategoryChannelTopicMessageModel extends BaseModel
     public function files(): HasMany
     {
         return $this->hasMany(ChatCategoryChannelTopicMessageFileModel::class, 'message_id');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
     }
 }
