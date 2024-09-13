@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Base\Database\Seeders\BaseSeeder;
 use Modules\Permission\Database\Seeders\PermissionTableSeeder;
 use Modules\Project\Database\Seeders\ProjectTableSeeder;
-use Modules\Project\Models\ProjectModuleModel;
 
 class ChatProjectModuleTableSeeder extends BaseSeeder
 {
@@ -21,15 +20,19 @@ class ChatProjectModuleTableSeeder extends BaseSeeder
 
         $this->command->warn(PHP_EOL . '🤖 🌱 seeding ' . str(__CLASS__)->explode('\\')->last() . ' ...');
 
-        $module = ProjectModuleModel::byName('Chat');
-        $project = $module->project;
+//        $module = ProjectModuleModel::byName('Chat');
+//        $project = $module->project;
 
         $this->call(
             class: PermissionTableSeeder::class,
-            parameters: ['module' => $module]
+            parameters: ['module_name' => 'Chat']
         );
 
-        $this->call(ProjectTableSeeder::class, parameters: ['project' => $project, 'module' => $module]);
+        $this->call(ProjectTableSeeder::class, parameters: [
+            //'project' => $project,
+            //'module' => $module,
+            'module_name' => 'Chat'
+        ]);
 
         $this->command->warn(PHP_EOL . '🤖 ✔ ' . str(__CLASS__)->explode('\\')->last() . ' ...');
     }
