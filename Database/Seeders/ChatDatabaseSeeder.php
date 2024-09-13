@@ -2,6 +2,7 @@
 
 namespace Modules\Chat\Database\Seeders;
 
+use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Base\Database\Seeders\BaseSeeder;
 use Nwidart\Modules\Facades\Module;
@@ -13,8 +14,10 @@ class ChatDatabaseSeeder extends BaseSeeder
      *
      * @return void
      */
-    public function run()
+    public function run(Command $command = null)
     {
+        $this->command = $command ?: $this->command;
+
         Model::unguard();
 
         $modules = collect(Module::allEnabled());
