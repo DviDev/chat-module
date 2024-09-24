@@ -20,17 +20,12 @@ class ChatProjectModuleTableSeeder extends BaseSeeder
 
         $this->command->warn(PHP_EOL . '🤖 🌱 seeding ' . str(__CLASS__)->explode('\\')->last() . ' ...');
 
-//        $module = ProjectModuleModel::byName('Chat');
-//        $project = $module->project;
-
         $this->call(
             class: PermissionTableSeeder::class,
             parameters: ['module_name' => 'Chat']
         );
 
         $this->call(ProjectTableSeeder::class, parameters: [
-            //'project' => $project,
-            //'module' => $module,
             'module_name' => 'Chat'
         ]);
 
