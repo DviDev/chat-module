@@ -85,7 +85,7 @@
                         <li>
                             <a href="#">
                                 <img class="contacts-list-img"
-                                     src="{{asset('dist/img/user1-128x128.jpg')}}" alt="{{$participant->user->name}}">
+                                     src="{{asset('assets/modules/lte/dist/img/user1-128x128.jpg')}}" alt="{{$participant->user->name}}">
                                 <div class="contacts-list-info">
                                 <span class="contacts-list-name">
                                     {{$participant->user->name}}
