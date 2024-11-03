@@ -22,7 +22,7 @@ class CreateMenuItemsListener extends CreateMenuItemsListenerContract
         return config('chat.name');
     }
 
-    protected function createMenuItem(MenuModel $menuModel, ProjectModuleEntityDBModel $entity, $key = null): void
+    protected function createMenuItem(MenuModel $menuModel, ProjectModuleEntityDBModel $entity = null, $key = null): void
     {
         parent::createMenuItem($menuModel, $entity, $key);
 
