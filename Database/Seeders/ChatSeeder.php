@@ -133,7 +133,7 @@ class ChatSeeder extends BaseSeeder
     {
         $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
 
-        $seed_total = config('app.SEED_CHAT_CATEGORY_COUNT');
+        $seed_total = config('chat.SEED_CHAT_CATEGORIES_COUNT');
 
         ChatCategoryModel::factory()
             ->for($chat, 'chat')
@@ -149,7 +149,7 @@ class ChatSeeder extends BaseSeeder
     function createChatCategoryChannels(ChatCategoryModel $category, ChatModel $chat): void
     {
         $channel = ChatCategoryChannelEntityModel::props();
-        ChatCategoryChannelModel::factory()->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create([
+        ChatCategoryChannelModel::factory()->count(config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT'))->create([
             $channel->category_id => $category->id
         ]);
         $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
@@ -195,7 +195,7 @@ class ChatSeeder extends BaseSeeder
     function createChannelTopics(ChatCategoryChannelModel $channel, ChatModel $chat): void
     {
         $topic = ChatCategoryChannelTopicEntityModel::props();
-        $seed_total = config('app.SEED_MODULE_COUNT');
+        $seed_total = config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT');
         ChatCategoryChannelTopicModel::factory()->count($seed_total)->create([
             $topic->channel_id => $channel->id,
             $topic->user_id => $chat->user_id
