@@ -70,7 +70,7 @@
                                      alt="{{$message->user->name}}">
                             @endif
 
-                            <div class="direct-chat-text">{{$message->message}}</div>
+                                <div class="direct-chat-text">{{$message->thread}}</div>
                         </div>
                     </div>
                 @endforeach
