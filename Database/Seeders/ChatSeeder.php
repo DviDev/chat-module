@@ -19,7 +19,6 @@ use Modules\Chat\Entities\ChatUser\ChatUserEntityModel;
 use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionEntityModel;
 use Modules\Chat\Models\ChannelParticipantModel;
 use Modules\Chat\Models\ChatCategoryChannelModel;
-use Modules\Chat\Models\ChatCategoryChannelTopicMessageModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicModel;
 use Modules\Chat\Models\ChatCategoryChannelUserModel;
 use Modules\Chat\Models\ChatCategoryModel;
@@ -31,6 +30,7 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Models\ChatUserModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
+use Modules\Post\Models\ThreadModel;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Nwidart\Modules\Facades\Module;
@@ -202,19 +202,18 @@ class ChatSeeder extends BaseSeeder
         ]);
         $channel->topics()
             ->each(function (ChatCategoryChannelTopicModel $topic) use ($channel, $chat, $seed_total) {
-                $this->createTopicMessages($topic);
+                $this->createTopicThreads($topic);
             });
     }
 
-    function createTopicMessages(ChatCategoryChannelTopicModel $topic): void
+    function createTopicThreads(ChatCategoryChannelTopicModel $topic): void
     {
-        $participants = $topic->channel->participantUsers();
-
-        $participants->each(function (User $participant) use ($topic) {
-            ChatCategoryChannelTopicMessageModel::factory()
-                ->for($participant, 'user')
-                ->for($topic, 'topic')
-                ->create();
+        $topic->channel->participantUsers()
+            ->each(function (User $participant) use ($topic) {
+                ThreadModel::factory()->create([
+                    'parent_id' => $topic->thread_id,
+                    'user_id' => $participant->id
+                ]);
         });
     }
 

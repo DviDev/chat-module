@@ -5,8 +5,8 @@
                 <div>{{$topic->title}}</div>
             </div>
             <div class="card-tools">
-                <span title="{{$topic->messages()->count() .' '. __('New Messages')}} "
-                      class="badge bg-success">{{$topic->messages()->count()}}</span>
+                <span title="{{$topic->thread->children()->count() .' '. __('New Messages')}} "
+                      class="badge bg-success">{{$topic->thread->children()->count()}}</span>
                 {{--<button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                 </button>
@@ -50,7 +50,7 @@
 
             {{--MESSAGES--}}
             <div class="direct-chat-messages grow bg-gray-50 rounded">
-                @foreach($topic->messages()->orderByDesc('id')->get()->all() as $message)
+                @foreach($topic->thread->children()->orderByDesc('id')->get()->all() as $message)
                     <div @class(["mb-1", "text-right" => $message->user_id !== $topic->user->id])>
                         <div class="direct-chat-infos clearfix">
                                 <span class="direct-chat-name float-left">

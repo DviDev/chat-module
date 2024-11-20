@@ -12,13 +12,15 @@ use Modules\Base\Factories\BaseFactory;
 use Modules\Base\Models\BaseModel;
 use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicProps;
+use Modules\Post\Models\ThreadModel;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
  * @link https://github.com/DaviMenezes
  * @property-read  ChatCategoryChannelModel $channel
  * @property-read  User $user
- * @property-read  ChatCategoryChannelTopicMessageModel[]|Collection $messages
+ * @property-read  ThreadModel $thread
+ * @property-read  ThreadModel[]|Collection $threads
  * @method ChatCategoryChannelTopicEntityModel toEntity()
  */
 class ChatCategoryChannelTopicModel extends BaseModel
@@ -28,6 +30,15 @@ class ChatCategoryChannelTopicModel extends BaseModel
     use SoftDeletes;
 
     protected $casts = ['created_at' => 'datetime'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating(function (self $topic) {
+            $topic->thread_id = ThreadModel::query()->create(['content' => $topic->title]);
+        });
+    }
 
     public static function table($alias = null): string
     {
@@ -51,18 +62,18 @@ class ChatCategoryChannelTopicModel extends BaseModel
         return $this->belongsTo(ChatCategoryChannelModel::class, 'channel_id');
     }
 
-    public function files(): HasMany
-    {
-        return $this->hasMany(ChatCategoryChannelTopicFileModel::class, 'topic_id');
-    }
-
-    public function messages(): HasMany
-    {
-        return $this->hasMany(ChatCategoryChannelTopicMessageModel::class, 'topic_id');
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function thread(): BelongsTo
+    {
+        return $this->belongsTo(ThreadModel::class, 'thread_id');
+    }
+
+    public function threads(): HasMany
+    {
+        return $this->hasMany(ThreadModel::class, 'parent_id');
     }
 }

@@ -40,8 +40,8 @@ class TopicItem extends Component
 
     public function forceDelete(): void
     {
-        $this->topic->messages()->delete();
+        $this->topic->threads()->delete();
         $this->topic->forceDelete();
-        Toastr::instance($this)->success('Item removido');
+        Toastr::instance($this)->success(__('base::form.The item has been removed'));
     }
 }
