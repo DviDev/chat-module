@@ -20,6 +20,6 @@ class DatabaseSeederListener
      */
     public function handle(DatabaseSeederEvent $event): void
     {
-        (new ChatDatabaseSeeder())->run(command: $event->command);
+        \Artisan::call('db:seed', ['--class' => ChatDatabaseSeeder::class]);
     }
 }
