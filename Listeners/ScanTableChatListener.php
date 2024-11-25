@@ -20,7 +20,6 @@ class ScanTableChatListener
      */
     public function handle(ScanTableEvent $event): void
     {
-        $event->command->warn(PHP_EOL . '🤖 🚀 scanning chat module ...');
         (new ScanTableDomain())->scan('chat');
     }
 }
