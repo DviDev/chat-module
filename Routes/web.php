@@ -14,12 +14,12 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Modules\Chat\Models\ChatCategoryChannelModel;
-use Modules\Chat\Models\ChatCategoryChannelTopicMessageModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicModel;
 use Modules\Chat\Models\ChatCategoryModel;
 use Modules\Chat\Models\ChatGroupPermissionModel;
 use Modules\Chat\Models\ChatModel;
 use Modules\Chat\Models\ChatPermissionGroupModel;
+use Modules\Post\Models\ThreadModel;
 use Modules\Project\Services\DynamicRoutes;
 
 DynamicRoutes::all('Chat');
@@ -41,7 +41,7 @@ Route::middleware(['auth', 'verified'])->prefix('chat')->group(function () {
     Route::get('/category/channel/topic/{topic}/messages', fn(ChatCategoryChannelTopicModel $topic) =>
         view('chat::components.page.chat_category_channel_topic_messages_page', compact('topic')))
         ->withTrashed()->name('admin.chat.category.channel.topic.messages');
-    Route::get('/category/channel/topic/message/{message}/files', fn(ChatCategoryChannelTopicMessageModel $message) =>
+    Route::get('/category/channel/topic/thread/{thread}/files', fn(ThreadModel $message) =>
         view('chat::components.page.chat_category_channel_topic_message_files_page', compact('message')))
         ->name('admin.chat.category.channel.topic.message.files');
     Route::get('/category/channel/{channel}/users', fn(ChatCategoryChannelModel $channel) =>

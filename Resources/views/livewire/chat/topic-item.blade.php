@@ -38,7 +38,7 @@
     </div>
     <div class="w-3/12 flex space-x-1 my-auto">
         <div class="relative my-auto">
-            <x-dvui::notification text="{{$topic->messages()->count()}}" top left title="total de mensagens"
+            <x-dvui::notification text="{{$topic->thread->children->count()}}" top left title="total de mensagens"
                                   class="bg-blue-600 border-r border-b border-r-white text-white p-1"/>
             <a href="{{route('admin.chat.category.channel.topic.messages', $topic->id)}}"
                class="bg-blue-600 rounded py-1.5 px-2.5 my-auto">
@@ -46,7 +46,7 @@
             </a>
         </div>
         @if($topic->trashed())
-            @if(config('app.env') == 'local' || ($topic->user_id == auth()->user()->id && $topic->messages()->count() > 0))
+            @if(config('app.env') == 'local' || ($topic->user_id == auth()->user()->id && $topic->thread->children()->count() > 0))
                 <x-dvui::button action="forceDelete" title="forçar remoção" confirm danger rounded sm class="my-auto">
                     <i class="fas fa-trash cursor-pointer my-auto"></i>
                 </x-dvui::button>

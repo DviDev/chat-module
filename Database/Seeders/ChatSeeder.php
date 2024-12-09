@@ -19,7 +19,6 @@ use Modules\Chat\Entities\ChatUser\ChatUserEntityModel;
 use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionEntityModel;
 use Modules\Chat\Models\ChannelParticipantModel;
 use Modules\Chat\Models\ChatCategoryChannelModel;
-use Modules\Chat\Models\ChatCategoryChannelTopicMessageModel;
 use Modules\Chat\Models\ChatCategoryChannelTopicModel;
 use Modules\Chat\Models\ChatCategoryChannelUserModel;
 use Modules\Chat\Models\ChatCategoryModel;
@@ -31,6 +30,7 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Models\ChatUserModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
+use Modules\Post\Models\ThreadModel;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Nwidart\Modules\Facades\Module;
@@ -133,7 +133,7 @@ class ChatSeeder extends BaseSeeder
     {
         $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
 
-        $seed_total = config('app.SEED_CHAT_CATEGORY_COUNT');
+        $seed_total = config('chat.SEED_CHAT_CATEGORIES_COUNT');
 
         ChatCategoryModel::factory()
             ->for($chat, 'chat')
@@ -149,7 +149,7 @@ class ChatSeeder extends BaseSeeder
     function createChatCategoryChannels(ChatCategoryModel $category, ChatModel $chat): void
     {
         $channel = ChatCategoryChannelEntityModel::props();
-        ChatCategoryChannelModel::factory()->count(config('app.SEED_MODULE_CATEGORY_COUNT'))->create([
+        ChatCategoryChannelModel::factory()->count(config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT'))->create([
             $channel->category_id => $category->id
         ]);
         $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
@@ -195,26 +195,25 @@ class ChatSeeder extends BaseSeeder
     function createChannelTopics(ChatCategoryChannelModel $channel, ChatModel $chat): void
     {
         $topic = ChatCategoryChannelTopicEntityModel::props();
-        $seed_total = config('app.SEED_MODULE_COUNT');
+        $seed_total = config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT');
         ChatCategoryChannelTopicModel::factory()->count($seed_total)->create([
             $topic->channel_id => $channel->id,
             $topic->user_id => $chat->user_id
         ]);
         $channel->topics()
             ->each(function (ChatCategoryChannelTopicModel $topic) use ($channel, $chat, $seed_total) {
-                $this->createTopicMessages($topic);
+                $this->createTopicThreads($topic);
             });
     }
 
-    function createTopicMessages(ChatCategoryChannelTopicModel $topic): void
+    function createTopicThreads(ChatCategoryChannelTopicModel $topic): void
     {
-        $participants = $topic->channel->participantUsers();
-
-        $participants->each(function (User $participant) use ($topic) {
-            ChatCategoryChannelTopicMessageModel::factory()
-                ->for($participant, 'user')
-                ->for($topic, 'topic')
-                ->create();
+        $topic->channel->participantUsers()
+            ->each(function (User $participant) use ($topic) {
+                ThreadModel::factory()->create([
+                    'parent_id' => $topic->thread_id,
+                    'user_id' => $participant->id
+                ]);
         });
     }
 

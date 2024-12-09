@@ -7,8 +7,6 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelParticipantTable;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelTable;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelTopicFileTable;
-use Modules\Chat\Http\Livewire\ChatCategoryChannelTopicMessageFileTable;
-use Modules\Chat\Http\Livewire\ChatCategoryChannelTopicMessageTable;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelTopicTable;
 use Modules\Chat\Http\Livewire\ChatCategoryChannelUserTable;
 use Modules\Chat\Http\Livewire\ChatCategoryParticipantTable;
@@ -59,9 +57,6 @@ class ChatServiceProvider extends ServiceProvider
     {
         \Livewire::component('chat::category-channel-participant-table', ChatCategoryChannelParticipantTable::class);
         \Livewire::component('chat::category-channel-table', ChatCategoryChannelTable::class);
-        \Livewire::component('chat::category-channel-topic-file-table', ChatCategoryChannelTopicFileTable::class);
-        \Livewire::component('chat::category-channel-topic-message-file-table', ChatCategoryChannelTopicMessageFileTable::class);
-        \Livewire::component('chat::category-channel-topic-message-table', ChatCategoryChannelTopicMessageTable::class);
         \Livewire::component('chat::category-channel-topic-table', ChatCategoryChannelTopicTable::class);
         \Livewire::component('chat::category-channel-user-table', ChatCategoryChannelUserTable::class);
         \Livewire::component('chat::category-participant-table', ChatCategoryParticipantTable::class);
