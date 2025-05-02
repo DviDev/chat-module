@@ -51,26 +51,33 @@
             {{--MESSAGES--}}
             <div class="direct-chat-messages grow bg-gray-50 rounded">
                 @foreach($topic->thread->children()->orderByDesc('id')->get()->all() as $message)
-                    <div @class(["mb-1", "text-right" => $message->user_id !== $topic->user->id])>
+                    <div @class([
+                            "mb-1 direct-chat-msg",
+                             "right" => $message->user_id == $topic->user->id,
+                             "left" => $message->user_id !== $topic->user->id,
+                             ])>
                         <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-left">
-                                    {{$message->user->name .' ('.trans($message->user->type->name).')'}}
-                                </span>
-                            <span class="direct-chat-timestamp float-right">
-                                    {{$message->created_at->format('d m H:i')}}
-                                </span>
+                            <span @class([
+                                "direct-chat-name float-left" => $message->user_id !== auth()->user()->id,
+                                "direct-chat-name float-right" => $message->user_id == auth()->user()->id,
+                            ])>
+                                {{$message->user->name .' ('.trans($message->user->type->name).')'}}
+                            </span>
+                            <span @class([
+                                "direct-chat-timestamp",
+                                "float-left" => $message->user_id == auth()->user()->id,
+                                "float-right" => $message->user_id !== auth()->user()->id,
+                                ])>
+                                {{$message->created_at->format('d m H:i')}}
+                            </span>
                         </div>
-                        <div @class(["flex" => true,])>
-                            @if(!$message->user->image_path)
-                                <x-dvui::icon.user class="w-[30px] rounded"/>
-                            @elseif(str($message->user->image_path)->contains('temp_seed_files'))
-                                <x-dvui::icon.user class="w-[30px] rounded"/>
-                            @else
-                                <img class="direct-chat-img" src="{{asset($message->user->image_path)}}"
-                                     alt="{{$message->user->name}}">
-                            @endif
-
-                                <div class="direct-chat-text">{{$message->thread}}</div>
+                        <i @class([
+                            "fas fa-user direct-chat-img fa-2x mt-2",
+                            "text-green" => $message->user_id == auth()->user()->id,
+                            "text-blue" => $message->user_id == auth()->user()->id,
+                            ])></i>
+                        <div @class(["direct-chat-text"])>
+                            {{$message->content}}
                         </div>
                     </div>
                 @endforeach
