@@ -15,8 +15,7 @@ class MessagesChatPage extends Component
 
     public function mount()
     {
-//        $this->topic_message = $this->topic->message;
-        $this->topic_message = $this->topic->thread();
+        $this->topic_message = $this->topic->thread;
     }
 
     public function render()
@@ -27,7 +26,7 @@ class MessagesChatPage extends Component
     public function sendMessage()
     {
         $this->validate(rules:['message' => 'required']);
-        $this->topic->threads()->create([
+        $this->topic->thread->children()->create([
                 'content' => $this->message,
                 'user_id' => auth()->user()->id]
         );
