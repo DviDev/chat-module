@@ -1,10 +1,11 @@
 {
-    "name": "nwidart/chat",
-    "description": "",
+    "name": "dvidev/chat-module",
+    "description": "Chat Module",
+    "type": "laravel-module",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "Davi Menezes",
+            "email": "davimenezes.dev@gmail.com"
         }
     ],
     "extra": {

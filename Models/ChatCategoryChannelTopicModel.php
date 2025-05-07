@@ -30,13 +30,17 @@ class ChatCategoryChannelTopicModel extends BaseModel
     use SoftDeletes;
 
     protected $casts = ['created_at' => 'datetime'];
+    protected $with = ['thread'];
 
     protected static function boot()
     {
         parent::boot();
 
         self::creating(function (self $topic) {
-            $topic->thread_id = ThreadModel::query()->create(['content' => $topic->title]);
+            $topic->thread_id = ThreadModel::query()->create([
+                'content' => $topic->title,
+                'user_id' => $topic->user_id,
+            ])->id;
         });
     }
 
