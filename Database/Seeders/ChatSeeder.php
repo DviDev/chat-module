@@ -44,10 +44,11 @@ class ChatSeeder extends BaseSeeder
      */
     public function run($event = null): void
     {
-        $this->command->warn(PHP_EOL . '🤖 ✔ ' . str(__CLASS__)->explode('\\')->last() . ' ...');
+        $this->command->warn(PHP_EOL.'🤖 ✔ '.str(__CLASS__)->explode('\\')->last().' ...');
 
-        if (!config('chat.SEED_CHATS_IN_PRODUCTION')) {
-            $this->command->warn(PHP_EOL . '🤖 ✔ No Seed in production');
+        if (! config('chat.SEED_CHATS_IN_PRODUCTION')) {
+            $this->command->warn(PHP_EOL.'🤖 ✔ No Seed in production');
+
             return;
         }
         $this->event = $event;
@@ -63,7 +64,7 @@ class ChatSeeder extends BaseSeeder
 
         $chats = ChatModel::factory($seed_total)->for($me, 'user')->create();
 
-        $chats->each(function (ChatModel $chat) use ($me, $firsWorkspace, $seed_total) {
+        $chats->each(function (ChatModel $chat) use ($firsWorkspace) {
             if ($this->event) {
                 Event::dispatch($this->event->class(), $this->event->param('chat', $chat)->payload());
             }
@@ -78,22 +79,22 @@ class ChatSeeder extends BaseSeeder
             $this->createChatUsers($chat);
         });
 
-        $this->command->warn(PHP_EOL . '🤖 ✔ ' . str(__CLASS__)->explode('\\')->last() . ' done');
+        $this->command->warn(PHP_EOL.'🤖 ✔ '.str(__CLASS__)->explode('\\')->last().' done');
     }
 
     protected function createWorkspaceChat(ChatModel $chat, WorkspaceModel $firsWorkspace): void
     {
-        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
+        $this->command->warn(PHP_EOL.'🤖 '.str(__METHOD__)->explode('\\')->last().' ...');
 
         if (collect(Module::allEnabled())->contains('Workspace')) {
             WorkspaceChatModel::factory()->for($firsWorkspace, 'workspace')->for($chat, 'chat')->create();
         }
-        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
+        $this->command->info(PHP_EOL.'🤖 ✔️ '.str(__METHOD__)->explode('\\')->last().' done');
     }
 
-    function createParticipants(ChatModel $chat): void
+    public function createParticipants(ChatModel $chat): void
     {
-        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
+        $this->command->warn(PHP_EOL.'🤖 '.str(__METHOD__)->explode('\\')->last().' ...');
 
         $p = ChatParticipantEntityModel::props();
         ChatParticipantModel::factory()->create([
@@ -108,7 +109,7 @@ class ChatSeeder extends BaseSeeder
         ]);
 
         if (collect(Module::allEnabled())->contains('Workspace')) {
-            /**@var WorkspaceModel $workspace */
+            /** @var WorkspaceModel $workspace */
             $workspace = $chat->workspaces()->first();
             $builder = $workspace->participants()->whereNot('user_id', 1);
             $builder = $builder->limit($builder->count() - 2);
@@ -126,12 +127,12 @@ class ChatSeeder extends BaseSeeder
             ]);
         });
 
-        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
+        $this->command->info(PHP_EOL.'🤖 ✔️ '.str(__METHOD__)->explode('\\')->last().' done');
     }
 
-    function createChatCategories(ChatModel $chat): void
+    public function createChatCategories(ChatModel $chat): void
     {
-        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
+        $this->command->warn(PHP_EOL.'🤖 '.str(__METHOD__)->explode('\\')->last().' ...');
 
         $seed_total = config('chat.SEED_CHAT_CATEGORIES_COUNT');
 
@@ -139,18 +140,18 @@ class ChatSeeder extends BaseSeeder
             ->for($chat, 'chat')
             ->for($chat->user, 'user')
             ->count($seed_total)->create();
-        $chat->categories()->each(function (ChatCategoryModel $category) use ($chat, $seed_total) {
+        $chat->categories()->each(function (ChatCategoryModel $category) use ($chat) {
             $this->createChatCategoryChannels($category, $chat);
         });
 
-        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
+        $this->command->info(PHP_EOL.'🤖 ✔️ '.str(__METHOD__)->explode('\\')->last().' done');
     }
 
-    function createChatCategoryChannels(ChatCategoryModel $category, ChatModel $chat): void
+    public function createChatCategoryChannels(ChatCategoryModel $category, ChatModel $chat): void
     {
         $channel = ChatCategoryChannelEntityModel::props();
         ChatCategoryChannelModel::factory()->count(config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT'))->create([
-            $channel->category_id => $category->id
+            $channel->category_id => $category->id,
         ]);
         $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
             $this->createCategoryChannelParticipants($channel, $chat);
@@ -163,77 +164,77 @@ class ChatSeeder extends BaseSeeder
         });
     }
 
-    function createCategoryChannelParticipants(ChatCategoryChannelModel $channel, ChatModel $chat): void
+    public function createCategoryChannelParticipants(ChatCategoryChannelModel $channel, ChatModel $chat): void
     {
         $p = ChannelParticipantEntityModel::props();
-        if (!ChannelParticipantModel::query()
+        if (! ChannelParticipantModel::query()
             ->where($p->channel_id, $channel->id)
             ->where($p->user_id, $channel->category->created_by_user_id)->exists()) {
             $participant = ChannelParticipantModel::factory()->create([
                 $p->channel_id => $channel->id,
                 $p->user_id => $channel->category->created_by_user_id,
-                $p->type => ChatCategoryChannelParticipantEnum::owner->name
+                $p->type => ChatCategoryChannelParticipantEnum::owner->name,
             ]);
         }
         ChannelParticipantModel::factory()->create([
             $p->channel_id => $channel->id,
             $p->user_id => User::factory()->create()->id,
-            $p->type => ChatCategoryChannelParticipantEnum::admin->name
+            $p->type => ChatCategoryChannelParticipantEnum::admin->name,
         ]);
         $participants = $chat->participants()->whereNot('user_id', $channel->category->created_by_user_id);
 
-        $participants->each(function (User $user) use ($channel, $chat) {
+        $participants->each(function (User $user) use ($channel) {
             $p = ChannelParticipantEntityModel::props();
             ChannelParticipantModel::factory()->create([
                 $p->channel_id => $channel->id,
                 $p->user_id => $user->id,
-                $p->type => ChatCategoryChannelParticipantEnum::default->name
+                $p->type => ChatCategoryChannelParticipantEnum::default->name,
             ]);
         });
     }
 
-    function createChannelTopics(ChatCategoryChannelModel $channel, ChatModel $chat): void
+    public function createChannelTopics(ChatCategoryChannelModel $channel, ChatModel $chat): void
     {
         $topic = ChatCategoryChannelTopicEntityModel::props();
         $seed_total = config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT');
         ChatCategoryChannelTopicModel::factory()->count($seed_total)->create([
             $topic->channel_id => $channel->id,
-            $topic->user_id => $chat->user_id
+            $topic->user_id => $chat->user_id,
         ]);
         $channel->topics()
-            ->each(function (ChatCategoryChannelTopicModel $topic) use ($channel, $chat, $seed_total) {
+            ->each(function (ChatCategoryChannelTopicModel $topic) {
                 $this->createTopicThreads($topic);
             });
     }
 
-    function createTopicThreads(ChatCategoryChannelTopicModel $topic): void
+    public function createTopicThreads(ChatCategoryChannelTopicModel $topic): void
     {
         $topic->channel->participantUsers()
             ->each(function (User $participant) use ($topic) {
                 ThreadModel::factory()->create([
                     'parent_id' => $topic->thread_id,
-                    'user_id' => $participant->id
+                    'user_id' => $participant->id,
                 ]);
-        });
+            });
     }
 
-    function createChatGroupPermissions(ChatModel $chat): void
+    public function createChatGroupPermissions(ChatModel $chat): void
     {
-        $this->command->warn(PHP_EOL . 'Creating chat group permissions ...');
+        $this->command->warn(PHP_EOL.'Creating chat group permissions ...');
         $config = ChatConfigEntityModel::props();
         ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
         ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
             $p = ChatGroupPermissionEntityModel::props();
             ChatGroupPermissionModel::factory()->create([
                 $p->group_id => ChatPermissionGroupModel::factory()->create()->id,
-                $p->permission_id => $permission->id
+                $p->permission_id => $permission->id,
             ]);
         });
     }
 
     protected function createChatUsers(ChatModel $chat): void
     {
-        $this->command->warn(PHP_EOL . '🤖 ' . str(__METHOD__)->explode('\\')->last() . ' ...');
+        $this->command->warn(PHP_EOL.'🤖 '.str(__METHOD__)->explode('\\')->last().' ...');
 
         $participants = $chat->participants();
 
@@ -246,10 +247,10 @@ class ChatSeeder extends BaseSeeder
             $permission = ChatUserPermissionEntityModel::props();
             ChatUserPermissionModel::factory()->create([
                 $permission->user_id => $user->id,
-                $permission->permission_id => ChatPermissionModel::query()->inRandomOrder()->first()->id
+                $permission->permission_id => ChatPermissionModel::query()->inRandomOrder()->first()->id,
             ]);
         });
 
-        $this->command->info(PHP_EOL . '🤖 ✔️ ' . str(__METHOD__)->explode('\\')->last() . ' done');
+        $this->command->info(PHP_EOL.'🤖 ✔️ '.str(__METHOD__)->explode('\\')->last().' done');
     }
 }

@@ -19,13 +19,13 @@ class ChatPermissionTableSeeder extends BaseSeeder
     {
         Model::unguard();
 
-        $this->command->warn(PHP_EOL . '🤖 🌱 seeding CHAT PERMISSIONS ...');
+        $this->command->warn(PHP_EOL.'🤖 🌱 seeding CHAT PERMISSIONS ...');
 
         $items = [
             PermissionEnum::READ,
             PermissionEnum::WRITE,
             PermissionEnum::UPDATE,
-            PermissionEnum::DELETE
+            PermissionEnum::DELETE,
         ];
         $permissions = collect($items);
 
@@ -33,10 +33,10 @@ class ChatPermissionTableSeeder extends BaseSeeder
             $entity = ChatPermissionEntityModel::props();
             ChatPermissionModel::query()->updateOrCreate(
                 [$entity->name => $permission->name],
-                [$entity->description => "bla bla bla"]
+                [$entity->description => 'bla bla bla']
             );
         });
 
-        $this->command->warn(PHP_EOL . '🤖 ✔ ️ CHAT PERMISSIONS done');
+        $this->command->warn(PHP_EOL.'🤖 ✔ ️ CHAT PERMISSIONS done');
     }
 }
