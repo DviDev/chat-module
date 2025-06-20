@@ -20,6 +20,6 @@ class ScanTableChatListener
      */
     public function handle(ScanTableEvent $event): void
     {
-        (new ScanTableDomain())->scan('chat');
+        (new ScanTableDomain)->scan('chat');
     }
 }

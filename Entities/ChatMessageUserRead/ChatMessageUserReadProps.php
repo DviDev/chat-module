@@ -8,7 +8,4 @@ namespace Modules\Chat\Entities\ChatMessageUserRead;
  * @property $user_id
  * @property $created_at
  */
-trait ChatMessageUserReadProps
-{
-
-}
+trait ChatMessageUserReadProps {}

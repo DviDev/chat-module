@@ -10,7 +10,4 @@ namespace Modules\Chat\Entities\ChatCategoryChannelUser;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ChatCategoryChannelUserProps
-{
-
-}
+trait ChatCategoryChannelUserProps {}

@@ -11,7 +11,4 @@ namespace Modules\Chat\Entities\Chat;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ChatProps
-{
-
-}
+trait ChatProps {}

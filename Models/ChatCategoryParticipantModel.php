@@ -10,13 +10,15 @@ use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method ChatCategoryParticipantEntityModel toEntity()
  */
 class ChatCategoryParticipantModel extends BaseModel
 {
-    use HasFactory;
     use ChatCategoryParticipantProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -25,7 +27,8 @@ class ChatCategoryParticipantModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatCategoryParticipantModel::class;
         };
     }

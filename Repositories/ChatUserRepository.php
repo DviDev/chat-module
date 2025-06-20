@@ -8,7 +8,9 @@ use Modules\Chat\Models\ChatUserModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method self obj()
  * @method ChatUserModel model()
  * @method ChatUserEntityModel find($id)
@@ -20,7 +22,7 @@ use Modules\Chat\Models\ChatUserModel;
 class ChatUserRepository extends BaseRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function modelClass(): string
     {

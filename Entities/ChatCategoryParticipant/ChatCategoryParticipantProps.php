@@ -11,7 +11,4 @@ namespace Modules\Chat\Entities\ChatCategoryParticipant;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ChatCategoryParticipantProps
-{
-
-}
+trait ChatCategoryParticipantProps {}

@@ -10,7 +10,4 @@ namespace Modules\Chat\Entities\ChatUserPermission;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ChatUserPermissionProps
-{
-
-}
+trait ChatUserPermissionProps {}

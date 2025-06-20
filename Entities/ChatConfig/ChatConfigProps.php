@@ -7,7 +7,4 @@ namespace Modules\Chat\Entities\ChatConfig;
  * @property $chat_id
  * @property $time_between_messages
  */
-trait ChatConfigProps
-{
-
-}
+trait ChatConfigProps {}

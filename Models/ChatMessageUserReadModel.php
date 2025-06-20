@@ -10,14 +10,17 @@ use Modules\Chat\Entities\ChatMessageUserRead\ChatMessageUserReadProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read ChatMessageUserReadModel $model
+ *
  * @method ChatMessageUserReadEntityModel toEntity()
  */
 class ChatMessageUserReadModel extends BaseModel
 {
-    use HasFactory;
     use ChatMessageUserReadProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -26,7 +29,8 @@ class ChatMessageUserReadModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatMessageUserReadModel::class;
         };
     }

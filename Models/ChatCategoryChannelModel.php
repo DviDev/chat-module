@@ -14,17 +14,20 @@ use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read ChatCategoryModel $category
  * @property-read User[] $participantUsers
  * @property-read ChannelParticipantModel[] $participants
  * @property-read ChatCategoryChannelTopicModel[] $topics
+ *
  * @method ChatCategoryChannelEntityModel toEntity()
  */
 class ChatCategoryChannelModel extends BaseModel
 {
-    use HasFactory;
     use ChatCategoryChannelProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -33,7 +36,8 @@ class ChatCategoryChannelModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatCategoryChannelModel::class;
         };
     }
@@ -67,5 +71,4 @@ class ChatCategoryChannelModel extends BaseModel
     {
         return $this->belongsToMany(User::class, ChatCategoryChannelUserModel::class, 'channel_id', 'user_id');
     }
-
 }

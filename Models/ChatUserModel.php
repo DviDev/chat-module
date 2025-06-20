@@ -10,13 +10,15 @@ use Modules\Chat\Entities\ChatUser\ChatUserProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method ChatUserEntityModel toEntity()
  */
 class ChatUserModel extends BaseModel
 {
-    use HasFactory;
     use ChatUserProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -25,7 +27,8 @@ class ChatUserModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatUserModel::class;
         };
     }
