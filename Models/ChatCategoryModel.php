@@ -14,15 +14,18 @@ use Modules\Chat\Entities\ChatCategory\ChatCategoryProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read  ChatModel $chat
  * @property-read  ChatCategoryChannelModel[] $channels
+ *
  * @method ChatCategoryEntityModel toEntity()
  */
 class ChatCategoryModel extends BaseModel
 {
-    use HasFactory;
     use ChatCategoryProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -31,7 +34,8 @@ class ChatCategoryModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatCategoryModel::class;
         };
     }

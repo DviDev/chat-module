@@ -18,7 +18,7 @@ class ChatProjectModuleTableSeeder extends BaseSeeder
     {
         Model::unguard();
 
-        $this->command->warn(PHP_EOL . '🤖 🌱 seeding ' . str(__CLASS__)->explode('\\')->last() . ' ...');
+        $this->command->warn(PHP_EOL.'🤖 🌱 seeding '.str(__CLASS__)->explode('\\')->last().' ...');
 
         $this->call(
             class: PermissionTableSeeder::class,
@@ -26,9 +26,9 @@ class ChatProjectModuleTableSeeder extends BaseSeeder
         );
 
         $this->call(ProjectTableSeeder::class, parameters: [
-            'module_name' => 'Chat'
+            'module_name' => 'Chat',
         ]);
 
-        $this->command->warn(PHP_EOL . '🤖 ✔ ' . str(__CLASS__)->explode('\\')->last() . ' ...');
+        $this->command->warn(PHP_EOL.'🤖 ✔ '.str(__CLASS__)->explode('\\')->last().' ...');
     }
 }

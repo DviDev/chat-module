@@ -10,7 +10,4 @@ namespace Modules\Chat\Entities\ChatCategory;
  * @property $updated_at
  * @property $created_by_user_id
  */
-trait ChatCategoryProps
-{
-
-}
+trait ChatCategoryProps {}

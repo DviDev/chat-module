@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId($p->user_id)
                 ->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-            $table->char($p->type); //ChatParticipantEnum::toArray()
+            $table->char($p->type); // ChatParticipantEnum::toArray()
             $table->timestamp($p->created_at)->useCurrent();
             $table->timestamp($p->updated_at)->useCurrent()->useCurrentOnUpdate();
             $table->timestamp($p->deleted_at)->nullable();

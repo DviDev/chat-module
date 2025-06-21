@@ -8,7 +8,9 @@ use Modules\Chat\Models\ChatCategoryChannelUserModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method self obj()
  * @method ChatCategoryChannelUserModel model()
  * @method ChatCategoryChannelUserEntityModel find($id)
@@ -20,7 +22,7 @@ use Modules\Chat\Models\ChatCategoryChannelUserModel;
 class ChatCategoryChannelUserRepository extends BaseRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function modelClass(): string
     {

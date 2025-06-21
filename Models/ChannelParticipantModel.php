@@ -12,15 +12,18 @@ use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method ChannelParticipantEntityModel toEntity()
+ *
  * @property-read ChatCategoryChannelModel $channel
  * @property-read User $user
  */
 class ChannelParticipantModel extends BaseModel
 {
-    use HasFactory;
     use ChannelParticipantProps;
+    use HasFactory;
 
     protected $with = ['user'];
 
@@ -31,7 +34,8 @@ class ChannelParticipantModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChannelParticipantModel::class;
         };
     }

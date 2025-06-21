@@ -8,7 +8,9 @@ use Modules\Chat\Models\ChatGroupPermissionModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method self obj()
  * @method ChatGroupPermissionModel model()
  * @method ChatGroupPermissionEntityModel find($id)
@@ -20,7 +22,7 @@ use Modules\Chat\Models\ChatGroupPermissionModel;
 class ChatGroupPermissionRepository extends BaseRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function modelClass(): string
     {

@@ -13,12 +13,12 @@ class ChatDatabaseSeeder extends BaseSeeder
      *
      * @return void
      */
-    public function run(Command $command = null)
+    public function run(?Command $command = null)
     {
         Model::unguard();
 
         $this->call(ChatSeeder::class);
 
-        $this->command->info(PHP_EOL . '🤖 ✔️ chat module: done');
+        $this->command->info(PHP_EOL.'🤖 ✔️ chat module: done');
     }
 }

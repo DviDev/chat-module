@@ -10,13 +10,15 @@ use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method ChatCategoryChannelUserEntityModel toEntity()
  */
 class ChatCategoryChannelUserModel extends BaseModel
 {
-    use HasFactory;
     use ChatCategoryChannelUserProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -25,7 +27,8 @@ class ChatCategoryChannelUserModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatCategoryChannelUserModel::class;
         };
     }

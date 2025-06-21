@@ -15,7 +15,4 @@ use Carbon\Carbon;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ChatCategoryChannelTopicProps
-{
-
-}
+trait ChatCategoryChannelTopicProps {}

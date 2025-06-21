@@ -10,13 +10,15 @@ use Modules\Chat\Entities\ChatPermission\ChatPermissionProps;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method ChatPermissionEntityModel toEntity()
  */
 class ChatPermissionModel extends BaseModel
 {
-    use HasFactory;
     use ChatPermissionProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -25,7 +27,8 @@ class ChatPermissionModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatPermissionModel::class;
         };
     }

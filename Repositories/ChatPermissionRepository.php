@@ -8,7 +8,9 @@ use Modules\Chat\Models\ChatPermissionModel;
 
 /**
  * @author Davi Menezes(davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @method self obj()
  * @method ChatPermissionModel model()
  * @method ChatPermissionEntityModel find($id)
@@ -20,7 +22,7 @@ use Modules\Chat\Models\ChatPermissionModel;
 class ChatPermissionRepository extends BaseRepository
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function modelClass(): string
     {

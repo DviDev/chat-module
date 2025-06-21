@@ -17,18 +17,22 @@ use Modules\Workspace\Models\WorkspaceModel;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read  User $user
  * @property-read  User[] $participants
  * @property-read  WorkspaceModel[] $workspaces
+ *
  * @method ChatEntityModel toEntity()
+ *
  * @property-read  ChatCategoryModel[] $categories
  */
 class ChatModel extends BaseModel
 {
-    use HasFactory;
-    use ChatProps;
     use BelongsToUser;
+    use ChatProps;
+    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -37,7 +41,8 @@ class ChatModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatModel::class;
         };
     }
