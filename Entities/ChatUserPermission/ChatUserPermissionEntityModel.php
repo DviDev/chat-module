@@ -4,7 +4,6 @@ namespace Modules\Chat\Entities\ChatUserPermission;
 
 use Modules\Base\Entities\BaseEntityModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
-use Modules\Chat\Repositories\ChatUserPermissionRepository;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
@@ -16,14 +15,8 @@ use Modules\Chat\Repositories\ChatUserPermissionRepository;
  * @method self save()
  * @method static self new()
  * @method static self props($alias = null, $force = null)
- * @method ChatUserPermissionRepository repository()
  */
 class ChatUserPermissionEntityModel extends BaseEntityModel
 {
     use ChatUserPermissionProps;
-
-    protected function repositoryClass(): string
-    {
-        return ChatUserPermissionRepository::class;
-    }
 }
