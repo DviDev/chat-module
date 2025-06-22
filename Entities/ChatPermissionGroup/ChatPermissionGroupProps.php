@@ -7,7 +7,4 @@ namespace Modules\Chat\Entities\ChatPermissionGroup;
  * @property $name
  * @property $description
  */
-trait ChatPermissionGroupProps
-{
-
-}
+trait ChatPermissionGroupProps {}

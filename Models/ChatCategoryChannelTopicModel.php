@@ -16,20 +16,24 @@ use Modules\Post\Models\ThreadModel;
 
 /**
  * @author Davi Menezes (davimenezes.dev@gmail.com)
+ *
  * @link https://github.com/DaviMenezes
+ *
  * @property-read  ChatCategoryChannelModel $channel
  * @property-read  User $user
  * @property-read  ThreadModel $thread
  * @property-read  ThreadModel[]|Collection $threads
+ *
  * @method ChatCategoryChannelTopicEntityModel toEntity()
  */
 class ChatCategoryChannelTopicModel extends BaseModel
 {
-    use HasFactory;
     use ChatCategoryChannelTopicProps;
+    use HasFactory;
     use SoftDeletes;
 
     protected $casts = ['created_at' => 'datetime'];
+
     protected $with = ['thread'];
 
     protected static function boot()
@@ -51,7 +55,8 @@ class ChatCategoryChannelTopicModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatCategoryChannelTopicModel::class;
         };
     }

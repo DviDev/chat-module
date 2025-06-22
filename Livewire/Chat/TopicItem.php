@@ -8,9 +8,11 @@ use Modules\DvUi\Services\Plugins\Toastr\Toastr;
 
 class TopicItem extends Component
 {
-    /**@var ChatCategoryChannelTopicModel*/
+    /** @var ChatCategoryChannelTopicModel */
     public $topic;
+
     public $title;
+
     public $message;
 
     public function mount()

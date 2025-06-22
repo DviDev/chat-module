@@ -11,7 +11,4 @@ namespace Modules\Chat\Entities\ChannelParticipant;
  * @property $updated_at
  * @property $deleted_at
  */
-trait ChannelParticipantProps
-{
-
-}
+trait ChannelParticipantProps {}

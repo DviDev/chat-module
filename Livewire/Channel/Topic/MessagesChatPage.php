@@ -8,9 +8,11 @@ use Modules\DvUi\Services\Plugins\Toastr\Toastr;
 
 class MessagesChatPage extends Component
 {
-    /**@var ChatCategoryChannelTopicModel*/
+    /** @var ChatCategoryChannelTopicModel */
     public $topic;
+
     public $message;
+
     public $topic_message;
 
     public function mount()
@@ -25,10 +27,10 @@ class MessagesChatPage extends Component
 
     public function sendMessage()
     {
-        $this->validate(rules:['message' => 'required']);
+        $this->validate(rules: ['message' => 'required']);
         $this->topic->thread->children()->create([
-                'content' => $this->message,
-                'user_id' => auth()->user()->id]
+            'content' => $this->message,
+            'user_id' => auth()->user()->id]
         );
         $this->message = null;
     }

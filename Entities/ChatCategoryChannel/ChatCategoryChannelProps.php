@@ -7,7 +7,4 @@ namespace Modules\Chat\Entities\ChatCategoryChannel;
  * @property $category_id
  * @property $name
  */
-trait ChatCategoryChannelProps
-{
-
-}
+trait ChatCategoryChannelProps {}
