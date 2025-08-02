@@ -18,7 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Chat\\": ""
+            "Modules\\Chat\\": "app/",
+            "Modules\\Chat\\Database\\Seeders\\": "database/Seeders/",
+            "Modules\\Chat\\Database\\Migrations\\": "database/Migrations/"
         }
+    },
+    "require": {
+        "dvidev/post-module": "*"
     }
 }
