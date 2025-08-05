@@ -8,14 +8,6 @@ use Modules\Project\Models\ProjectModuleEntityDBModel;
 
 class CreateMenuItemsListener extends CreateMenuItemsListenerContract
 {
-    /**
-     * Create the event listener.
-     */
-    public function __construct()
-    {
-        //
-    }
-
     public function moduleName(): string
     {
         return config('chat.name');
