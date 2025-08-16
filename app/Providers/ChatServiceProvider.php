@@ -12,7 +12,6 @@ class ChatServiceProvider extends ServiceProvider
      * @var string
      */
     protected $moduleName = 'Chat';
-
     /**
      * @var string
      */
@@ -28,6 +27,9 @@ class ChatServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+
+        $this->registerComponents();
+
         $this->loadMigrationsFrom(module_path($this->moduleName, 'database/Migrations'));
     }
 
@@ -38,10 +40,6 @@ class ChatServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        \Livewire::component('chat::category.channel.topic-item', TopicItem::class);
-        \Livewire::component('chat::channel.topic.messages-chat-page', MessagesChatPage::class);
-
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(ChatEventServiceProvider::class);
     }
@@ -54,7 +52,7 @@ class ChatServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower.'.php'),
+            module_path($this->moduleName, 'config/config.php') => config_path($this->moduleNameLower . '.php'),
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower
@@ -68,13 +66,13 @@ class ChatServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/'.$this->moduleNameLower);
+        $viewPath = resource_path('views/modules/' . $this->moduleNameLower);
 
         $sourcePath = module_path($this->moduleName, 'resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath,
-        ], ['views', $this->moduleNameLower.'-module-views']);
+        ], ['views', $this->moduleNameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->moduleNameLower);
     }
@@ -86,7 +84,7 @@ class ChatServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/'.$this->moduleNameLower);
+        $langPath = resource_path('lang/modules/' . $this->moduleNameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->moduleNameLower);
@@ -109,11 +107,17 @@ class ChatServiceProvider extends ServiceProvider
     {
         $paths = [];
         foreach (\Config::get('view.paths') as $path) {
-            if (is_dir($path.'/modules/'.$this->moduleNameLower)) {
-                $paths[] = $path.'/modules/'.$this->moduleNameLower;
+            if (is_dir($path . '/modules/' . $this->moduleNameLower)) {
+                $paths[] = $path . '/modules/' . $this->moduleNameLower;
             }
         }
 
         return $paths;
+    }
+
+    protected function registerComponents(): void
+    {
+        \Livewire::component('chat::category.channel.topic-item', TopicItem::class);
+        \Livewire::component('chat::channel.topic.messages-chat-page', MessagesChatPage::class);
     }
 }
