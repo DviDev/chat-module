@@ -2,7 +2,7 @@
 
 namespace Modules\Chat\Listeners;
 
-use Modules\Project\Listeners\CreateMenuItemsListenerContract;
+use Modules\Project\Contracts\CreateMenuItemsListenerContract;
 use Modules\Project\Models\MenuModel;
 use Modules\Project\Models\ProjectModuleEntityDBModel;
 
