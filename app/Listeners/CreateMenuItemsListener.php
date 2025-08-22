@@ -2,9 +2,9 @@
 
 namespace Modules\Chat\Listeners;
 
-use Modules\Project\Listeners\CreateMenuItemsListenerContract;
-use Modules\Project\Models\MenuModel;
+use Modules\Project\Contracts\CreateMenuItemsListenerContract;
 use Modules\Project\Models\ProjectModuleEntityDBModel;
+use Modules\Project\Models\ProjectModuleMenuModel;
 
 class CreateMenuItemsListener extends CreateMenuItemsListenerContract
 {
@@ -13,9 +13,9 @@ class CreateMenuItemsListener extends CreateMenuItemsListenerContract
         return config('chat.name');
     }
 
-    protected function createMenuItem(MenuModel $menuModel, ?ProjectModuleEntityDBModel $entity = null, $key = null): void
+    protected function createMenuItem(ProjectModuleMenuModel $menuModel, ?ProjectModuleEntityDBModel $entity = null, $active = null): void
     {
-        parent::createMenuItem($menuModel, $entity, $key);
+        parent::createMenuItem($menuModel, $entity, $active);
 
         $menuModel->active = null;
         $menuModel->save();

@@ -6,9 +6,11 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Base\Events\DatabaseSeederEvent;
 use Modules\Chat\Listeners\CreateMenuItemsListener;
 use Modules\Chat\Listeners\DatabaseSeederListener;
+use Modules\Chat\Listeners\DefineSearchableAttributes;
 use Modules\Chat\Listeners\ScanTableChatListener;
 use Modules\DBMap\Events\ScanTableEvent;
 use Modules\Project\Events\CreateMenuItemsEvent;
+use Modules\Project\Events\EntityAttributesCreatedEvent;
 
 class ChatEventServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class ChatEventServiceProvider extends ServiceProvider
         \Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
         \Event::listen(ScanTableEvent::class, ScanTableChatListener::class);
         \Event::listen(DatabaseSeederEvent::class, DatabaseSeederListener::class);
+        \Event::listen(EntityAttributesCreatedEvent::class, DefineSearchableAttributes::class);
     }
 
     /**
