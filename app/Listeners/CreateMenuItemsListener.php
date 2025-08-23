@@ -16,8 +16,5 @@ class CreateMenuItemsListener extends CreateMenuItemsListenerContract
     protected function createMenuItem(ProjectModuleMenuModel $menuModel, ?ProjectModuleEntityDBModel $entity = null, $active = null): void
     {
         parent::createMenuItem($menuModel, $entity, $active);
-
-        $menuModel->active = null;
-        $menuModel->save();
     }
 }
