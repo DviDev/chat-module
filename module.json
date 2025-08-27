@@ -9,5 +9,8 @@
     ],
     "aliases": {},
     "files": [],
-    "requires": []
+    "requires": [],
+    "modules_dependencies": [
+        "Modules\\Post\\Providers\\PostServiceProvider"
+    ]
 }
