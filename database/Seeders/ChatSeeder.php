@@ -30,6 +30,7 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Models\ChatUserModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
+use Modules\Person\Models\PersonModel;
 use Modules\Post\Models\ThreadModel;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
@@ -157,7 +158,7 @@ class ChatSeeder extends BaseSeeder
             $this->createCategoryChannelParticipants($channel, $chat);
             $this->createChannelTopics($channel, $chat);
             $user = ChatCategoryChannelUserEntityModel::props();
-            ChatCategoryChannelUserModel::factory()->create([
+            ChatCategoryChannelUserModel::query()->updateOrCreate([
                 $user->user_id => $chat->id,
                 $user->channel_id => $channel->id,
             ]);
