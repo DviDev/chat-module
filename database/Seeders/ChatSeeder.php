@@ -177,9 +177,14 @@ class ChatSeeder extends BaseSeeder
                 $p->type => ChatCategoryChannelParticipantEnum::owner->name,
             ]);
         }
+        $person = PersonModel::factory()->create();
+        $user = User::factory()->create([
+            'name' => $person->name,
+            'person_id' => $person->id,
+        ]);
         ChannelParticipantModel::factory()->create([
             $p->channel_id => $channel->id,
-            $p->user_id => User::factory()->create()->id,
+            $p->user_id => $user->id,
             $p->type => ChatCategoryChannelParticipantEnum::admin->name,
         ]);
         $participants = $chat->participants()->whereNot('user_id', $channel->category->created_by_user_id);
