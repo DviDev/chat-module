@@ -2,7 +2,6 @@
 
 namespace Modules\Chat\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Chat\Entities\ChatMessageUserRead\ChatMessageUserReadEntityModel;
@@ -20,7 +19,6 @@ use Modules\Chat\Entities\ChatMessageUserRead\ChatMessageUserReadProps;
 class ChatMessageUserReadModel extends BaseModel
 {
     use ChatMessageUserReadProps;
-    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -29,8 +27,7 @@ class ChatMessageUserReadModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = ChatMessageUserReadModel::class;
         };
     }

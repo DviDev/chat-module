@@ -30,6 +30,7 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Models\ChatUserModel;
 use Modules\Chat\Models\ChatUserPermissionModel;
+use Modules\Person\Models\PersonModel;
 use Modules\Post\Models\ThreadModel;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
@@ -157,7 +158,7 @@ class ChatSeeder extends BaseSeeder
             $this->createCategoryChannelParticipants($channel, $chat);
             $this->createChannelTopics($channel, $chat);
             $user = ChatCategoryChannelUserEntityModel::props();
-            ChatCategoryChannelUserModel::factory()->create([
+            ChatCategoryChannelUserModel::query()->updateOrCreate([
                 $user->user_id => $chat->id,
                 $user->channel_id => $channel->id,
             ]);
@@ -176,9 +177,14 @@ class ChatSeeder extends BaseSeeder
                 $p->type => ChatCategoryChannelParticipantEnum::owner->name,
             ]);
         }
+        $person = PersonModel::factory()->create();
+        $user = User::factory()->create([
+            'name' => $person->name,
+            'person_id' => $person->id,
+        ]);
         ChannelParticipantModel::factory()->create([
             $p->channel_id => $channel->id,
-            $p->user_id => User::factory()->create()->id,
+            $p->user_id => $user->id,
             $p->type => ChatCategoryChannelParticipantEnum::admin->name,
         ]);
         $participants = $chat->participants()->whereNot('user_id', $channel->category->created_by_user_id);

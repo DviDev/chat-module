@@ -2,7 +2,6 @@
 
 namespace Modules\Chat\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Factories\BaseFactory;
 use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionEntityModel;
@@ -18,7 +17,6 @@ use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionProps;
 class ChatGroupPermissionModel extends BaseModel
 {
     use ChatGroupPermissionProps;
-    use HasFactory;
 
     public static function table($alias = null): string
     {
@@ -27,8 +25,7 @@ class ChatGroupPermissionModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = ChatGroupPermissionModel::class;
         };
     }

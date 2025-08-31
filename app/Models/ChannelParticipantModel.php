@@ -3,7 +3,6 @@
 namespace Modules\Chat\Models;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Factories\BaseFactory;
@@ -23,7 +22,6 @@ use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantProps;
 class ChannelParticipantModel extends BaseModel
 {
     use ChannelParticipantProps;
-    use HasFactory;
 
     protected $with = ['user'];
 
@@ -34,8 +32,7 @@ class ChannelParticipantModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = ChannelParticipantModel::class;
         };
     }

@@ -3,7 +3,6 @@
 namespace Modules\Chat\Models;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,7 +24,6 @@ use Modules\Chat\Entities\ChatCategory\ChatCategoryProps;
 class ChatCategoryModel extends BaseModel
 {
     use ChatCategoryProps;
-    use HasFactory;
 
     public function modelEntity(): string
     {
@@ -34,8 +32,7 @@ class ChatCategoryModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory
-        {
+        return new class extends BaseFactory {
             protected $model = ChatCategoryModel::class;
         };
     }
