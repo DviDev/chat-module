@@ -103,9 +103,10 @@ class ChatSeeder extends BaseSeeder
             $p->user_id => $chat->user_id,
             $p->type => ChatParticipantEnum::owner->name,
         ]);
+        $person = PersonModel::factory()->create();
         ChatParticipantModel::factory()->create([
             $p->chat_id => $chat->id,
-            $p->user_id => User::factory()->create()->id,
+            $p->user_id => User::factory()->create(['name' => $person->name, 'person_id' => $person->id])->id,
             $p->type => ChatParticipantEnum::admin->name,
         ]);
 
