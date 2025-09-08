@@ -25,7 +25,8 @@ class ChatUserModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatUserModel::class;
         };
     }

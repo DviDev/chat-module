@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\Chat\Entities\ChatMessageUserRead\ChatMessageUserReadEntityModel;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('chat_channel_topic_message_read_users', function (Blueprint $table) {

@@ -16,12 +16,13 @@ class DefineSearchableAttributes extends DefineSearchableAttributesContract
     public function searchableFields(): array
     {
         $p = ChatEntityModel::props();
+
         return [
             ChatModel::table() => [
                 $p->id,
                 $p->user_id,
                 $p->name,
-            ]
+            ],
         ];
     }
 }

@@ -12,7 +12,7 @@ class ChatServiceProvider extends BaseServiceProviderContract
     {
         return [
             RouteServiceProvider::class,
-            ChatEventServiceProvider::class
+            ChatEventServiceProvider::class,
         ];
     }
 

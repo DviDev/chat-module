@@ -28,10 +28,10 @@ use Modules\Post\Models\ThreadModel;
 class ChatCategoryChannelTopicModel extends BaseModel
 {
     use ChatCategoryChannelTopicProps;
-
     use SoftDeletes;
 
     protected $casts = ['created_at' => 'datetime'];
+
     protected $with = ['thread'];
 
     protected static function boot()
@@ -53,7 +53,8 @@ class ChatCategoryChannelTopicModel extends BaseModel
 
     protected static function newFactory(): BaseFactory
     {
-        return new class extends BaseFactory {
+        return new class extends BaseFactory
+        {
             protected $model = ChatCategoryChannelTopicModel::class;
         };
     }

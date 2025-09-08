@@ -7,5 +7,5 @@ return [
     'description' => 'descrição',
     'created_at' => 'data de criação',
     'updated_at' => 'data de atualização',
-    'deleted_at' => 'data de remoção'
+    'deleted_at' => 'data de remoção',
 ];

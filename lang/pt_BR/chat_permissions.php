@@ -3,5 +3,5 @@
 return [
     'id' => 'id',
     'name' => 'nome',
-    'description' => 'descrição'
+    'description' => 'descrição',
 ];
