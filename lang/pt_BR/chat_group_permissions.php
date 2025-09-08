@@ -3,5 +3,5 @@
 return [
     'id' => 'id',
     'group_id' => 'grupo',
-    'permission_id' => 'permissão'
+    'permission_id' => 'permissão',
 ];
