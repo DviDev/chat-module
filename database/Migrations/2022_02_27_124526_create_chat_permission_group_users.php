@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatPermissionGroupUser\ChatPermissionGroupUserEntityM
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_permission_group_users', function (Blueprint $table) {
@@ -22,7 +21,6 @@ return new class extends Migration
                 ->cascadeOnUpdate()->restrictOnDelete();
         });
     }
-
 
     public function down()
     {

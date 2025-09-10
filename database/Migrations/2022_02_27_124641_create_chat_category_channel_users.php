@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserEntityM
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_category_channel_users', function (Blueprint $table) {
@@ -27,7 +26,6 @@ return new class extends Migration
             $table->unique([$p->channel_id, $p->user_id]);
         });
     }
-
 
     public function down()
     {

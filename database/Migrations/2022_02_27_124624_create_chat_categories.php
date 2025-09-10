@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatCategory\ChatCategoryEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_categories', function (Blueprint $table) {
@@ -23,7 +22,6 @@ return new class extends Migration
             $table->timestamp($p->updated_at)->useCurrent();
         });
     }
-
 
     public function down()
     {

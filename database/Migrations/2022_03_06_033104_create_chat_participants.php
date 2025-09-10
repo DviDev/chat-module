@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatParticipant\ChatParticipantEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_participants', function (Blueprint $table) {
@@ -25,7 +24,6 @@ return new class extends Migration
             $table->timestamp($p->deleted_at)->nullable();
         });
     }
-
 
     public function down()
     {

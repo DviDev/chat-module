@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicEntit
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_category_channel_topics', function (Blueprint $table) {
@@ -33,7 +32,6 @@ return new class extends Migration
 
         });
     }
-
 
     public function down()
     {

@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatPermissionGroup\ChatPermissionGroupEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_permission_groups', function (Blueprint $table) {
@@ -17,7 +16,6 @@ return new class extends Migration
             $table->string($prop->description)->nullable();
         });
     }
-
 
     public function down()
     {

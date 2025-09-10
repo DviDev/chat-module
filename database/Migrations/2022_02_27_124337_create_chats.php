@@ -7,7 +7,6 @@ use Modules\Chat\Entities\Chat\ChatEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chats', function (Blueprint $table) {
@@ -24,7 +23,6 @@ return new class extends Migration
 
         });
     }
-
 
     public function down()
     {

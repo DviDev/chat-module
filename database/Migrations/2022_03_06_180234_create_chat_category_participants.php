@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatCategoryParticipant\ChatCategoryParticipantEntityM
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_category_participants', function (Blueprint $table) {
@@ -27,7 +26,6 @@ return new class extends Migration
 
         });
     }
-
 
     public function down()
     {

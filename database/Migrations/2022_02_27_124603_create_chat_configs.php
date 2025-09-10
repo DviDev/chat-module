@@ -7,7 +7,6 @@ use Modules\Chat\Entities\ChatConfig\ChatConfigEntityModel;
 
 return new class extends Migration
 {
-
     public function up()
     {
         Schema::create('chat_configs', function (Blueprint $table) {
@@ -20,7 +19,6 @@ return new class extends Migration
             $table->tinyInteger($prop->time_between_messages)->unsigned();
         });
     }
-
 
     public function down()
     {
