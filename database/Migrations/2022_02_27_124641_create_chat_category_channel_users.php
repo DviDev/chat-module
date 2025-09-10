@@ -7,11 +7,7 @@ use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserEntityM
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('chat_category_channel_users', function (Blueprint $table) {
@@ -32,11 +28,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('chat_category_channel_users');

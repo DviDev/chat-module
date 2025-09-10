@@ -7,11 +7,7 @@ use Modules\Chat\Entities\ChatGroupPermission\ChatGroupPermissionEntityModel;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('chat_group_permissions', function (Blueprint $table) {
@@ -27,11 +23,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('chat_group_permissions');

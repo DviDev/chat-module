@@ -7,11 +7,7 @@ use Modules\Chat\Entities\ChatConfig\ChatConfigEntityModel;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('chat_configs', function (Blueprint $table) {
@@ -25,11 +21,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('chat_configs');
