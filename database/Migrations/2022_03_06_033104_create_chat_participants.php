@@ -7,11 +7,6 @@ use Modules\Chat\Entities\ChatParticipant\ChatParticipantEntityModel;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('chat_participants', function (Blueprint $table) {
@@ -30,11 +25,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('chat_participants');
