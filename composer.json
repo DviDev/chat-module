@@ -22,5 +22,10 @@
             "Modules\\Chat\\Database\\Seeders\\": "database/Seeders/",
             "Modules\\Chat\\Database\\Migrations\\": "database/Migrations/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Chat\\Tests\\": "tests/"
+        }
     }
 }
