@@ -13,7 +13,7 @@ class DefineSearchableAttributes extends DefineSearchableAttributesContract
         return config('chat.name');
     }
 
-    public function searchableFields(): array
+    protected function searchableFields(): array
     {
         $p = ChatEntityModel::props();
 
