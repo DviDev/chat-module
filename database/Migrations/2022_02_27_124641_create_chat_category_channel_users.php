@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('chat_category_channel_users', function (Blueprint $table) {
+        Schema::create('chat_category_channel_users', function (Blueprint $table): void {
             $table->id();
 
             $p = ChatCategoryChannelUserEntityModel::props(null, true);

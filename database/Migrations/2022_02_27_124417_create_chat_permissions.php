@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('chat_permissions', function (Blueprint $table) {
+        Schema::create('chat_permissions', function (Blueprint $table): void {
             $table->id();
             $prop = ChatPermissionEntityModel::props(null, true);
             $table->string($prop->name, 50);

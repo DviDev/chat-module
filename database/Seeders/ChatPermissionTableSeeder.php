@@ -31,7 +31,7 @@ final class ChatPermissionTableSeeder extends BaseSeeder
         ];
         $permissions = collect($items);
 
-        $permissions->each(function (PermissionEnum $permission) {
+        $permissions->each(function (PermissionEnum $permission): void {
             $entity = ChatPermissionEntityModel::props();
             ChatPermissionModel::query()->updateOrCreate(
                 [$entity->name => $permission->name],

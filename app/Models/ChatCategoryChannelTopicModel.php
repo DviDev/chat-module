@@ -70,7 +70,7 @@ final class ChatCategoryChannelTopicModel extends BaseModel
     {
         parent::boot();
 
-        self::creating(function (self $topic) {
+        self::creating(function (self $topic): void {
             $topic->thread_id = ThreadModel::query()->create([
                 'content' => $topic->title,
                 'user_id' => $topic->user_id,

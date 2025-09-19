@@ -67,7 +67,7 @@ final class ChatSeeder extends BaseSeeder
 
         $chats = ChatModel::factory($seed_total)->for($me, 'user')->create();
 
-        $chats->each(function (ChatModel $chat) use ($firsWorkspace) {
+        $chats->each(function (ChatModel $chat) use ($firsWorkspace): void {
             if ($this->event) {
                 Event::dispatch($this->event->class(), $this->event->param('chat', $chat)->payload());
             }
@@ -112,7 +112,7 @@ final class ChatSeeder extends BaseSeeder
             $participants = collect();
         }
 
-        $participants->each(function (User $user) use ($chat) {
+        $participants->each(function (User $user) use ($chat): void {
             $p = ChatParticipantEntityModel::props();
             ChatParticipantModel::factory()->create([
                 $p->chat_id => $chat->id,
@@ -134,7 +134,7 @@ final class ChatSeeder extends BaseSeeder
             ->for($chat, 'chat')
             ->for($chat->user, 'user')
             ->count($seed_total)->create();
-        $chat->categories()->each(function (ChatCategoryModel $category) use ($chat) {
+        $chat->categories()->each(function (ChatCategoryModel $category) use ($chat): void {
             $this->createChatCategoryChannels($category, $chat);
         });
 
@@ -147,7 +147,7 @@ final class ChatSeeder extends BaseSeeder
         ChatCategoryChannelModel::factory()->count(config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT'))->create([
             $channel->category_id => $category->id,
         ]);
-        $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat) {
+        $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat): void {
             $this->createCategoryChannelParticipants($channel, $chat);
             $this->createChannelTopics($channel, $chat);
             $user = ChatCategoryChannelUserEntityModel::props();
@@ -182,7 +182,7 @@ final class ChatSeeder extends BaseSeeder
         ]);
         $participants = $chat->participants()->whereNot('user_id', $channel->category->created_by_user_id);
 
-        $participants->each(function (User $user) use ($channel) {
+        $participants->each(function (User $user) use ($channel): void {
             $p = ChannelParticipantEntityModel::props();
             ChannelParticipantModel::factory()->create([
                 $p->channel_id => $channel->id,
@@ -201,7 +201,7 @@ final class ChatSeeder extends BaseSeeder
             $topic->user_id => $chat->user_id,
         ]);
         $channel->topics()
-            ->each(function (ChatCategoryChannelTopicModel $topic) {
+            ->each(function (ChatCategoryChannelTopicModel $topic): void {
                 $this->createTopicThreads($topic);
             });
     }
@@ -209,7 +209,7 @@ final class ChatSeeder extends BaseSeeder
     public function createTopicThreads(ChatCategoryChannelTopicModel $topic): void
     {
         $topic->channel->participantUsers()
-            ->each(function (User $participant) use ($topic) {
+            ->each(function (User $participant) use ($topic): void {
                 ThreadModel::factory()->create([
                     'parent_id' => $topic->thread_id,
                     'user_id' => $participant->id,
@@ -222,7 +222,7 @@ final class ChatSeeder extends BaseSeeder
         $this->command->warn(PHP_EOL.'Creating chat group permissions ...');
         $config = ChatConfigEntityModel::props();
         ChatConfigModel::factory()->create([$config->chat_id => $chat->id]);
-        ChatPermissionModel::query()->each(function (ChatPermissionModel $permission) {
+        ChatPermissionModel::query()->each(function (ChatPermissionModel $permission): void {
             $p = ChatGroupPermissionEntityModel::props();
             ChatGroupPermissionModel::factory()->create([
                 $p->group_id => ChatPermissionGroupModel::factory()->create()->id,
@@ -247,7 +247,7 @@ final class ChatSeeder extends BaseSeeder
 
         $participants = $chat->participants();
 
-        $participants->each(function (User $user) use ($chat) {
+        $participants->each(function (User $user) use ($chat): void {
             $chatUser = ChatUserEntityModel::props();
             ChatUserModel::factory()->create([
                 $chatUser->user_id => $user->id,

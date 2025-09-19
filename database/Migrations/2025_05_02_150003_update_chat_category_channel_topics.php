@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('chat_category_channel_topics', function (Blueprint $table) {
+        Schema::table('chat_category_channel_topics', function (Blueprint $table): void {
             $p = ChatCategoryChannelTopicEntityModel::props(null, true);
             $table->foreignId($p->thread_id)
                 ->after($p->user_id)
@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('chat_category_channel_topics', function (Blueprint $table) {
+        Schema::table('chat_category_channel_topics', function (Blueprint $table): void {
             $p = ChatCategoryChannelTopicEntityModel::props(null, true);
             $table->dropColumn($p->thread_id);
         });

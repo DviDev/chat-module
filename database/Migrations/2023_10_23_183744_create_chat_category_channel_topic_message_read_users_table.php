@@ -11,7 +11,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('chat_channel_topic_message_read_users', function (Blueprint $table) {
+        Schema::create('chat_channel_topic_message_read_users', function (Blueprint $table): void {
             $p = ChatMessageUserReadEntityModel::props(force: true);
             $table->id();
             $table->foreignId($p->message_id)->references('id')
