@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Database\Seeders;
 
 use App\Models\User;
@@ -36,7 +38,7 @@ use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
 use Nwidart\Modules\Facades\Module;
 
-class ChatSeeder extends BaseSeeder
+final class ChatSeeder extends BaseSeeder
 {
     protected ?SeederEventDTO $event = null;
 
@@ -47,7 +49,7 @@ class ChatSeeder extends BaseSeeder
     {
         $this->command->warn(PHP_EOL.'🤖 ✔ '.str(__CLASS__)->explode('\\')->last().' ...');
 
-        if (config('app.env') == 'production' && ! config('chat.SEED_CHATS_IN_PRODUCTION')) {
+        if (config('app.env') === 'production' && ! config('chat.SEED_CHATS_IN_PRODUCTION')) {
             $this->command->warn(PHP_EOL.'🤖 ✔ No Seed in production');
 
             return;
@@ -81,16 +83,6 @@ class ChatSeeder extends BaseSeeder
         });
 
         $this->command->warn(PHP_EOL.'🤖 ✔ '.str(__CLASS__)->explode('\\')->last().' done');
-    }
-
-    protected function createWorkspaceChat(ChatModel $chat, WorkspaceModel $firsWorkspace): void
-    {
-        $this->command->warn(PHP_EOL.'🤖 '.str(__METHOD__)->explode('\\')->last().' ...');
-
-        if (collect(Module::allEnabled())->contains('Workspace')) {
-            WorkspaceChatModel::factory()->for($firsWorkspace, 'workspace')->for($chat, 'chat')->create();
-        }
-        $this->command->info(PHP_EOL.'🤖 ✔️ '.str(__METHOD__)->explode('\\')->last().' done');
     }
 
     public function createParticipants(ChatModel $chat): void
@@ -237,6 +229,16 @@ class ChatSeeder extends BaseSeeder
                 $p->permission_id => $permission->id,
             ]);
         });
+    }
+
+    protected function createWorkspaceChat(ChatModel $chat, WorkspaceModel $firsWorkspace): void
+    {
+        $this->command->warn(PHP_EOL.'🤖 '.str(__METHOD__)->explode('\\')->last().' ...');
+
+        if (collect(Module::allEnabled())->contains('Workspace')) {
+            WorkspaceChatModel::factory()->for($firsWorkspace, 'workspace')->for($chat, 'chat')->create();
+        }
+        $this->command->info(PHP_EOL.'🤖 ✔️ '.str(__METHOD__)->explode('\\')->last().' done');
     }
 
     protected function createChatUsers(ChatModel $chat): void

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use App\Models\User;
@@ -27,27 +29,19 @@ use Modules\Workspace\Models\WorkspaceModel;
  *
  * @property-read  ChatCategoryModel[] $categories
  */
-class ChatModel extends BaseModel
+final class ChatModel extends BaseModel
 {
     use BelongsToUser;
     use ChatProps;
 
-    public function modelEntity(): string
-    {
-        return ChatEntityModel::class;
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = ChatModel::class;
-        };
-    }
-
     public static function table($alias = null): string
     {
         return self::dbTable('chats', $alias);
+    }
+
+    public function modelEntity(): string
+    {
+        return ChatEntityModel::class;
     }
 
     public function user(): BelongsTo
@@ -83,5 +77,13 @@ class ChatModel extends BaseModel
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, ChatUserModel::class, 'chat_id', 'user_id');
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = ChatModel::class;
+        };
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use App\Models\User;
@@ -16,26 +18,18 @@ use Modules\Chat\Entities\ChatPermissionGroup\ChatPermissionGroupProps;
  *
  * @method ChatPermissionGroupEntityModel toEntity()
  */
-class ChatPermissionGroupModel extends BaseModel
+final class ChatPermissionGroupModel extends BaseModel
 {
     use ChatPermissionGroupProps;
-
-    public function modelEntity(): string
-    {
-        return ChatPermissionGroupEntityModel::class;
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = ChatPermissionGroupModel::class;
-        };
-    }
 
     public static function table($alias = null): string
     {
         return self::dbTable('chat_permission_groups', $alias);
+    }
+
+    public function modelEntity(): string
+    {
+        return ChatPermissionGroupEntityModel::class;
     }
 
     public function permissions(): BelongsToMany
@@ -46,5 +40,13 @@ class ChatPermissionGroupModel extends BaseModel
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, ChatPermissionGroupUserModel::class, 'group_id', 'user_id');
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = ChatPermissionGroupModel::class;
+        };
     }
 }

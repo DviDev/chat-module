@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use App\Models\User;
@@ -19,28 +21,20 @@ use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantProps;
  * @property-read ChatCategoryChannelModel $channel
  * @property-read User $user
  */
-class ChannelParticipantModel extends BaseModel
+final class ChannelParticipantModel extends BaseModel
 {
     use ChannelParticipantProps;
 
     protected $with = ['user'];
 
-    public function modelEntity(): string
-    {
-        return ChannelParticipantEntityModel::class;
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = ChannelParticipantModel::class;
-        };
-    }
-
     public static function table($alias = null): string
     {
         return self::dbTable('chat_category_channel_participants', $alias);
+    }
+
+    public function modelEntity(): string
+    {
+        return ChannelParticipantEntityModel::class;
     }
 
     public function channel(): BelongsTo
@@ -51,5 +45,13 @@ class ChannelParticipantModel extends BaseModel
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = ChannelParticipantModel::class;
+        };
     }
 }

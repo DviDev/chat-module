@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use Modules\Base\Contracts\BaseModel;
@@ -14,9 +16,14 @@ use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserProps;
  *
  * @method ChatCategoryChannelUserEntityModel toEntity()
  */
-class ChatCategoryChannelUserModel extends BaseModel
+final class ChatCategoryChannelUserModel extends BaseModel
 {
     use ChatCategoryChannelUserProps;
+
+    public static function table($alias = null): string
+    {
+        return self::dbTable('chat_category_channel_users', $alias);
+    }
 
     public function modelEntity(): string
     {
@@ -29,10 +36,5 @@ class ChatCategoryChannelUserModel extends BaseModel
         {
             protected $model = ChatCategoryChannelUserModel::class;
         };
-    }
-
-    public static function table($alias = null): string
-    {
-        return self::dbTable('chat_category_channel_users', $alias);
     }
 }

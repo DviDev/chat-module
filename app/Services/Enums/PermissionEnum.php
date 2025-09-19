@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Services\Enums;
 
 enum PermissionEnum: int

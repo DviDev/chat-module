@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Database\Seeders;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Base\Database\Seeders\BaseSeeder;
 
-class ChatDatabaseSeeder extends BaseSeeder
+final class ChatDatabaseSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

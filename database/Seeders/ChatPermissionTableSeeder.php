@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +10,7 @@ use Modules\Chat\Entities\ChatPermission\ChatPermissionEntityModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Services\Enums\PermissionEnum;
 
-class ChatPermissionTableSeeder extends BaseSeeder
+final class ChatPermissionTableSeeder extends BaseSeeder
 {
     /**
      * Run the database seeds.

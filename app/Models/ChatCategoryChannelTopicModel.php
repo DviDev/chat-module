@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use App\Models\User;
@@ -25,7 +27,7 @@ use Modules\Post\Models\ThreadModel;
  *
  * @method ChatCategoryChannelTopicEntityModel toEntity()
  */
-class ChatCategoryChannelTopicModel extends BaseModel
+final class ChatCategoryChannelTopicModel extends BaseModel
 {
     use ChatCategoryChannelTopicProps;
     use SoftDeletes;
@@ -34,29 +36,9 @@ class ChatCategoryChannelTopicModel extends BaseModel
 
     protected $with = ['thread'];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        self::creating(function (self $topic) {
-            $topic->thread_id = ThreadModel::query()->create([
-                'content' => $topic->title,
-                'user_id' => $topic->user_id,
-            ])->id;
-        });
-    }
-
     public static function table($alias = null): string
     {
         return self::dbTable('chat_category_channel_topics', $alias);
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = ChatCategoryChannelTopicModel::class;
-        };
     }
 
     public function modelEntity(): string
@@ -82,5 +64,25 @@ class ChatCategoryChannelTopicModel extends BaseModel
     public function threads(): HasMany
     {
         return $this->hasMany(ThreadModel::class, 'parent_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::creating(function (self $topic) {
+            $topic->thread_id = ThreadModel::query()->create([
+                'content' => $topic->title,
+                'user_id' => $topic->user_id,
+            ])->id;
+        });
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = ChatCategoryChannelTopicModel::class;
+        };
     }
 }
