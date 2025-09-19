@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Entities\ChatParticipant;
 
 use Modules\Base\Entities\BaseEntityModel;
@@ -16,7 +18,7 @@ use Modules\Chat\Models\ChatParticipantModel;
  * @method static self new()
  * @method static self props($alias = null, $force = null)
  */
-class ChatParticipantEntityModel extends BaseEntityModel
+final class ChatParticipantEntityModel extends BaseEntityModel
 {
     use ChatParticipantProps;
 }
