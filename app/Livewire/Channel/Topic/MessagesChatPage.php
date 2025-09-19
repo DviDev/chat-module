@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Livewire\Channel\Topic;
 
 use Livewire\Component;
 use Modules\Chat\Models\ChatCategoryChannelTopicModel;
 use Modules\DvUi\Services\Plugins\Toastr\Toastr;
 
-class MessagesChatPage extends Component
+final class MessagesChatPage extends Component
 {
     /** @var ChatCategoryChannelTopicModel */
     public $topic;
