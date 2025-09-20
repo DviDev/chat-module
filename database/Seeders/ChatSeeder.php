@@ -147,7 +147,7 @@ final class ChatSeeder extends BaseSeeder
         ChatCategoryChannelModel::factory()->count(config('chat.SEED_CHAT_CATEGORY_CHANNELS_COUNT'))->create([
             $channel->category_id => $category->id,
         ]);
-        $category->channels()->each(function (ChatCategoryChannelModel $channel) use ($chat): void {
+        $category->channels()->with('category')->each(function (ChatCategoryChannelModel $channel) use ($chat): void {
             $this->createCategoryChannelParticipants($channel, $chat);
             $this->createChannelTopics($channel, $chat);
             $user = ChatCategoryChannelUserEntityModel::props();
@@ -200,7 +200,7 @@ final class ChatSeeder extends BaseSeeder
             $topic->channel_id => $channel->id,
             $topic->user_id => $chat->user_id,
         ]);
-        $channel->topics()
+        $channel->topics()->with('channel')
             ->each(function (ChatCategoryChannelTopicModel $topic): void {
                 $this->createTopicThreads($topic);
             });
