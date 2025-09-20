@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Entities\ChatCategoryChannelTopic;
 
 use Modules\Base\Entities\BaseEntityModel;
@@ -16,7 +18,7 @@ use Modules\Chat\Models\ChatCategoryChannelTopicModel;
  * @method static self new()
  * @method static self props($alias = null, $force = null)
  */
-class ChatCategoryChannelTopicEntityModel extends BaseEntityModel
+final class ChatCategoryChannelTopicEntityModel extends BaseEntityModel
 {
     use ChatCategoryChannelTopicProps;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use Modules\Base\Contracts\BaseModel;
@@ -14,9 +16,14 @@ use Modules\Chat\Entities\ChatUserPermission\ChatUserPermissionProps;
  *
  * @method ChatUserPermissionEntityModel toEntity()
  */
-class ChatUserPermissionModel extends BaseModel
+final class ChatUserPermissionModel extends BaseModel
 {
     use ChatUserPermissionProps;
+
+    public static function table($alias = null): string
+    {
+        return self::dbTable('chat_user_permissions', $alias);
+    }
 
     public function modelEntity(): string
     {
@@ -29,10 +36,5 @@ class ChatUserPermissionModel extends BaseModel
         {
             protected $model = ChatUserPermissionModel::class;
         };
-    }
-
-    public static function table($alias = null): string
-    {
-        return self::dbTable('chat_user_permissions', $alias);
     }
 }

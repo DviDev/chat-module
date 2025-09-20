@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use App\Models\User;
@@ -23,26 +25,18 @@ use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelProps;
  *
  * @method ChatCategoryChannelEntityModel toEntity()
  */
-class ChatCategoryChannelModel extends BaseModel
+final class ChatCategoryChannelModel extends BaseModel
 {
     use ChatCategoryChannelProps;
-
-    public function modelEntity(): string
-    {
-        return ChatCategoryChannelEntityModel::class;
-    }
-
-    protected static function newFactory(): BaseFactory
-    {
-        return new class extends BaseFactory
-        {
-            protected $model = ChatCategoryChannelModel::class;
-        };
-    }
 
     public static function table($alias = null): string
     {
         return self::dbTable('chat_category_channels', $alias);
+    }
+
+    public function modelEntity(): string
+    {
+        return ChatCategoryChannelEntityModel::class;
     }
 
     public function category(): BelongsTo
@@ -68,5 +62,13 @@ class ChatCategoryChannelModel extends BaseModel
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, ChatCategoryChannelUserModel::class, 'channel_id', 'user_id');
+    }
+
+    protected static function newFactory(): BaseFactory
+    {
+        return new class extends BaseFactory
+        {
+            protected $model = ChatCategoryChannelModel::class;
+        };
     }
 }

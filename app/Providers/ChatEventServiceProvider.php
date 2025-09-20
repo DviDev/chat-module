@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Providers;
 
+use Event;
 use Illuminate\Support\ServiceProvider;
 use Modules\Base\Events\DatabaseSeederEvent;
 use Modules\Chat\Listeners\CreateMenuItemsListener;
@@ -12,17 +15,17 @@ use Modules\DBMap\Events\ScanTableEvent;
 use Modules\Project\Events\CreateMenuItemsEvent;
 use Modules\View\Events\DefineSearchableAttributesEvent;
 
-class ChatEventServiceProvider extends ServiceProvider
+final class ChatEventServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
      */
     public function register(): void
     {
-        \Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
-        \Event::listen(ScanTableEvent::class, ScanTableChatListener::class);
-        \Event::listen(DatabaseSeederEvent::class, DatabaseSeederListener::class);
-        \Event::listen(DefineSearchableAttributesEvent::class, DefineSearchableAttributes::class);
+        Event::listen(CreateMenuItemsEvent::class, CreateMenuItemsListener::class);
+        Event::listen(ScanTableEvent::class, ScanTableChatListener::class);
+        Event::listen(DatabaseSeederEvent::class, DatabaseSeederListener::class);
+        Event::listen(DefineSearchableAttributesEvent::class, DefineSearchableAttributes::class);
     }
 
     /**

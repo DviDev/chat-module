@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Entities\ChatPermissionGroup;
 
 use Modules\Base\Entities\BaseEntityModel;
@@ -16,7 +18,7 @@ use Modules\Chat\Models\ChatPermissionGroupModel;
  * @method static self new()
  * @method static self props($alias = null, $force = null)
  */
-class ChatPermissionGroupEntityModel extends BaseEntityModel
+final class ChatPermissionGroupEntityModel extends BaseEntityModel
 {
     use ChatPermissionGroupProps;
 }

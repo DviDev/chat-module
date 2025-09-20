@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +19,7 @@ use Modules\Project\Services\DynamicRoutes;
 
 DynamicRoutes::all('Chat');
 
-Route::middleware(['auth', 'verified'])->prefix('chat')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('chat')->group(function (): void {
     Route::get('/category/channel/topic/{topic}/messages', fn (ChatCategoryChannelTopicModel $topic) => view('chat::components.page.chat_category_channel_topic_messages_page', compact('topic')))
         ->withTrashed()
         ->name('admin.chat.category.channel.topic.messages');

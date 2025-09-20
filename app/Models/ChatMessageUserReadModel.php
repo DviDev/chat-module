@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use Modules\Base\Contracts\BaseModel;
@@ -16,9 +18,14 @@ use Modules\Chat\Entities\ChatMessageUserRead\ChatMessageUserReadProps;
  *
  * @method ChatMessageUserReadEntityModel toEntity()
  */
-class ChatMessageUserReadModel extends BaseModel
+final class ChatMessageUserReadModel extends BaseModel
 {
     use ChatMessageUserReadProps;
+
+    public static function table($alias = null): string
+    {
+        return self::dbTable('chat_channel_topic_message_read_users', $alias);
+    }
 
     public function modelEntity(): string
     {
@@ -31,10 +38,5 @@ class ChatMessageUserReadModel extends BaseModel
         {
             protected $model = ChatMessageUserReadModel::class;
         };
-    }
-
-    public static function table($alias = null): string
-    {
-        return self::dbTable('chat_channel_topic_message_read_users', $alias);
     }
 }

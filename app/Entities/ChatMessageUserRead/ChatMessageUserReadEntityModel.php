@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Entities\ChatMessageUserRead;
 
 use Modules\Base\Entities\BaseEntityModel;
@@ -16,7 +18,7 @@ use Modules\Seguro\Models\ChatMessageUserReadModel;
  * @method static self new()
  * @method static self props($alias = null, $force = null)
  */
-class ChatMessageUserReadEntityModel extends BaseEntityModel
+final class ChatMessageUserReadEntityModel extends BaseEntityModel
 {
     use ChatMessageUserReadProps;
 }

@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Listeners;
 
 use Modules\Chat\Entities\Chat\ChatEntityModel;
 use Modules\Chat\Models\ChatModel;
 use Modules\Project\Contracts\DefineSearchableAttributesContract;
 
-class DefineSearchableAttributes extends DefineSearchableAttributesContract
+final class DefineSearchableAttributes extends DefineSearchableAttributesContract
 {
     protected function moduleName(): string
     {
         return config('chat.name');
     }
 
-    public function searchableFields(): array
+    protected function searchableFields(): array
     {
         $p = ChatEntityModel::props();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'name' => 'Chat',
     'SEED_CHAT_CATEGORIES_COUNT' => env('SEEDER_DEFAULT', 3),

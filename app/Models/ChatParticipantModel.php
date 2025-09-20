@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Models;
 
 use Modules\Base\Contracts\BaseModel;
@@ -14,9 +16,14 @@ use Modules\Chat\Entities\ChatParticipant\ChatParticipantProps;
  *
  * @method ChatParticipantEntityModel toEntity()
  */
-class ChatParticipantModel extends BaseModel
+final class ChatParticipantModel extends BaseModel
 {
     use ChatParticipantProps;
+
+    public static function table($alias = null): string
+    {
+        return self::dbTable('chat_participants', $alias);
+    }
 
     public function modelEntity(): string
     {
@@ -29,10 +36,5 @@ class ChatParticipantModel extends BaseModel
         {
             protected $model = ChatParticipantModel::class;
         };
-    }
-
-    public static function table($alias = null): string
-    {
-        return self::dbTable('chat_participants', $alias);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Listeners;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -7,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 use Modules\Base\Events\DatabaseSeederEvent;
 use Modules\Chat\Database\Seeders\ChatSeeder;
 
-class DatabaseSeederListener implements ShouldQueue
+final class DatabaseSeederListener implements ShouldQueue
 {
     public function handle(DatabaseSeederEvent $event): void
     {

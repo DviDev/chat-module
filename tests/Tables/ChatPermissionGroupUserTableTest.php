@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Tests\Tables;
 
 use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Services\Tests\BaseTest;
 use Modules\Chat\Models\ChatPermissionGroupUserModel;
 
-class ChatPermissionGroupUserTableTest extends BaseTest
+final class ChatPermissionGroupUserTableTest extends BaseTest
 {
     public function getModelClass(): string|BaseModel
     {

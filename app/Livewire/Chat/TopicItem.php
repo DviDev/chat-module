@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Chat\Livewire\Chat;
 
 use Livewire\Component;
 use Modules\Chat\Models\ChatCategoryChannelTopicModel;
 use Modules\DvUi\Services\Plugins\Toastr\Toastr;
 
-class TopicItem extends Component
+final class TopicItem extends Component
 {
     /** @var ChatCategoryChannelTopicModel */
     public $topic;
