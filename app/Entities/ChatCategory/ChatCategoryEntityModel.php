@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Chat\Entities\ChatCategory;
 
-use Modules\Base\Entities\BaseEntityModel;
+use Modules\Base\Contracts\BaseEntityModel;
 use Modules\Chat\Models\ChatCategoryModel;
 
 /**
