@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Base\Contracts\BaseModel;
-use Modules\Base\Factories\BaseFactory;
+use Modules\Base\Contracts\BaseFactory;
 use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannel\ChatCategoryChannelProps;
 
