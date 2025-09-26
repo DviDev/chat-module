@@ -6,7 +6,7 @@ namespace Modules\Chat\Database\Seeders;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Base\Database\Seeders\BaseSeeder;
+use Modules\Base\Contracts\BaseSeeder;
 
 final class ChatDatabaseSeeder extends BaseSeeder
 {
