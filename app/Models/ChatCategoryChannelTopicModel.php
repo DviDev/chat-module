@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 use Modules\Base\Contracts\BaseModel;
-use Modules\Base\Factories\BaseFactory;
+use Modules\Base\Contracts\BaseFactory;
 use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelTopic\ChatCategoryChannelTopicProps;
 use Modules\Post\Models\ThreadModel;

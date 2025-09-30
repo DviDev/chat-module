@@ -6,7 +6,7 @@ namespace Modules\Chat\Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Event;
-use Modules\Base\Database\Seeders\BaseSeeder;
+use Modules\Base\Contracts\BaseSeeder;
 use Modules\Base\Database\Seeders\SeederEventDTO;
 use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantEntityModel;
 use Modules\Chat\Entities\ChannelParticipant\ChatCategoryChannelParticipantEnum;

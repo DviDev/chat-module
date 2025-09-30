@@ -7,7 +7,7 @@ namespace Modules\Chat\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Base\Contracts\BaseModel;
-use Modules\Base\Factories\BaseFactory;
+use Modules\Base\Contracts\BaseFactory;
 use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantEntityModel;
 use Modules\Chat\Entities\ChannelParticipant\ChannelParticipantProps;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Chat\Models;
 
 use Modules\Base\Contracts\BaseModel;
-use Modules\Base\Factories\BaseFactory;
+use Modules\Base\Contracts\BaseFactory;
 use Modules\Chat\Entities\ChatUser\ChatUserEntityModel;
 use Modules\Chat\Entities\ChatUser\ChatUserProps;
 

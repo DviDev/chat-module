@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Chat\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Base\Database\Seeders\BaseSeeder;
+use Modules\Base\Contracts\BaseSeeder;
 use Modules\Chat\Entities\ChatPermission\ChatPermissionEntityModel;
 use Modules\Chat\Models\ChatPermissionModel;
 use Modules\Chat\Services\Enums\PermissionEnum;
