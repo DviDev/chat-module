@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Chat\Models;
 
-use Modules\Base\Contracts\BaseModel;
 use Modules\Base\Contracts\BaseFactory;
+use Modules\Base\Contracts\BaseModel;
 use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserEntityModel;
 use Modules\Chat\Entities\ChatCategoryChannelUser\ChatCategoryChannelUserProps;
 
