@@ -36,7 +36,6 @@ use Modules\Person\Models\PersonModel;
 use Modules\Post\Models\ThreadModel;
 use Modules\Workspace\Models\WorkspaceChatModel;
 use Modules\Workspace\Models\WorkspaceModel;
-use Nwidart\Modules\Facades\Module;
 
 final class ChatSeeder extends BaseSeeder
 {
@@ -59,7 +58,7 @@ final class ChatSeeder extends BaseSeeder
         $this->call(ChatPermissionTableSeeder::class);
 
         $me = User::find(1);
-        $firsWorkspace = collect(Module::allEnabled())->contains('Workspace')
+        $firsWorkspace = moduleIsEnabled('Workspace')
             ? (WorkspaceModel::byUserId($me->id)->first() ?: WorkspaceModel::factory()->create())
             : null;
 
@@ -72,7 +71,7 @@ final class ChatSeeder extends BaseSeeder
                 Event::dispatch($this->event->class(), $this->event->param('chat', $chat)->payload());
             }
 
-            if (collect(Module::allEnabled())->contains('Workspace')) {
+            if (moduleIsEnabled('Workspace')) {
                 $this->createWorkspaceChat($chat, $firsWorkspace);
                 $this->createParticipants($chat);
             }
@@ -102,7 +101,7 @@ final class ChatSeeder extends BaseSeeder
             $p->type => ChatParticipantEnum::admin->name,
         ]);
 
-        if (collect(Module::allEnabled())->contains('Workspace')) {
+        if (moduleIsEnabled('Workspace')) {
             /** @var WorkspaceModel $workspace */
             $workspace = $chat->workspaces()->first();
             $builder = $workspace->participants()->whereNot('user_id', 1);
@@ -235,7 +234,7 @@ final class ChatSeeder extends BaseSeeder
     {
         $this->command->warn(PHP_EOL.'🤖 '.str(__METHOD__)->explode('\\')->last().' ...');
 
-        if (collect(Module::allEnabled())->contains('Workspace')) {
+        if (moduleIsEnabled('Workspace')) {
             WorkspaceChatModel::factory()->for($firsWorkspace, 'workspace')->for($chat, 'chat')->create();
         }
         $this->command->info(PHP_EOL.'🤖 ✔️ '.str(__METHOD__)->explode('\\')->last().' done');
